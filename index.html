@@ -4,3125 +4,5557 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#06100b">
-<meta name="apple-mobile-web-app-capable" content="yes">
 <title>PAID ZOMBIE</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <style>
 :root{
-  --bg:#030705;
-  --bg2:#07100b;
-  --card:#0a1510;
-  --card2:#0d1b14;
-  --green:#72ff9b;
-  --green2:#22d86b;
-  --green3:#0b9f48;
-  --blue:#4ca6ff;
-  --white:#f1fff5;
-  --muted:#779083;
-  --border:rgba(115,255,155,.13);
-  --shadow:0 18px 55px rgba(0,0,0,.45);
-  --radius:24px;
+  --bg:#030604;
+  --bg2:#07110b;
+  --panel:#0a1510;
+  --panel2:#0d1b14;
+  --green:#5cff8d;
+  --green2:#19e66a;
+  --green3:#0fa94a;
+  --text:#f2fff6;
+  --muted:#8da596;
+  --line:rgba(92,255,141,.13);
+  --blue:#42a5ff;
+  --red:#ff6573;
+  --yellow:#ffd85a;
+  --radius:22px;
 }
 
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+*{
+  box-sizing:border-box;
+  -webkit-tap-highlight-color:transparent;
+}
+
 html,body{
   margin:0;
   padding:0;
   width:100%;
   min-height:100%;
   background:
-    radial-gradient(circle at 50% -10%,rgba(45,255,117,.13),transparent 38%),
-    radial-gradient(circle at 100% 70%,rgba(24,113,65,.08),transparent 30%),
+    radial-gradient(circle at 50% -10%,rgba(45,255,120,.10),transparent 35%),
+    radial-gradient(circle at 100% 70%,rgba(0,180,100,.06),transparent 30%),
     var(--bg);
-  color:var(--white);
-  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:var(--text);
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  overflow-x:hidden;
 }
-body{overflow-x:hidden}
-button,input,select{font:inherit}
-button{border:0;color:inherit;cursor:pointer}
-button:active{transform:scale(.97)}
 
-.app{
-  width:100%;
-  max-width:600px;
+body{
   min-height:100vh;
-  margin:auto;
-  padding:
-    calc(14px + env(safe-area-inset-top))
-    16px
-    calc(92px + env(safe-area-inset-bottom));
 }
 
-.topbar{
+button,input,select{
+  font:inherit;
+}
+
+button{
+  border:0;
+  cursor:pointer;
+  color:inherit;
+}
+
+#app{
+  min-height:100vh;
+  padding-bottom:100px;
+}
+
+/* ---------- HEADER ---------- */
+
+.header{
+  position:sticky;
+  top:0;
+  z-index:20;
+  padding:
+    calc(13px + env(safe-area-inset-top))
+    16px 13px;
+  background:rgba(3,8,5,.80);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(92,255,141,.08);
+}
+
+.header-inner{
+  max-width:620px;
+  margin:auto;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  margin-bottom:18px;
 }
 
-.userBox{display:flex;align-items:center;gap:12px}
+.user-box{
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+
 .avatar{
-  width:48px;height:48px;border-radius:16px;
-  border:1px solid rgba(114,255,155,.25);
-  background:linear-gradient(145deg,#12251a,#07100b);
-  display:grid;place-items:center;
+  width:46px;
+  height:46px;
+  border-radius:50%;
   overflow:hidden;
-  box-shadow:0 8px 28px rgba(0,0,0,.35),inset 0 0 20px rgba(114,255,155,.05);
+  border:2px solid rgba(92,255,141,.45);
+  background:linear-gradient(135deg,#123f25,#06110a);
+  box-shadow:0 0 20px rgba(46,255,119,.13);
+  flex:none;
 }
-.avatar img{width:100%;height:100%;object-fit:cover}
-.avatar svg{width:27px;height:27px}
-.username{font-size:17px;font-weight:800}
-.status{font-size:12px;color:var(--green);margin-top:2px}
 
-.balanceBox{text-align:right}
-.balanceLabel{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.12em}
-.balance{
-  font-size:21px;font-weight:900;letter-spacing:-.03em;
+.avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.avatar-fallback{
+  width:100%;
+  height:100%;
+  display:grid;
+  place-items:center;
+  color:var(--green);
+  font-size:21px;
+  font-weight:900;
+}
+
+.username{
+  font-weight:800;
+  font-size:15px;
+  max-width:145px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.user-level{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:2px;
+}
+
+.header-balances{
+  text-align:right;
+}
+
+.h-zmb{
+  font-weight:900;
+  font-size:16px;
   color:var(--green);
 }
-.tonBalance{
+
+.h-ton{
   color:var(--blue);
-  font-size:14px;
+  font-size:12px;
   font-weight:800;
   margin-top:2px;
 }
 
-.screen{display:none;animation:screenIn .22s ease}
-.screen.active{display:block}
-@keyframes screenIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+/* ---------- MAIN ---------- */
 
-.titleRow{
-  display:flex;align-items:end;justify-content:space-between;
-  margin:8px 2px 16px;
+main{
+  max-width:620px;
+  margin:auto;
+  padding:16px 14px 20px;
 }
+
+.screen{
+  display:none;
+  animation:screenIn .25s ease;
+}
+
+.screen.active{
+  display:block;
+}
+
+@keyframes screenIn{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:none}
+}
+
 .title{
   font-size:29px;
-  line-height:1;
+  line-height:1.05;
   font-weight:950;
-  letter-spacing:-.05em;
+  letter-spacing:-1px;
+  margin:6px 3px 5px;
 }
-.subtitle{font-size:14px;color:var(--muted);margin-top:7px}
 
-.card{
-  background:
-    linear-gradient(145deg,rgba(19,42,28,.96),rgba(6,14,10,.98));
-  border:1px solid var(--border);
-  border-radius:var(--radius);
-  box-shadow:var(--shadow),inset 0 1px 0 rgba(255,255,255,.035);
+.subtitle{
+  color:var(--muted);
+  font-size:14px;
+  margin:0 3px 18px;
+}
+
+/* ---------- GLASS ---------- */
+
+.glass{
   position:relative;
   overflow:hidden;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.035),transparent 40%),
+    linear-gradient(160deg,rgba(92,255,141,.035),rgba(5,13,8,.92));
+  border:1px solid rgba(92,255,141,.13);
+  border-radius:var(--radius);
+  box-shadow:
+    inset 0 1px rgba(255,255,255,.035),
+    0 15px 50px rgba(0,0,0,.27);
 }
-.card:before{
+
+.glass:after{
   content:"";
   position:absolute;
-  inset:0;
-  background:linear-gradient(125deg,rgba(255,255,255,.035),transparent 35%);
+  width:150px;
+  height:150px;
+  top:-100px;
+  right:-60px;
+  background:rgba(92,255,141,.06);
+  filter:blur(30px);
+  border-radius:50%;
   pointer-events:none;
 }
 
-.homeCore{
-  padding:18px;
-  margin-bottom:16px;
-  border-radius:30px;
-  background:
-    radial-gradient(circle at 50% 45%,rgba(78,255,137,.13),transparent 32%),
-    linear-gradient(145deg,#102117,#050a07);
-  border:1px solid rgba(114,255,155,.18);
-  box-shadow:0 25px 70px rgba(0,0,0,.55),inset 0 0 50px rgba(48,255,112,.035);
-}
-.coreOuter{
-  width:100%;
-  max-width:470px;
-  margin:auto;
-  padding:10px;
-  border-radius:25px;
-  border:1px solid rgba(114,255,155,.12);
-  background:linear-gradient(145deg,#0d1b13,#050b07);
-}
-.coreInner{
-  width:88%;
-  margin:auto;
-  height:170px;
-  border-radius:22px;
+/* ---------- HOME CORE ---------- */
+
+.core-card{
+  height:255px;
+  border-radius:28px;
+  margin-bottom:15px;
   position:relative;
   overflow:hidden;
-  display:grid;
-  place-items:center;
   background:
-    radial-gradient(circle,rgba(104,255,151,.18),transparent 38%),
-    linear-gradient(180deg,#0a1710,#030806);
-  border:1px solid rgba(114,255,155,.18);
+    radial-gradient(circle at 50% 50%,rgba(64,255,128,.10),transparent 30%),
+    linear-gradient(145deg,#09150e,#040a06);
+  border:1px solid rgba(92,255,141,.15);
+  box-shadow:
+    inset 0 1px rgba(255,255,255,.04),
+    0 25px 60px rgba(0,0,0,.4);
 }
-.coreInner:before,.coreInner:after{
-  content:"";
+
+#coreCanvas{
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+.core-label{
   position:absolute;
-  border-radius:50%;
-  border:1px solid rgba(114,255,155,.16);
-  animation:spin 13s linear infinite;
-}
-.coreInner:before{width:130px;height:130px}
-.coreInner:after{width:90px;height:90px;animation-direction:reverse;animation-duration:8s}
-@keyframes spin{to{transform:rotate(360deg)}}
-.coreCircle{
-  width:72px;height:72px;border-radius:50%;
-  display:grid;place-items:center;
-  background:radial-gradient(circle at 35% 30%,#baffca,#22d86b 28%,#087c39 70%);
-  box-shadow:0 0 35px rgba(57,255,117,.4),0 0 90px rgba(57,255,117,.14);
+  left:20px;
+  bottom:17px;
   z-index:2;
 }
-.coreCircle svg{width:36px;height:36px;color:#031008}
-.coreText{
-  position:absolute;bottom:12px;
-  font-size:10px;font-weight:900;letter-spacing:.22em;
-  color:rgba(180,255,201,.55);
+
+.core-name{
+  color:#dfffea;
+  font-weight:950;
+  font-size:14px;
+  letter-spacing:2px;
 }
-.systemLine{
-  margin-top:13px;
-  text-align:center;
-  font-size:11px;
+
+.core-status{
   color:var(--green);
-  letter-spacing:.13em;
+  font-size:11px;
+  margin-top:4px;
   font-weight:800;
 }
 
-.levelCard{padding:17px;margin-bottom:16px}
-.levelTop{display:flex;justify-content:space-between;align-items:center}
-.levelName{font-size:15px;font-weight:900}
-.levelNum{font-size:13px;color:var(--green)}
-.progress{
-  height:8px;background:#020604;border-radius:99px;
-  overflow:hidden;margin-top:12px;
-}
-.progress i{
-  display:block;height:100%;width:0;
-  border-radius:99px;
-  background:linear-gradient(90deg,#18a952,#8affac);
-  box-shadow:0 0 15px rgba(86,255,137,.35);
-  transition:width .4s ease;
+/* ---------- BALANCE ---------- */
+
+.balance-card{
+  padding:18px;
+  margin-bottom:15px;
 }
 
-.homeGrid{
+.balance-label{
+  color:var(--muted);
+  font-size:12px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+.balance-main{
+  font-size:30px;
+  font-weight:950;
+  color:var(--green);
+  margin-top:4px;
+  letter-spacing:-1px;
+}
+
+.ton-balance{
+  color:var(--blue);
+  font-size:17px;
+  font-weight:900;
+  margin-top:5px;
+}
+
+.level-row{
+  display:flex;
+  justify-content:space-between;
+  color:var(--muted);
+  font-size:12px;
+  margin-top:15px;
+  margin-bottom:7px;
+}
+
+.progress{
+  height:8px;
+  border-radius:20px;
+  background:#122019;
+  overflow:hidden;
+}
+
+.progress i{
+  display:block;
+  height:100%;
+  width:0;
+  border-radius:inherit;
+  background:linear-gradient(90deg,var(--green3),var(--green));
+  box-shadow:0 0 12px rgba(92,255,141,.3);
+}
+
+/* ---------- HOME BUTTONS ---------- */
+
+.home-grid{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:13px;
-  margin-bottom:17px;
+  gap:11px;
+  margin-bottom:15px;
 }
-.bigBtn{
-  min-height:108px;
+
+.big-btn{
+  min-height:106px;
+  border-radius:21px;
   padding:17px;
   text-align:left;
-  border-radius:23px;
-  background:linear-gradient(145deg,#102118,#07100b);
-  border:1px solid var(--border);
-  box-shadow:0 15px 35px rgba(0,0,0,.3),inset 0 1px rgba(255,255,255,.035);
-  transition:.2s;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.012)),
+    #09130e;
+  border:1px solid rgba(92,255,141,.12);
+  box-shadow:inset 0 1px rgba(255,255,255,.04);
+  transition:.18s;
 }
-.bigBtn:hover{border-color:rgba(114,255,155,.3)}
-.bigIcon{
-  width:45px;height:45px;
-  display:grid;place-items:center;
-  border-radius:15px;
-  background:rgba(83,255,135,.08);
+
+.big-btn:active{
+  transform:scale(.97);
+}
+
+.big-icon{
+  width:40px;
+  height:40px;
+  border-radius:13px;
+  display:grid;
+  place-items:center;
+  background:rgba(92,255,141,.08);
   color:var(--green);
-  margin-bottom:13px;
+  margin-bottom:12px;
 }
-.bigIcon svg{width:24px;height:24px}
-.bigBtn b{font-size:16px;font-weight:900}
-.bigBtn span{display:block;color:var(--muted);font-size:12px;margin-top:5px}
 
-.sectionHead{
-  display:flex;align-items:center;justify-content:space-between;
-  margin:22px 2px 11px;
+.big-icon svg{
+  width:23px;
+  height:23px;
 }
-.sectionHead b{font-size:17px}
-.sectionHead span{font-size:12px;color:var(--muted)}
 
-.payoutCard{padding:15px}
-.payoutFeed{display:flex;flex-direction:column;gap:8px}
-.payout{
-  display:flex;align-items:center;gap:11px;
-  padding:11px 9px;
-  border-radius:16px;
-  background:rgba(0,0,0,.2);
-  border:1px solid rgba(255,255,255,.035);
-  animation:payoutIn .45s ease;
+.big-btn strong{
+  display:block;
+  font-size:16px;
+  font-weight:950;
 }
-@keyframes payoutIn{
-  from{opacity:0;transform:translateY(-15px) scale(.97)}
-  to{opacity:1;transform:none}
+
+.big-btn span{
+  color:var(--muted);
+  font-size:12px;
+  display:block;
+  margin-top:3px;
 }
-.payoutAvatar{
-  width:37px;height:37px;border-radius:12px;
-  display:grid;place-items:center;
-  background:linear-gradient(145deg,#173c26,#09130d);
+
+/* ---------- PAYOUTS ---------- */
+
+.section-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:21px 2px 9px;
+}
+
+.section-head h3{
+  font-size:17px;
+  margin:0;
+}
+
+.live{
+  font-size:10px;
   color:var(--green);
   font-weight:900;
-  font-size:13px;
-}
-.payoutInfo{flex:1;min-width:0}
-.payoutName{font-size:13px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.payoutTime{font-size:10px;color:var(--muted);margin-top:2px}
-.payoutAmount{text-align:right;color:var(--green);font-weight:900;font-size:13px}
-.payoutStatus{font-size:9px;color:#5ed982;margin-top:2px}
-
-.miningHero{padding:25px;text-align:center;margin-bottom:14px}
-.miningStatus{
-  display:inline-flex;align-items:center;gap:7px;
-  padding:8px 12px;border-radius:99px;
-  background:rgba(78,255,137,.07);
-  color:var(--green);font-size:11px;font-weight:900;
-}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green)}
-.miningValue{
-  margin:22px 0 7px;
-  font-size:40px;
-  font-weight:950;
-  letter-spacing:-.055em;
-  font-variant-numeric:tabular-nums;
-}
-.miningRate{font-size:13px;color:var(--muted)}
-.miningTimer{font-size:14px;margin-top:10px;color:#b7d9c1;font-variant-numeric:tabular-nums}
-.primary{
-  width:100%;
-  min-height:54px;
-  border-radius:17px;
-  background:linear-gradient(135deg,#79ff9e,#28d66d);
-  color:#031008;
-  font-size:15px;
-  font-weight:950;
-  box-shadow:0 10px 30px rgba(41,214,109,.18);
-}
-.secondary{
-  width:100%;min-height:50px;border-radius:16px;
-  background:#0d1912;border:1px solid var(--border);
-  font-weight:850;
-}
-.disabled{opacity:.45;pointer-events:none}
-.miningDetails{
-  display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:13px;
-}
-.statBox{padding:15px;border-radius:18px;background:rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.035)}
-.statBox small{color:var(--muted);font-size:11px}
-.statBox b{display:block;font-size:17px;margin-top:6px}
-
-.tabs{
-  display:flex;gap:7px;padding:5px;
-  background:#050b07;border:1px solid var(--border);
-  border-radius:17px;margin-bottom:14px;
-}
-.tab{
-  flex:1;padding:12px 8px;border-radius:12px;
-  background:transparent;color:var(--muted);font-weight:850;font-size:13px;
-}
-.tab.active{background:#122319;color:var(--green)}
-
-.adNetwork{padding:17px;margin-bottom:12px}
-.adHead{display:flex;justify-content:space-between;align-items:center}
-.adTitle{display:flex;align-items:center;gap:11px}
-.networkIcon{
-  width:40px;height:40px;border-radius:13px;
-  background:rgba(114,255,155,.08);display:grid;place-items:center;color:var(--green)
-}
-.adTitle b{font-size:15px}
-.adTitle small{display:block;color:var(--muted);margin-top:3px;font-size:11px}
-.counter{font-size:14px;font-weight:900;color:var(--green)}
-.adProgress{height:6px;background:#030604;border-radius:99px;overflow:hidden;margin:15px 0}
-.adProgress i{display:block;height:100%;background:linear-gradient(90deg,#20c965,#9affb5);width:0}
-.watchBtn{
-  width:100%;min-height:46px;border-radius:14px;
-  background:#102218;color:var(--green);font-weight:900;
-  border:1px solid rgba(114,255,155,.13)
+  letter-spacing:.8px;
 }
 
-.task{padding:15px;display:flex;align-items:center;gap:12px;margin-bottom:9px}
-.taskIcon{width:42px;height:42px;border-radius:14px;background:#101e15;color:var(--green);display:grid;place-items:center}
-.taskMain{flex:1}
-.taskMain b{font-size:14px}
-.taskMain small{display:block;color:var(--muted);font-size:11px;margin-top:3px}
-.smallBtn{padding:11px 13px;border-radius:12px;background:#102319;color:var(--green);font-weight:900;font-size:11px}
-
-.formCard{padding:18px;margin-bottom:13px}
-label{display:block;color:var(--muted);font-size:12px;font-weight:750;margin:0 0 7px}
-input,select{
-  width:100%;height:52px;
-  border-radius:15px;
-  background:#050b07;
-  border:1px solid var(--border);
-  color:var(--white);
-  outline:none;
-  padding:0 15px;
-  font-size:15px;
-}
-input:focus,select:focus{border-color:rgba(114,255,155,.4)}
-.field{margin-bottom:14px}
-
-.packageGrid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.package{
-  padding:15px;border-radius:16px;
-  background:#07100b;border:1px solid var(--border);
-  text-align:left;
-}
-.package.selected{border-color:var(--green);background:#0d2014}
-.package b{display:block;font-size:16px}
-.package span{font-size:11px;color:var(--muted);display:block;margin-top:4px}
-
-.walletHero{padding:21px;margin-bottom:13px}
-.walletBig{font-size:35px;font-weight:950;margin:7px 0}
-.walletTon{color:var(--blue);font-size:18px;font-weight:850}
-.walletActions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:17px}
-.walletActions button{min-height:51px;border-radius:15px;background:#0d1c13;border:1px solid var(--border);font-weight:900}
-
-.historyItem{padding:14px;display:flex;gap:12px;align-items:center;border-bottom:1px solid rgba(255,255,255,.045)}
-.historyItem:last-child{border-bottom:0}
-.historyIcon{width:39px;height:39px;border-radius:12px;background:#0e1e14;color:var(--green);display:grid;place-items:center}
-.historyMain{flex:1}
-.historyMain b{font-size:13px}
-.historyMain small{display:block;color:var(--muted);font-size:10px;margin-top:3px}
-.historyAmount{font-weight:900;color:var(--green);font-size:13px}
-
-.profileHero{padding:21px;margin-bottom:12px;display:flex;align-items:center;gap:15px}
-.profileAvatar{width:67px;height:67px;border-radius:21px;overflow:hidden;background:#0c1b12;display:grid;place-items:center}
-.profileAvatar img{width:100%;height:100%;object-fit:cover}
-.profileName{font-size:21px;font-weight:950}
-.profileId{font-size:11px;color:var(--muted);margin-top:4px}
-
-.menu{display:flex;flex-direction:column;gap:8px}
-.menuItem{
-  width:100%;min-height:61px;padding:0 15px;
-  border-radius:17px;background:linear-gradient(145deg,#0c1911,#07100b);
-  border:1px solid rgba(114,255,155,.09);
-  display:flex;align-items:center;gap:13px;text-align:left;
-}
-.menuIcon{width:38px;height:38px;border-radius:12px;background:#102117;color:var(--green);display:grid;place-items:center;flex:none}
-.menuIcon svg{width:20px;height:20px}
-.menuText{font-size:14px;font-weight:850;flex:1}
-.menuArrow{color:#486654}
-
-.topTabs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-bottom:13px}
-.topTab{padding:12px 4px;border-radius:13px;background:#09120d;color:var(--muted);font-size:11px;font-weight:900}
-.topTab.active{color:var(--green);background:#102319}
-.rankItem{padding:14px;display:flex;align-items:center;gap:12px;margin-bottom:8px}
-.rank{width:31px;font-weight:950;color:var(--muted);text-align:center}
-.rank:nth-child(1){color:var(--green)}
-.rankAvatar{width:40px;height:40px;border-radius:13px;background:#102117;color:var(--green);display:grid;place-items:center;font-weight:900}
-.rankInfo{flex:1}
-.rankInfo b{font-size:14px}
-.rankInfo small{display:block;color:var(--muted);font-size:10px;margin-top:3px}
-.rankValue{font-weight:950;color:var(--green);font-size:13px}
-.currentRank{border-color:rgba(114,255,155,.35);box-shadow:0 0 25px rgba(114,255,155,.06)}
-
-.refCard{padding:19px;margin-bottom:12px}
-.refLink{
-  padding:13px;border-radius:14px;background:#040906;
-  border:1px dashed rgba(114,255,155,.2);
-  font-size:12px;color:#a4c5ae;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-}
-.refButtons{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}
-.refButtons button{height:48px;border-radius:14px;background:#102118;color:var(--green);font-weight:900}
-.friendItem{padding:13px;display:flex;align-items:center;gap:11px;border-bottom:1px solid rgba(255,255,255,.04)}
-
-.giveaway{padding:18px;margin-bottom:11px}
-.giveawayPrize{font-size:25px;font-weight:950;color:var(--green)}
-.giveawayMeta{display:flex;gap:8px;flex-wrap:wrap;margin:11px 0}
-.badge{padding:7px 9px;border-radius:10px;background:#08130d;color:var(--muted);font-size:10px;font-weight:800}
-
-.settingsBox{padding:18px;margin-bottom:12px}
-.langGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.langBtn{padding:13px 5px;border-radius:14px;background:#08120d;color:var(--muted);font-weight:900}
-.langBtn.active{color:#031008;background:var(--green)}
-
-.modalBack{
-  position:fixed;inset:0;z-index:100;
-  background:rgba(0,0,0,.72);
-  backdrop-filter:blur(13px);
-  display:none;align-items:flex-end;justify-content:center;
-  padding:12px;
-}
-.modalBack.show{display:flex}
-.modal{
-  width:100%;max-width:570px;
-  max-height:92vh;overflow:auto;
-  padding:20px;
-  border-radius:27px 27px 20px 20px;
-  background:linear-gradient(145deg,#102118,#050b07);
-  border:1px solid rgba(114,255,155,.16);
-  box-shadow:0 -20px 80px rgba(0,0,0,.65);
-  animation:modalIn .22s ease;
-}
-@keyframes modalIn{from{transform:translateY(25px);opacity:0}to{transform:none;opacity:1}}
-.modalHead{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
-.modalTitle{font-size:21px;font-weight:950}
-.close{
-  width:38px;height:38px;border-radius:13px;background:#0a1510;color:var(--muted);font-size:20px
-}
-
-.toast{
-  position:fixed;z-index:300;left:50%;bottom:105px;
-  transform:translateX(-50%) translateY(20px);
-  padding:12px 16px;border-radius:14px;
-  background:#102118;border:1px solid rgba(114,255,155,.18);
-  color:var(--white);font-size:13px;font-weight:800;
-  opacity:0;pointer-events:none;transition:.25s;
-  max-width:90%;text-align:center;
-}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-
-.nav{
-  position:fixed;z-index:50;
-  left:50%;bottom:calc(8px + env(safe-area-inset-bottom));
-  transform:translateX(-50%);
-  width:min(580px,calc(100% - 18px));
-  height:69px;padding:6px;
-  display:grid;grid-template-columns:repeat(5,1fr);
-  background:rgba(6,14,10,.91);
-  backdrop-filter:blur(20px);
-  border:1px solid rgba(114,255,155,.13);
-  border-radius:23px;
-  box-shadow:0 15px 50px rgba(0,0,0,.55);
-}
-.navBtn{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:3px;border-radius:17px;background:transparent;color:#557063;
-  font-size:10px;font-weight:850;
-}
-.navBtn svg{width:22px;height:22px}
-.navBtn.active{background:#102118;color:var(--green)}
-
-.gameWrap{padding:10px;background:#030805;border-radius:20px;border:1px solid var(--border)}
-#gameCanvas{
-  display:block;width:100%;height:auto;aspect-ratio:1.05/1;
-  background:linear-gradient(180deg,#07130d,#020604);
-  border-radius:15px;
-  touch-action:none;
-}
-.gameInfo{display:flex;justify-content:space-between;margin:12px 2px}
-.gameScore{font-size:19px;font-weight:950;color:var(--green)}
-.gameHint{font-size:11px;color:var(--muted);text-align:right}
-.gameButtons{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:12px}
-
-.comboGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
-.comboCard{
-  aspect-ratio:.75;
-  border-radius:14px;
-  background:linear-gradient(145deg,#102017,#07100b);
-  border:1px solid var(--border);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
+.payout-list{
+  display:flex;
+  flex-direction:column;
   gap:8px;
 }
-.comboCard.selected{border-color:var(--green);box-shadow:0 0 20px rgba(114,255,155,.13);background:#11281a}
-.comboNum{font-size:20px;font-weight:950}
-.comboCard small{font-size:9px;color:var(--muted)}
 
-.wheel{
-  width:245px;height:245px;border-radius:50%;margin:12px auto 20px;
-  border:8px solid #101f15;
+.payout{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:13px 14px;
+  border-radius:16px;
+  background:rgba(10,23,15,.8);
+  border:1px solid rgba(92,255,141,.08);
+  animation:payoutIn .35s ease;
+}
+
+@keyframes payoutIn{
+  from{opacity:0;transform:translateY(-8px) scale(.98)}
+  to{opacity:1;transform:none}
+}
+
+.payout-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.payout-avatar{
+  width:35px;
+  height:35px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,#173923,#09150e);
+  color:var(--green);
+  font-weight:900;
+  font-size:12px;
+}
+
+.payout-name{
+  font-size:13px;
+  font-weight:800;
+}
+
+.payout-time{
+  color:var(--muted);
+  font-size:10px;
+  margin-top:2px;
+}
+
+.payout-amount{
+  color:var(--green);
+  font-weight:950;
+  font-size:13px;
+}
+
+.payout-status{
+  color:#6e9b7d;
+  font-size:9px;
+  text-align:right;
+  margin-top:2px;
+}
+
+/* ---------- BOTTOM NAV ---------- */
+
+.bottom-nav{
+  position:fixed;
+  z-index:50;
+  left:50%;
+  transform:translateX(-50%);
+  bottom:calc(8px + env(safe-area-inset-bottom));
+  width:min(620px,calc(100% - 18px));
+  height:70px;
+  padding:7px;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  background:rgba(7,16,11,.91);
+  border:1px solid rgba(92,255,141,.14);
+  border-radius:23px;
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  box-shadow:0 15px 50px rgba(0,0,0,.5);
+}
+
+.nav-btn{
+  background:transparent;
+  border-radius:17px;
+  color:#708578;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:4px;
+}
+
+.nav-btn.active{
+  background:rgba(92,255,141,.09);
+  color:var(--green);
+}
+
+.nav-btn svg{
+  width:22px;
+  height:22px;
+}
+
+.nav-btn span{
+  font-size:10px;
+  font-weight:850;
+}
+
+/* ---------- GENERIC ---------- */
+
+.card{
+  padding:17px;
+  margin-bottom:12px;
+}
+
+.card-title{
+  font-size:17px;
+  font-weight:950;
+  margin-bottom:13px;
+}
+
+.primary{
+  width:100%;
+  padding:15px;
+  border-radius:16px;
+  color:#021006;
+  background:linear-gradient(135deg,#79ffa1,#2ee76e);
+  font-size:14px;
+  font-weight:950;
+  box-shadow:0 8px 25px rgba(52,255,116,.13);
+}
+
+.secondary{
+  width:100%;
+  padding:14px;
+  border-radius:15px;
+  color:var(--green);
+  background:rgba(92,255,141,.07);
+  border:1px solid rgba(92,255,141,.12);
+  font-weight:900;
+}
+
+.danger{
+  color:#ff8992;
+  background:rgba(255,70,90,.07);
+}
+
+.row{
+  display:flex;
+  gap:10px;
+}
+
+.row>*{
+  flex:1;
+}
+
+.input{
+  width:100%;
+  padding:15px;
+  color:var(--text);
+  outline:none;
+  border-radius:15px;
+  border:1px solid rgba(92,255,141,.12);
+  background:#07110b;
+  font-size:15px;
+}
+
+.input:focus{
+  border-color:rgba(92,255,141,.4);
+}
+
+.label{
+  color:var(--muted);
+  font-size:11px;
+  font-weight:800;
+  margin:12px 0 6px;
+  display:block;
+}
+
+.stat-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.stat{
+  padding:16px;
+  border-radius:17px;
+  background:rgba(255,255,255,.025);
+  border:1px solid var(--line);
+}
+
+.stat b{
+  font-size:22px;
+  display:block;
+}
+
+.stat span{
+  color:var(--muted);
+  font-size:11px;
+}
+
+/* ---------- MINING ---------- */
+
+.mining-display{
+  padding:25px 18px;
+  text-align:center;
+  margin-bottom:12px;
+}
+
+.mining-status{
+  color:var(--green);
+  font-size:11px;
+  font-weight:900;
+  letter-spacing:1.5px;
+}
+
+.mining-value{
+  margin:12px 0 5px;
+  font-size:36px;
+  line-height:1;
+  font-weight:950;
+  color:#eafff0;
+  font-variant-numeric:tabular-nums;
+}
+
+.mining-unit{
+  color:var(--green);
+  font-size:13px;
+  font-weight:900;
+}
+
+.mining-speed{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:10px;
+}
+
+.mining-action{
+  margin-top:18px;
+}
+
+.mining-tabs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin:13px 0;
+}
+
+.mining-tab{
+  padding:14px;
+  border-radius:15px;
+  background:#08120c;
+  border:1px solid var(--line);
+  color:var(--muted);
+  font-weight:900;
+}
+
+.mining-tab.active{
+  background:rgba(92,255,141,.09);
+  color:var(--green);
+  border-color:rgba(92,255,141,.25);
+}
+
+.item{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px;
+  border-radius:17px;
+  margin-bottom:8px;
+  background:#08120c;
+  border:1px solid rgba(92,255,141,.08);
+}
+
+.item-icon{
+  width:43px;
+  height:43px;
+  flex:none;
+  display:grid;
+  place-items:center;
+  border-radius:14px;
+  color:var(--green);
+  background:rgba(92,255,141,.08);
+}
+
+.item-icon svg{
+  width:23px;
+  height:23px;
+}
+
+.item-info{
+  flex:1;
+}
+
+.item-info strong{
+  display:block;
+  font-size:14px;
+}
+
+.item-info span{
+  color:var(--muted);
+  font-size:11px;
+  display:block;
+  margin-top:3px;
+}
+
+.item button{
+  padding:9px 12px;
+  border-radius:11px;
+  background:rgba(92,255,141,.09);
+  color:var(--green);
+  font-size:11px;
+  font-weight:900;
+}
+
+/* ---------- EARN ---------- */
+
+.tabs{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:7px;
+  padding:5px;
+  background:#07100a;
+  border-radius:17px;
+  margin-bottom:13px;
+}
+
+.tab{
+  padding:13px;
+  border-radius:13px;
+  background:transparent;
+  color:var(--muted);
+  font-weight:900;
+}
+
+.tab.active{
+  color:var(--green);
+  background:rgba(92,255,141,.08);
+}
+
+.ad-network{
+  padding:16px;
+  margin-bottom:10px;
+}
+
+.ad-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.ad-name{
+  font-weight:950;
+  font-size:15px;
+}
+
+.ad-count{
+  color:var(--green);
+  font-size:12px;
+  font-weight:900;
+}
+
+.ad-progress{
+  margin:12px 0;
+}
+
+.ad-progress .progress{
+  height:7px;
+}
+
+.ad-btn{
+  width:100%;
+  padding:13px;
+  border-radius:14px;
+  background:rgba(92,255,141,.09);
+  color:var(--green);
+  font-weight:950;
+}
+
+.task{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px;
+  margin-bottom:8px;
+  border-radius:16px;
+  background:#08120c;
+  border:1px solid var(--line);
+}
+
+.task-main{
+  flex:1;
+}
+
+.task-main strong{
+  font-size:13px;
+  display:block;
+}
+
+.task-main span{
+  color:var(--green);
+  font-size:11px;
+}
+
+.task button{
+  padding:10px 13px;
+  border-radius:12px;
+  background:rgba(92,255,141,.08);
+  color:var(--green);
+  font-size:11px;
+  font-weight:900;
+}
+
+/* ---------- GAMES ---------- */
+
+.game-card{
+  padding:17px;
+  margin-bottom:11px;
+}
+
+.game-card-head{
+  display:flex;
+  align-items:center;
+  gap:13px;
+}
+
+.game-cover{
+  width:54px;
+  height:54px;
+  border-radius:17px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(145deg,#14291c,#07110b);
+  border:1px solid var(--line);
+  color:var(--green);
+}
+
+.game-cover svg{
+  width:28px;
+  height:28px;
+}
+
+.game-info{
+  flex:1;
+}
+
+.game-info strong{
+  font-size:17px;
+}
+
+.game-info span{
+  display:block;
+  color:var(--muted);
+  font-size:12px;
+  margin-top:3px;
+}
+
+.game-card button{
+  padding:11px 15px;
+  border-radius:13px;
+  background:var(--green);
+  color:#021006;
+  font-weight:950;
+  font-size:12px;
+}
+
+/* ---------- TOP ---------- */
+
+.top-tabs{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:6px;
+  margin-bottom:12px;
+}
+
+.top-tab{
+  padding:12px 5px;
+  border-radius:14px;
+  background:#08120c;
+  border:1px solid var(--line);
+  color:var(--muted);
+  font-size:11px;
+  font-weight:900;
+}
+
+.top-tab.active{
+  color:var(--green);
+  background:rgba(92,255,141,.08);
+}
+
+.rank{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:13px;
+  margin-bottom:7px;
+  border-radius:16px;
+  background:#08120c;
+  border:1px solid rgba(92,255,141,.08);
+}
+
+.rank-num{
+  width:30px;
+  text-align:center;
+  font-size:15px;
+  font-weight:950;
+  color:var(--muted);
+}
+
+.rank:nth-child(2) .rank-num{color:#ffd85a}
+.rank:nth-child(3) .rank-num{color:#dce5e2}
+
+.rank-avatar{
+  width:38px;
+  height:38px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:#102117;
+  color:var(--green);
+  font-size:11px;
+  font-weight:900;
+}
+
+.rank-user{
+  flex:1;
+}
+
+.rank-user strong{
+  font-size:13px;
+}
+
+.rank-user span{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  margin-top:2px;
+}
+
+.rank-score{
+  color:var(--green);
+  font-size:12px;
+  font-weight:950;
+}
+
+.my-position{
+  padding:16px;
+  margin-top:12px;
+  color:var(--green);
+  text-align:center;
+  font-weight:900;
+}
+
+/* ---------- FRIENDS ---------- */
+
+.ref-link{
+  padding:14px;
+  border-radius:15px;
+  background:#061009;
+  border:1px dashed rgba(92,255,141,.22);
+  color:var(--green);
+  font-size:12px;
+  word-break:break-all;
+  margin:10px 0;
+}
+
+/* ---------- WALLET ---------- */
+
+.wallet-total{
+  padding:22px;
+  text-align:center;
+  margin-bottom:11px;
+}
+
+.wallet-zmb{
+  color:var(--green);
+  font-size:29px;
+  font-weight:950;
+}
+
+.wallet-ton{
+  color:var(--blue);
+  font-size:20px;
+  font-weight:950;
+  margin-top:5px;
+}
+
+.wallet-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:9px;
+  margin-top:17px;
+}
+
+.wallet-actions button{
+  padding:14px;
+  border-radius:15px;
+  font-weight:950;
+}
+
+.swap-btn{
+  background:rgba(92,255,141,.09);
+  color:var(--green);
+}
+
+.withdraw-btn{
+  background:rgba(66,165,255,.1);
+  color:var(--blue);
+}
+
+/* ---------- PROFILE ---------- */
+
+.profile-head{
+  padding:20px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:12px;
+}
+
+.profile-avatar{
+  width:68px;
+  height:68px;
+  border-radius:22px;
+  overflow:hidden;
+  background:#102117;
+  border:1px solid rgba(92,255,141,.2);
+}
+
+.profile-avatar img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.profile-name{
+  font-size:20px;
+  font-weight:950;
+}
+
+.profile-id{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:4px;
+}
+
+.menu-list{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.menu-item{
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:14px;
+  border-radius:17px;
+  background:#08120c;
+  border:1px solid rgba(92,255,141,.07);
+  text-align:left;
+}
+
+.menu-icon{
+  width:42px;
+  height:42px;
+  flex:none;
+  display:grid;
+  place-items:center;
+  border-radius:14px;
+  color:var(--green);
+  background:rgba(92,255,141,.07);
+}
+
+.menu-icon svg{
+  width:23px;
+  height:23px;
+}
+
+.menu-item span{
+  flex:1;
+  font-size:14px;
+  font-weight:850;
+}
+
+.menu-item .arrow{
+  color:#547060;
+}
+
+/* ---------- GIVEAWAYS ---------- */
+
+.giveaway{
+  padding:17px;
+  margin-bottom:10px;
+}
+
+.giveaway-prize{
+  font-size:21px;
+  color:var(--green);
+  font-weight:950;
+}
+
+.giveaway-meta{
+  color:var(--muted);
+  font-size:11px;
+  margin:6px 0 14px;
+}
+
+/* ---------- MODALS ---------- */
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+  background:rgba(0,0,0,.68);
+  backdrop-filter:blur(8px);
+}
+
+.modal.open{
+  display:flex;
+}
+
+.modal-box{
+  width:min(620px,100%);
+  max-height:92vh;
+  overflow:auto;
+  padding:19px 15px calc(20px + env(safe-area-inset-bottom));
+  border-radius:28px 28px 0 0;
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.035),transparent 35%),
+    #07110b;
+  border:1px solid rgba(92,255,141,.14);
+  box-shadow:0 -20px 70px rgba(0,0,0,.5);
+  animation:modalIn .25s ease;
+}
+
+@keyframes modalIn{
+  from{transform:translateY(40px);opacity:0}
+  to{transform:none;opacity:1}
+}
+
+.modal-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:15px;
+}
+
+.modal-title{
+  font-size:20px;
+  font-weight:950;
+}
+
+.close{
+  width:38px;
+  height:38px;
+  border-radius:13px;
+  background:#0c1b12;
+  color:var(--muted);
+  font-size:21px;
+}
+
+/* ---------- COMBO ---------- */
+
+.combo-cards{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:7px;
+}
+
+.combo-card{
+  aspect-ratio:.76;
+  border-radius:16px;
+  background:
+    linear-gradient(145deg,#102218,#061009);
+  border:1px solid rgba(92,255,141,.13);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  color:var(--muted);
+  font-weight:950;
+  transition:.18s;
+}
+
+.combo-card.selected{
+  border-color:var(--green);
+  background:rgba(92,255,141,.10);
+  color:var(--green);
+  transform:translateY(-5px);
+  box-shadow:0 10px 25px rgba(92,255,141,.12);
+}
+
+.combo-card svg{
+  width:27px;
+  height:27px;
+}
+
+/* ---------- WHEEL ---------- */
+
+.wheel-wrap{
+  width:270px;
+  height:270px;
+  margin:10px auto 20px;
   position:relative;
-  background:conic-gradient(
-    #12301e 0 45deg,#0a1a11 45deg 90deg,
-    #174427 90deg 135deg,#0a1a11 135deg 180deg,
-    #12301e 180deg 225deg,#0a1a11 225deg 270deg,
-    #174427 270deg 315deg,#0a1a11 315deg 360deg
-  );
-  box-shadow:0 0 50px rgba(114,255,155,.12);
-  transition:transform 4s cubic-bezier(.12,.7,.1,1);
-}
-.wheel:after{
-  content:"";
-  position:absolute;inset:50%;width:48px;height:48px;
-  transform:translate(-50%,-50%);
-  background:var(--green);border-radius:50%;
-  box-shadow:0 0 25px rgba(114,255,155,.4);
-}
-.wheelLabels{position:absolute;inset:0}
-.wheelLabels span{
-  position:absolute;left:50%;top:50%;
-  transform-origin:0 0;
-  font-size:11px;font-weight:950;color:#b7ffca;
-}
-.pointer{
-  width:0;height:0;border-left:9px solid transparent;border-right:9px solid transparent;
-  border-top:20px solid #fff;
-  margin:auto;filter:drop-shadow(0 0 8px #fff)
 }
 
-.empty{padding:30px;text-align:center;color:var(--muted);font-size:13px}
+#wheelCanvas{
+  width:270px;
+  height:270px;
+  border-radius:50%;
+  display:block;
+  transition:transform 4s cubic-bezier(.12,.72,.15,1);
+  box-shadow:0 0 40px rgba(92,255,141,.12);
+}
 
-@media(max-width:390px){
-  .app{padding-left:12px;padding-right:12px}
+.wheel-pointer{
+  position:absolute;
+  top:-7px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:3;
+  width:0;
+  height:0;
+  border-left:10px solid transparent;
+  border-right:10px solid transparent;
+  border-top:18px solid var(--green);
+  filter:drop-shadow(0 2px 4px rgba(0,0,0,.7));
+}
+
+/* ---------- GAME MODAL ---------- */
+
+.game-modal{
+  align-items:center;
+}
+
+.game-modal .modal-box{
+  width:min(620px,calc(100% - 12px));
+  max-height:none;
+  border-radius:25px;
+  padding:10px;
+}
+
+.game-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:5px 5px 10px;
+}
+
+.game-head strong{
+  font-size:18px;
+}
+
+.game-head span{
+  color:var(--green);
+  font-size:13px;
+  font-weight:900;
+}
+
+.game-area{
+  position:relative;
+  overflow:hidden;
+  border-radius:19px;
+  background:#061009;
+  border:1px solid rgba(92,255,141,.12);
+}
+
+.game-area canvas{
+  display:block;
+  width:100%;
+  height:auto;
+  touch-action:none;
+}
+
+.game-hud{
+  position:absolute;
+  top:10px;
+  left:10px;
+  right:10px;
+  display:flex;
+  justify-content:space-between;
+  pointer-events:none;
+}
+
+.hud-box{
+  padding:7px 10px;
+  border-radius:11px;
+  background:rgba(0,0,0,.48);
+  border:1px solid rgba(255,255,255,.07);
+  backdrop-filter:blur(6px);
+}
+
+.hud-box small{
+  color:#a2b4a9;
+  font-size:9px;
+  display:block;
+}
+
+.hud-box b{
+  color:var(--green);
+  font-size:14px;
+}
+
+.game-overlay{
+  position:absolute;
+  inset:0;
+  display:none;
+  place-items:center;
+  background:rgba(0,0,0,.35);
+  backdrop-filter:blur(3px);
+}
+
+.game-overlay.show{
+  display:grid;
+}
+
+.game-over-card{
+  text-align:center;
+  padding:22px;
+  border-radius:21px;
+  background:rgba(4,12,7,.94);
+  border:1px solid rgba(92,255,141,.18);
+  min-width:220px;
+}
+
+.game-over-card h2{
+  margin:0 0 8px;
+}
+
+.game-over-card p{
+  color:var(--muted);
+  font-size:12px;
+}
+
+/* ---------- TOAST ---------- */
+
+#toast{
+  position:fixed;
+  z-index:200;
+  left:50%;
+  bottom:90px;
+  transform:translate(-50%,20px);
+  opacity:0;
+  pointer-events:none;
+  padding:12px 17px;
+  border-radius:14px;
+  background:rgba(11,25,16,.95);
+  border:1px solid rgba(92,255,141,.16);
+  color:#eafff0;
+  font-size:12px;
+  font-weight:800;
+  box-shadow:0 10px 35px rgba(0,0,0,.4);
+  transition:.25s;
+  max-width:90%;
+  text-align:center;
+}
+
+#toast.show{
+  opacity:1;
+  transform:translate(-50%,0);
+}
+
+/* ---------- AD MODAL ---------- */
+
+.ad-loader{
+  text-align:center;
+  padding:25px 10px;
+}
+
+.loader-ring{
+  width:70px;
+  height:70px;
+  margin:0 auto 15px;
+  border-radius:50%;
+  border:5px solid rgba(92,255,141,.1);
+  border-top-color:var(--green);
+  animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media(max-width:380px){
+  main{padding-left:11px;padding-right:11px}
   .title{font-size:26px}
-  .bigBtn{min-height:100px}
-  .bigIcon{width:41px;height:41px}
-  .balance{font-size:18px}
-  .avatar{width:44px;height:44px}
+  .big-btn{min-height:98px}
+  .mining-value{font-size:31px}
+}
+
+@media(min-width:700px){
+  main{padding-left:0;padding-right:0}
 }
 </style>
 </head>
 
 <body>
 
-<div class="app">
+<div id="app">
 
-<header class="topbar">
-  <div class="userBox">
-    <div class="avatar" id="headerAvatar"></div>
-    <div>
-      <div class="username" id="headerName">Survivor</div>
-      <div class="status">● ZMB NETWORK</div>
+<header class="header">
+  <div class="header-inner">
+
+    <div class="user-box">
+      <div class="avatar" id="headerAvatar">
+        <div class="avatar-fallback">Z</div>
+      </div>
+
+      <div>
+        <div class="username" id="headerName">Survivor</div>
+        <div class="user-level" id="headerLevel">LEVEL 1</div>
+      </div>
     </div>
-  </div>
 
-  <div class="balanceBox">
-    <div class="balanceLabel">ZMB</div>
-    <div class="balance" id="headerBalance">0.0000000</div>
-    <div class="tonBalance"><span id="headerTon">0.0000</span> TON</div>
+    <div class="header-balances">
+      <div class="h-zmb" id="headerZmb">0.0000000 ZMB</div>
+      <div class="h-ton" id="headerTon">0.0000 TON</div>
+    </div>
+
   </div>
 </header>
 
+<main>
+
 <!-- HOME -->
-<section id="home" class="screen active">
-  <div class="homeCore">
-    <div class="coreOuter">
-      <div class="coreInner">
-        <div class="coreCircle">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-            <path d="M12 2v20M2 12h20M5 5l14 14M19 5 5 19"/>
-          </svg>
-        </div>
-        <div class="coreText">ZMB CORE · ONLINE</div>
-      </div>
+<section class="screen active" id="screen-home">
+
+  <h1 class="title" data-i18n="welcome">Welcome back</h1>
+  <p class="subtitle" data-i18n="network">ZMB Network is online</p>
+
+  <div class="core-card">
+    <canvas id="coreCanvas"></canvas>
+
+    <div class="core-label">
+      <div class="core-name">ZMB CORE</div>
+      <div class="core-status">● SYSTEM ONLINE</div>
     </div>
-    <div class="systemLine">● SYSTEM ONLINE · ZMB NETWORK</div>
   </div>
 
-  <div class="levelCard card">
-    <div class="levelTop">
-      <div class="levelName" data-i18n="level">LEVEL 1</div>
-      <div class="levelNum" id="levelProgressText">0 / 100 ZMB</div>
+  <div class="glass balance-card">
+    <div class="balance-label" data-i18n="balance">Balance</div>
+    <div class="balance-main" id="homeZmb">0.0000000 ZMB</div>
+    <div class="ton-balance" id="homeTon">0.0000 TON</div>
+
+    <div class="level-row">
+      <span id="levelText">LEVEL 1</span>
+      <span id="levelXp">0 / 100 XP</span>
     </div>
-    <div class="progress"><i id="levelProgress"></i></div>
+
+    <div class="progress">
+      <i id="levelProgress"></i>
+    </div>
   </div>
 
-  <div class="homeGrid">
-    <button class="bigBtn" data-go="mining">
-      <div class="bigIcon">⛏</div>
-      <b data-i18n="mining">MINING</b>
-      <span data-i18n="mineDesc">Earn ZMB</span>
+  <div class="home-grid">
+
+    <button class="big-btn" data-screen="mining">
+      <div class="big-icon" data-icon="pick"></div>
+      <strong data-i18n="mining">MINING</strong>
+      <span data-i18n="mineSub">Start earning ZMB</span>
     </button>
 
-    <button class="bigBtn" data-go="games">
-      <div class="bigIcon">◈</div>
-      <b data-i18n="games">GAMES</b>
-      <span data-i18n="gamesDesc">Play & earn</span>
+    <button class="big-btn" data-screen="games">
+      <div class="big-icon" data-icon="game"></div>
+      <strong data-i18n="games">GAMES</strong>
+      <span data-i18n="gamesSub">Play & earn</span>
     </button>
 
-    <button class="bigBtn" data-go="earn">
-      <div class="bigIcon">▶</div>
-      <b data-i18n="earn">EARN</b>
-      <span data-i18n="earnDesc">Ads & tasks</span>
+    <button class="big-btn" data-screen="earn">
+      <div class="big-icon" data-icon="ads"></div>
+      <strong data-i18n="earn">EARN</strong>
+      <span data-i18n="earnSub">Ads & tasks</span>
     </button>
 
-    <button class="bigBtn" data-go="giveaways">
-      <div class="bigIcon">✦</div>
-      <b data-i18n="giveaways">GIVEAWAYS</b>
-      <span data-i18n="giveDesc">Win rewards</span>
+    <button class="big-btn" data-screen="giveaways">
+      <div class="big-icon" data-icon="gift"></div>
+      <strong data-i18n="giveaways">GIVEAWAYS</strong>
+      <span data-i18n="giveSub">Win rewards</span>
     </button>
+
   </div>
 
-  <div class="sectionHead">
-    <b data-i18n="recentPayouts">Recent payouts</b>
-    <span>DEMO LIVE FEED</span>
+  <div class="section-head">
+    <h3 data-i18n="recentPayouts">Recent payouts</h3>
+    <span class="live">● LIVE FEED</span>
   </div>
 
-  <div class="payoutCard card">
-    <div class="payoutFeed" id="payoutFeed"></div>
-  </div>
+  <div class="payout-list" id="payoutList"></div>
+
 </section>
+
 
 <!-- MINING -->
-<section id="mining" class="screen">
-  <div class="titleRow">
-    <div>
-      <div class="title" data-i18n="mining">MINING</div>
-      <div class="subtitle" data-i18n="miningSub">Passive ZMB generation</div>
+<section class="screen" id="screen-mining">
+
+  <h1 class="title" data-i18n="mining">MINING</h1>
+  <p class="subtitle" data-i18n="miningSubTitle">Your ZMB mining station</p>
+
+  <div class="glass mining-display">
+
+    <div class="mining-status" id="miningStatus">● READY</div>
+
+    <div class="mining-value" id="miningValue">
+      0.0000000
     </div>
+
+    <div class="mining-unit">ZMB</div>
+
+    <div class="mining-speed" id="miningSpeed">
+      0.0000001 ZMB / sec
+    </div>
+
+    <div class="mining-action">
+      <button class="primary" id="miningButton" data-action="startMining">
+        START MINING
+      </button>
+    </div>
+
   </div>
 
-  <div class="miningHero card">
-    <div class="miningStatus" id="miningStatus">
-      <i class="dot"></i><span id="miningStatusText">MINING OFFLINE</span>
-    </div>
+  <div class="mining-tabs">
 
-    <div class="miningValue" id="miningValue">0.0000000</div>
-    <div class="miningRate">ZMB <span data-i18n="perSecond">per second</span></div>
-    <div class="miningTimer" id="miningTimer">00:00:00</div>
+    <button class="mining-tab active" data-mining-tab="shop">
+      🛒 <span data-i18n="shop">SHOP</span>
+    </button>
 
-    <div style="margin-top:21px">
-      <button class="primary" id="miningButton" data-action="startMining">START MINING</button>
-    </div>
+    <button class="mining-tab" data-mining-tab="boosts">
+      ⚡ <span data-i18n="boosts">BOOSTS</span>
+    </button>
 
-    <div class="miningDetails">
-      <div class="statBox">
-        <small data-i18n="rate">RATE</small>
-        <b id="mineRate">0.0000010</b>
-      </div>
-      <div class="statBox">
-        <small data-i18n="session">SESSION</small>
-        <b id="mineSession">0.0000000</b>
-      </div>
-    </div>
   </div>
 
-  <div class="card" style="padding:16px">
-    <div style="font-size:14px;font-weight:850" data-i18n="offlineMining">Offline mining</div>
-    <div style="font-size:12px;color:var(--muted);line-height:1.55;margin-top:6px" data-i18n="offlineText">
-      Mining is calculated from timestamps, so closing the Mini App does not stop the demo session.
-    </div>
-  </div>
+  <div id="miningShop"></div>
+
+  <div id="miningBoosts" style="display:none"></div>
+
 </section>
+
 
 <!-- GAMES -->
-<section id="games" class="screen">
-  <div class="titleRow">
-    <div>
-      <div class="title" data-i18n="games">GAMES</div>
-      <div class="subtitle" data-i18n="gamesSub">Play. Score. Earn.</div>
+<section class="screen" id="screen-games">
+
+  <h1 class="title" data-i18n="games">GAMES</h1>
+  <p class="subtitle" data-i18n="gamesSubTitle">Play. Survive. Earn ZMB.</p>
+
+  <div class="glass game-card">
+
+    <div class="game-card-head">
+
+      <div class="game-cover" data-icon="flap"></div>
+
+      <div class="game-info">
+        <strong data-i18n="zombieFlip">ZOMBIE FLIP</strong>
+        <span data-i18n="flipDesc">Fly through the infected zone</span>
+      </div>
+
+      <button data-action="openFlip" data-i18n="play">PLAY</button>
+
     </div>
+
   </div>
 
-  <div class="card" style="padding:15px;margin-bottom:11px">
-    <button class="bigBtn" style="width:100%;min-height:95px" data-action="openGame" data-game="flip">
-      <div class="bigIcon">◆</div>
-      <b>ZOMBIE FLIP</b>
-      <span>Flappy-style flight · avoid walls</span>
-    </button>
+
+  <div class="glass game-card">
+
+    <div class="game-card-head">
+
+      <div class="game-cover" data-icon="run"></div>
+
+      <div class="game-info">
+        <strong data-i18n="zombieRun">ZOMBIE RUN</strong>
+        <span data-i18n="runDesc">Run and collect ZMB coins</span>
+      </div>
+
+      <button data-action="openRun" data-i18n="play">PLAY</button>
+
+    </div>
+
   </div>
 
-  <div class="card" style="padding:15px">
-    <button class="bigBtn" style="width:100%;min-height:95px" data-action="openGame" data-game="run">
-      <div class="bigIcon">➜</div>
-      <b>ZOMBIE RUN</b>
-      <span>Run · jump · collect ZMB</span>
-    </button>
+
+  <div class="glass game-card">
+
+    <div class="game-card-head">
+
+      <div class="game-cover" data-icon="wheel"></div>
+
+      <div class="game-info">
+        <strong data-i18n="dailyWheel">DAILY WHEEL</strong>
+        <span data-i18n="wheelDesc">One spin every day</span>
+      </div>
+
+      <button data-action="openWheel" data-i18n="open">OPEN</button>
+
+    </div>
+
   </div>
 
-  <div class="homeGrid" style="margin-top:13px">
-    <button class="bigBtn" data-action="openWheel">
-      <div class="bigIcon">◉</div>
-      <b>DAILY WHEEL</b>
-      <span>1 spin / 24h</span>
-    </button>
 
-    <button class="bigBtn" data-action="openCombo">
-      <div class="bigIcon">▦</div>
-      <b>DAILY COMBO</b>
-      <span>Pick 3 of 5</span>
-    </button>
+  <div class="glass game-card">
+
+    <div class="game-card-head">
+
+      <div class="game-cover" data-icon="cards"></div>
+
+      <div class="game-info">
+        <strong data-i18n="combo">COMBO</strong>
+        <span data-i18n="comboDesc">Find today's combination</span>
+      </div>
+
+      <button data-action="openCombo" data-i18n="open">OPEN</button>
+
+    </div>
+
   </div>
+
 </section>
 
+
 <!-- EARN -->
-<section id="earn" class="screen">
-  <div class="titleRow">
-    <div>
-      <div class="title" data-i18n="earn">EARN</div>
-      <div class="subtitle">Ads · tasks · promotion</div>
-    </div>
-  </div>
+<section class="screen" id="screen-earn">
+
+  <h1 class="title" data-i18n="earn">EARN</h1>
+  <p class="subtitle" data-i18n="earnSubTitle">Complete tasks and earn ZMB</p>
 
   <div class="tabs">
-    <button class="tab active" data-earn-tab="ads">ADS</button>
-    <button class="tab" data-earn-tab="promote">PROMOTE</button>
+    <button class="tab active" data-earn-tab="ads" data-i18n="ads">ADS</button>
+    <button class="tab" data-earn-tab="promote" data-i18n="promote">PROMOTE</button>
   </div>
 
   <div id="earnAds">
-    <div class="adNetwork card">
-      <div class="adHead">
-        <div class="adTitle">
-          <div class="networkIcon">A</div>
-          <div>
-            <b>AD NETWORK 01</b>
-            <small>AdsGram · demo</small>
-          </div>
-        </div>
-        <div class="counter"><span id="ad1Count">0</span>/20</div>
+
+    <div class="glass ad-network">
+
+      <div class="ad-head">
+        <div class="ad-name">ADS NETWORK 01</div>
+        <div class="ad-count" id="adCount1">0 / 20</div>
       </div>
-      <div class="adProgress"><i id="ad1Progress"></i></div>
-      <button class="watchBtn" data-action="watchAd" data-network="1">WATCH AD · +0.5 ZMB</button>
+
+      <div class="ad-progress">
+        <div class="progress">
+          <i id="adProgress1"></i>
+        </div>
+      </div>
+
+      <button class="ad-btn" data-action="watchAd" data-network="1">
+        WATCH AD · +0.5 ZMB
+      </button>
+
     </div>
 
-    <div class="adNetwork card">
-      <div class="adHead">
-        <div class="adTitle">
-          <div class="networkIcon">B</div>
-          <div>
-            <b>AD NETWORK 02</b>
-            <small>Second network · demo</small>
-          </div>
-        </div>
-        <div class="counter"><span id="ad2Count">0</span>/20</div>
+
+    <div class="glass ad-network">
+
+      <div class="ad-head">
+        <div class="ad-name">ADS NETWORK 02</div>
+        <div class="ad-count" id="adCount2">0 / 20</div>
       </div>
-      <div class="adProgress"><i id="ad2Progress"></i></div>
-      <button class="watchBtn" data-action="watchAd" data-network="2">WATCH AD · +0.5 ZMB</button>
+
+      <div class="ad-progress">
+        <div class="progress">
+          <i id="adProgress2"></i>
+        </div>
+      </div>
+
+      <button class="ad-btn" data-action="watchAd" data-network="2">
+        WATCH AD · +0.5 ZMB
+      </button>
+
     </div>
 
-    <div class="sectionHead">
-      <b>CHANNEL TASKS</b>
-      <span>+2 ZMB</span>
+    <div class="section-head">
+      <h3 data-i18n="subscriptions">Subscriptions</h3>
     </div>
-    <div id="subTasks"></div>
+
+    <div id="subscriptionTasks"></div>
+
   </div>
+
 
   <div id="earnPromote" style="display:none">
-    <div class="formCard card">
-      <div style="font-size:17px;font-weight:900;margin-bottom:15px">PROMOTE CHANNEL</div>
 
-      <div class="field">
-        <label>TELEGRAM CHANNEL</label>
-        <input id="promoChannel" placeholder="@yourchannel">
+    <div class="glass card">
+
+      <div class="card-title" data-i18n="promoteChannel">
+        Promote your Telegram channel
       </div>
 
-      <div class="field">
-        <label>PACKAGE</label>
-        <div class="packageGrid">
-          <button class="package selected" data-package="starter">
-            <b>STARTER</b><span>1,000 impressions</span>
-          </button>
-          <button class="package" data-package="boost">
-            <b>BOOST</b><span>5,000 impressions</span>
-          </button>
-          <button class="package" data-package="pro">
-            <b>PRO</b><span>15,000 impressions</span>
-          </button>
-          <button class="package" data-package="custom">
-            <b>CUSTOM</b><span>Set budget</span>
-          </button>
-        </div>
-      </div>
+      <label class="label" data-i18n="channelLink">CHANNEL / LINK</label>
+      <input
+        class="input"
+        id="promoteLink"
+        placeholder="@yourchannel or t.me/..."
+      >
 
-      <div class="field">
-        <label>PAYMENT</label>
-        <select id="promoPayment">
-          <option>TON</option>
-          <option>Telegram Stars</option>
-        </select>
-      </div>
+      <label class="label" data-i18n="package">PACKAGE</label>
 
-      <div class="field">
-        <label>BUDGET</label>
-        <input id="promoBudget" type="number" min="0" placeholder="10">
-      </div>
+      <select class="input" id="promotePackage">
+        <option value="10">10 TON · BASIC</option>
+        <option value="25">25 TON · BOOST</option>
+        <option value="50">50 TON · MAX</option>
+      </select>
 
-      <button class="primary" data-action="createPromo">CREATE CAMPAIGN</button>
+      <label class="label" data-i18n="payment">PAYMENT</label>
+
+      <select class="input" id="promotePayment">
+        <option>TON</option>
+        <option>Telegram Stars</option>
+      </select>
+
+      <button class="primary" style="margin-top:14px" data-action="createPromo">
+        CREATE CAMPAIGN
+      </button>
+
     </div>
+
   </div>
+
 </section>
 
-<!-- TOP -->
-<section id="top" class="screen">
-  <div class="titleRow">
-    <div>
-      <div class="title">TOP 50</div>
-      <div class="subtitle">Global rankings</div>
-    </div>
-  </div>
 
-  <div class="topTabs">
-    <button class="topTab active" data-top-tab="zmb">TOP ZMB</button>
-    <button class="topTab" data-top-tab="ref">TOP REF</button>
-    <button class="topTab" data-top-tab="games">TOP GAMES</button>
+<!-- TOP -->
+<section class="screen" id="screen-top">
+
+  <h1 class="title">TOP 50</h1>
+  <p class="subtitle" data-i18n="topSub">Global survivor rankings</p>
+
+  <div class="top-tabs">
+
+    <button class="top-tab active" data-top-tab="zmb">
+      TOP ZMB
+    </button>
+
+    <button class="top-tab" data-top-tab="ref">
+      TOP REF
+    </button>
+
+    <button class="top-tab" data-top-tab="games">
+      TOP GAMES
+    </button>
+
   </div>
 
   <div id="topList"></div>
+
+  <div class="glass my-position" id="myPosition">
+    YOUR POSITION · #127
+  </div>
+
 </section>
+
 
 <!-- FRIENDS -->
-<section id="friends" class="screen">
-  <div class="titleRow">
-    <div>
-      <div class="title" data-i18n="friends">FRIENDS</div>
-      <div class="subtitle">Invite survivors</div>
+<section class="screen" id="screen-friends">
+
+  <h1 class="title" data-i18n="friends">FRIENDS</h1>
+  <p class="subtitle" data-i18n="friendsSub">Invite survivors and earn together</p>
+
+  <div class="glass card">
+
+    <div class="card-title" data-i18n="yourReferral">
+      Your referral link
     </div>
+
+    <div class="ref-link" id="refLink">
+      https://t.me/PAID_ZOMBIE_BOT?start=ref
+    </div>
+
+    <div class="row">
+      <button class="secondary" data-action="copyRef" data-i18n="copy">
+        COPY
+      </button>
+
+      <button class="secondary" data-action="shareRef" data-i18n="share">
+        SHARE
+      </button>
+    </div>
+
   </div>
 
-  <div class="refCard card">
-    <div style="font-size:16px;font-weight:900;margin-bottom:10px">YOUR REFERRAL LINK</div>
-    <div class="refLink" id="refLink">https://t.me/paid_zombie_bot?start=demo</div>
-    <div class="refButtons">
-      <button data-action="copyRef">COPY</button>
-      <button data-action="shareRef">SHARE</button>
+  <div class="stat-grid">
+
+    <div class="stat glass">
+      <b id="refCount">0</b>
+      <span data-i18n="referrals">REFERRALS</span>
     </div>
+
+    <div class="stat glass">
+      <b id="refEarn">0.0000</b>
+      <span>ZMB EARNED</span>
+    </div>
+
   </div>
 
-  <div class="card" style="padding:17px;margin-bottom:12px">
-    <div style="display:flex;justify-content:space-between">
-      <div><small style="color:var(--muted)">REFERRALS</small><div style="font-size:25px;font-weight:950" id="refCount">0</div></div>
-      <div style="text-align:right"><small style="color:var(--muted)">EARNED</small><div style="font-size:25px;font-weight:950;color:var(--green)" id="refEarned">0.0000</div></div>
-    </div>
+  <div class="section-head">
+    <h3 data-i18n="yourFriends">Your friends</h3>
   </div>
 
-  <div class="sectionHead"><b>YOUR FRIENDS</b></div>
-  <div class="card" id="friendsList"></div>
+  <div id="referralList"></div>
+
 </section>
 
-<!-- WALLET -->
-<section id="wallet" class="screen">
-  <div class="titleRow">
-    <div>
-      <div class="title" data-i18n="wallet">WALLET</div>
-      <div class="subtitle">Assets & transactions</div>
-    </div>
-  </div>
-
-  <div class="walletHero card">
-    <div style="font-size:11px;color:var(--muted);font-weight:800">ZMB BALANCE</div>
-    <div class="walletBig" id="walletZmb">0.0000000 ZMB</div>
-    <div class="walletTon" id="walletTon">0.0000 TON</div>
-
-    <div class="walletActions">
-      <button data-action="openSwap">⇄ SWAP</button>
-      <button data-action="openWithdraw">↗ WITHDRAW</button>
-    </div>
-  </div>
-
-  <div class="sectionHead"><b>TRANSACTION HISTORY</b></div>
-  <div class="card" id="historyList"></div>
-</section>
 
 <!-- GIVEAWAYS -->
-<section id="giveaways" class="screen">
-  <div class="titleRow">
-    <div>
-      <div class="title" data-i18n="giveaways">GIVEAWAYS</div>
-      <div class="subtitle">Win ZMB & TON prizes</div>
-    </div>
-  </div>
+<section class="screen" id="screen-giveaways">
 
-  <div class="card" style="padding:17px;margin-bottom:13px">
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <div>
-        <small style="color:var(--muted)">MY TICKETS</small>
-        <div style="font-size:28px;font-weight:950;color:var(--green)" id="ticketCount">0</div>
-      </div>
-      <div style="text-align:right;font-size:11px;color:var(--muted)">5 ADS<br>= 1 TICKET</div>
+  <h1 class="title" data-i18n="giveaways">GIVEAWAYS</h1>
+  <p class="subtitle" data-i18n="giveSubTitle">Use tickets to enter</p>
+
+  <div class="glass card">
+    <div class="card-title" data-i18n="myTickets">My tickets</div>
+    <div style="font-size:30px;font-weight:950;color:var(--green)" id="ticketCount">0</div>
+    <div style="color:var(--muted);font-size:11px;margin-top:4px" data-i18n="ticketRule">
+      5 watched ads = 1 ticket
     </div>
   </div>
 
   <div id="giveawayList"></div>
+
 </section>
+
+
+<!-- WALLET -->
+<section class="screen" id="screen-wallet">
+
+  <h1 class="title" data-i18n="wallet">WALLET</h1>
+  <p class="subtitle" data-i18n="walletSub">Manage your demo balances</p>
+
+  <div class="glass wallet-total">
+
+    <div class="balance-label">ZMB</div>
+    <div class="wallet-zmb" id="walletZmb">0.0000000</div>
+
+    <div class="wallet-ton" id="walletTon">
+      0.0000 TON
+    </div>
+
+    <div class="wallet-actions">
+
+      <button class="swap-btn" data-action="openSwap" data-i18n="swap">
+        SWAP
+      </button>
+
+      <button class="withdraw-btn" data-action="openWithdraw" data-i18n="withdraw">
+        WITHDRAW
+      </button>
+
+    </div>
+
+  </div>
+
+  <div class="section-head">
+    <h3 data-i18n="history">Transaction history</h3>
+  </div>
+
+  <div id="historyList"></div>
+
+</section>
+
 
 <!-- PROFILE -->
-<section id="profile" class="screen">
-  <div class="titleRow">
-    <div>
-      <div class="title" data-i18n="profile">PROFILE</div>
-      <div class="subtitle">Account & settings</div>
+<section class="screen" id="screen-profile">
+
+  <h1 class="title" data-i18n="profile">PROFILE</h1>
+
+  <div class="glass profile-head">
+
+    <div class="profile-avatar" id="profileAvatar">
+      <div class="avatar-fallback">Z</div>
     </div>
-  </div>
 
-  <div class="profileHero card">
-    <div class="profileAvatar" id="profileAvatar"></div>
     <div>
-      <div class="profileName" id="profileName">Survivor</div>
-      <div class="profileId" id="profileId">Player ID: DEMO</div>
+      <div class="profile-name" id="profileName">Survivor</div>
+      <div class="profile-id" id="profileId">Player ID: DEMO</div>
     </div>
+
   </div>
 
-  <div class="menu">
-    <button class="menuItem" data-action="openWithdraw"><div class="menuIcon">↗</div><div class="menuText">WITHDRAW</div><div class="menuArrow">›</div></button>
-    <button class="menuItem" data-action="openSwap"><div class="menuIcon">⇄</div><div class="menuText">SWAP</div><div class="menuArrow">›</div></button>
-    <button class="menuItem" data-action="openStats"><div class="menuIcon">▥</div><div class="menuText">STATISTICS</div><div class="menuArrow">›</div></button>
-    <button class="menuItem" data-action="openBonuses"><div class="menuIcon">✦</div><div class="menuText">BONUSES</div><div class="menuArrow">›</div></button>
-    <button class="menuItem" data-action="openSupport"><div class="menuIcon">?</div><div class="menuText">SUPPORT</div><div class="menuArrow">›</div></button>
-    <button class="menuItem" data-action="openFaq"><div class="menuIcon">≡</div><div class="menuText">FAQ</div><div class="menuArrow">›</div></button>
-    <button class="menuItem" data-action="openChannels"><div class="menuIcon">◉</div><div class="menuText">OUR CHANNELS</div><div class="menuArrow">›</div></button>
-    <button class="menuItem" data-go="settings"><div class="menuIcon">⚙</div><div class="menuText">SETTINGS</div><div class="menuArrow">›</div></button>
+  <div class="menu-list">
+
+    <button class="menu-item" data-action="openWithdraw">
+      <div class="menu-icon" data-icon="wallet"></div>
+      <span data-i18n="withdraw">WITHDRAW</span>
+      <b class="arrow">›</b>
+    </button>
+
+    <button class="menu-item" data-action="openSwap">
+      <div class="menu-icon" data-icon="swap"></div>
+      <span data-i18n="swap">SWAP</span>
+      <b class="arrow">›</b>
+    </button>
+
+    <button class="menu-item" data-action="openStats">
+      <div class="menu-icon" data-icon="chart"></div>
+      <span data-i18n="statistics">STATISTICS</span>
+      <b class="arrow">›</b>
+    </button>
+
+    <button class="menu-item" data-action="openBonuses">
+      <div class="menu-icon" data-icon="gift"></div>
+      <span data-i18n="bonuses">BONUSES</span>
+      <b class="arrow">›</b>
+    </button>
+
+    <button class="menu-item" data-action="openSupport">
+      <div class="menu-icon" data-icon="support"></div>
+      <span data-i18n="support">SUPPORT</span>
+      <b class="arrow">›</b>
+    </button>
+
+    <button class="menu-item" data-action="openFaq">
+      <div class="menu-icon" data-icon="help"></div>
+      <span data-i18n="faq">FAQ</span>
+      <b class="arrow">›</b>
+    </button>
+
+    <button class="menu-item" data-action="openChannels">
+      <div class="menu-icon" data-icon="telegram"></div>
+      <span data-i18n="ourChannels">OUR CHANNELS</span>
+      <b class="arrow">›</b>
+    </button>
+
+    <button class="menu-item" data-action="openSettings">
+      <div class="menu-icon" data-icon="settings"></div>
+      <span data-i18n="settings">SETTINGS</span>
+      <b class="arrow">›</b>
+    </button>
+
   </div>
 
-  <div class="card" style="padding:18px;margin-top:12px;text-align:center">
-    <b>PAID ZOMBIE</b>
-    <div style="font-size:11px;color:var(--muted);margin-top:5px">Powered by ZMB Network</div>
-    <div style="font-size:10px;color:#466050;margin-top:7px">Member since Sep 2026 · Build 1.0.0</div>
+  <div style="text-align:center;color:#53675a;font-size:10px;margin:20px 0 8px">
+    PAID ZOMBIE · ZMB NETWORK<br>
+    BUILD 1.0.0 · SEP 2026
   </div>
+
 </section>
+
 
 <!-- SETTINGS -->
-<section id="settings" class="screen">
-  <div class="titleRow">
-    <div>
-      <div class="title" data-i18n="settings">SETTINGS</div>
-      <div class="subtitle">PAID ZOMBIE</div>
+<section class="screen" id="screen-settings">
+
+  <h1 class="title" data-i18n="settings">SETTINGS</h1>
+  <p class="subtitle" data-i18n="settingsSub">Customize your experience</p>
+
+  <div class="glass card">
+
+    <div class="card-title" data-i18n="language">
+      Language
     </div>
-  </div>
 
-  <div class="settingsBox card">
-    <div style="font-size:16px;font-weight:900;margin-bottom:6px">LANGUAGE</div>
-    <div style="font-size:12px;color:var(--muted);margin-bottom:13px">Choose interface language</div>
+    <div class="tabs">
 
-    <div class="langGrid">
-      <button class="langBtn" data-lang="ru">РУС</button>
-      <button class="langBtn" data-lang="en">ENG</button>
-      <button class="langBtn" data-lang="uk">УКР</button>
+      <button class="tab" data-lang="ru">
+        Русский
+      </button>
+
+      <button class="tab" data-lang="uk">
+        Українська
+      </button>
+
+      <button class="tab" data-lang="en">
+        English
+      </button>
+
     </div>
+
   </div>
 
-  <div class="settingsBox card">
-    <div style="font-size:14px;font-weight:900">VERSION</div>
-    <div style="font-size:12px;color:var(--muted);margin-top:6px">PAID ZOMBIE · v1.0.0 · ZMB Network</div>
-  </div>
+  <button class="secondary" data-screen="profile">
+    ← <span data-i18n="back">BACK</span>
+  </button>
 
-  <button class="secondary" data-go="profile">← BACK</button>
 </section>
 
-</div>
+</main>
 
-<nav class="nav">
-  <button class="navBtn active" data-go="home">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M9 21v-6h6v6"/></svg>
-    <span data-i18n="home">HOME</span>
-  </button>
-
-  <button class="navBtn" data-go="top">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 21V10M16 21V3M12 21v-6"/><path d="M5 10h6M13 3h6M9 15h6"/></svg>
-    <span>TOP</span>
-  </button>
-
-  <button class="navBtn" data-go="friends">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="10" r="2.5"/><path d="M3 20c.5-4 2.5-6 6-6s5.5 2 6 6M15 15c3.5-.2 5.5 1.5 6 5"/></svg>
-    <span data-i18n="friends">FRIENDS</span>
-  </button>
-
-  <button class="navBtn" data-go="wallet">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7a2 2 0 0 1 2-2h13a3 3 0 0 1 3 3v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M3 8h15a3 3 0 0 1 3 3H17a2 2 0 0 0 0 4h4"/></svg>
-    <span data-i18n="wallet">WALLET</span>
-  </button>
-
-  <button class="navBtn" data-go="profile">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="3.2"/><path d="M5 21c.7-4.5 3-7 7-7s6.3 2.5 7 7"/></svg>
-    <span data-i18n="profile">PROFILE</span>
-  </button>
-</nav>
 
 <!-- MODAL -->
-<div class="modalBack" id="modalBack">
-  <div class="modal" id="modal"></div>
+
+<div class="modal" id="modal">
+
+  <div class="modal-box" id="modalContent"></div>
+
 </div>
 
-<div class="toast" id="toast"></div>
+
+<!-- GAME MODAL -->
+
+<div class="modal game-modal" id="gameModal">
+
+  <div class="modal-box">
+
+    <div class="game-head">
+      <strong id="gameTitle">ZOMBIE FLIP</strong>
+      <span id="gameScoreTop">0 ZMB</span>
+    </div>
+
+    <div class="game-area">
+
+      <canvas id="gameCanvas" width="600" height="760"></canvas>
+
+      <div class="game-hud">
+
+        <div class="hud-box">
+          <small id="gameScoreLabel">SCORE</small>
+          <b id="gameScore">0</b>
+        </div>
+
+        <div class="hud-box">
+          <small id="gameRewardLabel">EARNED</small>
+          <b id="gameReward">0.0000000 ZMB</b>
+        </div>
+
+      </div>
+
+      <div class="game-overlay" id="gameOverlay">
+
+        <div class="game-over-card">
+
+          <h2 id="gameOverTitle">GAME OVER</h2>
+
+          <p id="gameOverText">
+            Your run has ended.
+          </p>
+
+          <button class="primary" id="gameRestart">
+            PLAY AGAIN
+          </button>
+
+          <button class="secondary" style="margin-top:8px" id="gameClose">
+            CLOSE
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div style="text-align:center;color:var(--muted);font-size:10px;padding:9px">
+      TAP / SPACE TO JUMP
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- TOAST -->
+
+<div id="toast"></div>
+
+<!-- AUDIO -->
+
+<audio id="jumpSound" preload="auto">
+  <source src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAESsAACJWAAACABAAZGF0YQAAAAA=" type="audio/wav">
+</audio>
+
+
+<!-- ICONS -->
 
 <script>
-(() => {
+const ICONS={
+
+pick:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4l6 6"/><path d="M18 2l4 4"/><path d="M3 21l9-9"/><path d="M8 16l-5 5"/><path d="M7 10l7 7"/><path d="M9 5l10 10"/></svg>`,
+
+game:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6" width="18" height="12" rx="4"/><path d="M8 12h5M10.5 9.5v5"/><circle cx="16.5" cy="11" r="1"/><circle cx="18.5" cy="13" r="1"/></svg>`,
+
+ads:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 8h8M8 12h5M8 16h8"/></svg>`,
+
+gift:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="9" width="18" height="12" rx="2"/><path d="M12 9v12M3 13h18M4 9h16"/><path d="M12 9H8.5C6 9 5 7.5 5 6s1.2-2 2.5-2c2.4 0 4.5 5 4.5 5Z"/><path d="M12 9h3.5c2.5 0 3.5-1.5 3.5-3s-1.2-2-2.5-2c-2.4 0-4.5 5-4.5 5Z"/></svg>`,
+
+flap:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 13c1-5 5-8 10-7l4 2-3 3 3 3-5 2c-4 1-7 0-9-3Z"/><circle cx="15" cy="10" r="1"/><path d="M7 8L4 5M7 16l-3 3"/></svg>`,
+
+run:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="14" cy="5" r="2"/><path d="M11 9l4 2 3-2M12 9l-3 5 4 2M13 16l-2 5M14 16l5 4"/><path d="M5 20h15"/></svg>`,
+
+wheel:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2"/><path d="M12 3v7M12 14v7M3 12h7M14 12h7"/></svg>`,
+
+cards:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="6" y="3" width="12" height="17" rx="2"/><path d="M9 7h6M9 11h6M9 15h3"/></svg>`,
+
+wallet:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6h16v14H4z"/><path d="M4 6l2-3h13a1 1 0 0 1 1 1v2"/><path d="M15 12h5v4h-5a2 2 0 0 1 0-4Z"/></svg>`,
+
+swap:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 7h11l-3-3M17 17H6l3 3"/><path d="M18 7l-3 3M6 17l3-3"/></svg>`,
+
+chart:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 19V5M4 19h17"/><path d="M7 15l3-4 3 2 5-7"/></svg>`,
+
+support:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M8 13c1 2 3 3 5 3 1 0 2-.3 3-1"/><circle cx="9" cy="10" r="1"/><circle cx="15" cy="10" r="1"/></svg>`,
+
+help:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9.5 9a2.7 2.7 0 1 1 4.5 2c-1.4 1-2 1.4-2 3"/><circle cx="12" cy="17" r=".7"/></svg>`,
+
+telegram:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 4L3 11l7 2 2 7 3-5 4 3 2-14Z"/><path d="M10 13l8-6"/></svg>`,
+
+settings:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-1.8 1.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.1h-2.6V20a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1-1.8-1.8.1-.1A1.7 1.7 0 0 0 8 15a1.7 1.7 0 0 0-1.6-1H6v-2.6h.4A1.7 1.7 0 0 0 8 10a1.7 1.7 0 0 0-.3-1.9l-.1-.1 1.8-1.8.1.1a1.7 1.7 0 0 0 1.9.3 1.7 1.7 0 0 0 1-1.6V5H15v.4a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1 1.8 1.8-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.4V14H21a1.7 1.7 0 0 0-1.6 1Z"/></svg>`
+
+};
+
+document.querySelectorAll("[data-icon]").forEach(el=>{
+  const icon=ICONS[el.dataset.icon];
+  if(icon) el.innerHTML=icon;
+});
+</script>
+
+
+<script>
+(function(){
+
 "use strict";
 
 /* =========================================================
    TELEGRAM
 ========================================================= */
-const tg = window.Telegram?.WebApp;
+
+const tg=window.Telegram?.WebApp;
 
 if(tg){
   tg.ready();
   tg.expand();
-  try{tg.setHeaderColor("#06100b")}catch(e){}
-  try{tg.setBackgroundColor("#030705")}catch(e){}
 }
 
-const tgUser = tg?.initDataUnsafe?.user || null;
-
-/* =========================================================
-   CONFIG
-========================================================= */
-
-const CONFIG = {
-  miningRate: 0.0000010,
-  adReward: 0.5,
-  subReward: 2,
-  maxAdsPerNetwork: 20,
-  wheelCooldown: 24 * 60 * 60 * 1000,
-  withdrawalMinimum: 100,
-  demoSwapRate: 1000
-};
-
-/*
-  DAILY COMBO
-  ---------------------------------------------
-  ПОКА ЧТО здесь вручную задаётся правильная комбинация.
-
-  Например:
-  const DAILY_COMBO = [2,4,5];
-
-  В будущем бот/backend сможет передавать это
-  значение серверно. Сейчас URL ?combo=2,4,5
-  тоже позволяет быстро поменять комбинацию для DEMO.
-*/
-let DAILY_COMBO = [2,4,5];
-
-const urlCombo = new URLSearchParams(location.search).get("combo");
-if(urlCombo){
-  const parsed = urlCombo.split(",").map(Number).filter(n => n>=1 && n<=5);
-  if(parsed.length === 3 && new Set(parsed).size === 3) DAILY_COMBO = parsed.sort();
-}
-
-const SUB_TASKS = [
-  {id:1,title:"Your Channel #1",link:"#"},
-  {id:2,title:"Your Channel #2",link:"#"},
-  {id:3,title:"Your Channel #3",link:"#"}
-];
-
-const PAYOUT_NAMES = [
-  "zombie_404","deadinside","CryptoZombie","survivor_x",
-  "ZMBHunter","greenwalker","nightzombie","infected",
-  "zmb_player","lastsurvivor","zombieking","unknown_user"
-];
 
 /* =========================================================
    STATE
 ========================================================= */
 
-const defaultState = {
-  zmb: 0,
-  ton: 0,
-  gram: 0,
-  miningActive: false,
-  miningStartedAt: null,
-  miningClaimed: 0,
+const STORAGE="paidZombie_v3";
+
+const defaultState={
+  zmb:0,
+  ton:0,
+  gram:0,
+
+  xp:0,
+
+  mining:{
+    active:false,
+    startedAt:0,
+    claimed:0,
+    speed:0.0000001
+  },
+
   ads:{
     1:0,
-    2:0
+    2:0,
+    total:0
   },
-  subscriptions:{},
+
   tickets:0,
-  referrals:[],
-  referralEarned:0,
-  history:[],
+
+  referrals:0,
+
   games:{
     flipBest:0,
-    runBest:0
+    runBest:0,
+    flipGames:0,
+    runGames:0
   },
-  giveaways:{},
-  language:"ru",
+
+  ownedBoosts:[],
+
+  ownedMiners:["Basic Miner"],
+
   wheelLast:0,
+
   comboDate:"",
   comboSelected:[],
-  comboClaimed:false
+
+  history:[],
+
+  lang:"ru"
 };
 
-let state = loadState();
+let state=loadState();
 
 function loadState(){
+
   try{
-    const saved = JSON.parse(localStorage.getItem("paidZombieState"));
-    return deepMerge(defaultState,saved || {});
+
+    const saved=JSON.parse(localStorage.getItem(STORAGE));
+
+    return deepMerge(
+      structuredClone(defaultState),
+      saved || {}
+    );
+
   }catch(e){
-    return JSON.parse(JSON.stringify(defaultState));
+
+    return structuredClone(defaultState);
+
   }
+
 }
 
 function saveState(){
-  localStorage.setItem("paidZombieState",JSON.stringify(state));
+  localStorage.setItem(STORAGE,JSON.stringify(state));
 }
 
-function deepMerge(base,extra){
-  const out=JSON.parse(JSON.stringify(base));
-  if(!extra)return out;
-  for(const k in extra){
+function deepMerge(base,source){
+
+  Object.keys(source).forEach(k=>{
+
     if(
-      extra[k] &&
-      typeof extra[k]==="object" &&
-      !Array.isArray(extra[k]) &&
-      typeof out[k]==="object"
-    ) out[k]=deepMerge(out[k],extra[k]);
-    else out[k]=extra[k];
-  }
-  return out;
-}
+      source[k] &&
+      typeof source[k]==="object" &&
+      !Array.isArray(source[k]) &&
+      base[k]
+    ){
 
-/* =========================================================
-   I18N
-========================================================= */
+      deepMerge(base[k],source[k]);
 
-const I18N = {
-  ru:{
-    home:"ГЛАВНАЯ",
-    mining:"МАЙНИНГ",
-    games:"ИГРЫ",
-    earn:"ЗАРАБОТОК",
-    giveaways:"РОЗЫГРЫШИ",
-    friends:"ДРУЗЬЯ",
-    wallet:"КОШЕЛЁК",
-    profile:"ПРОФИЛЬ",
-    settings:"НАСТРОЙКИ",
-    level:"УРОВЕНЬ 1",
-    mineDesc:"Зарабатывай ZMB",
-    gamesDesc:"Играй и получай",
-    earnDesc:"Реклама и задания",
-    giveDesc:"Выигрывай награды",
-    recentPayouts:"Последние выплаты",
-    miningSub:"Пассивная генерация ZMB",
-    perSecond:"в секунду",
-    rate:"СКОРОСТЬ",
-    session:"СЕССИЯ",
-    offlineMining:"Оффлайн-майнинг",
-    offlineText:"Майнинг считается по времени, поэтому закрытие Mini App не останавливает демо-сессию."
-  },
-  en:{
-    home:"HOME",
-    mining:"MINING",
-    games:"GAMES",
-    earn:"EARN",
-    giveaways:"GIVEAWAYS",
-    friends:"FRIENDS",
-    wallet:"WALLET",
-    profile:"PROFILE",
-    settings:"SETTINGS",
-    level:"LEVEL 1",
-    mineDesc:"Earn ZMB",
-    gamesDesc:"Play & earn",
-    earnDesc:"Ads & tasks",
-    giveDesc:"Win rewards",
-    recentPayouts:"Recent payouts",
-    miningSub:"Passive ZMB generation",
-    perSecond:"per second",
-    rate:"RATE",
-    session:"SESSION",
-    offlineMining:"Offline mining",
-    offlineText:"Mining is calculated from timestamps, so closing the Mini App does not stop the demo session."
-  },
-  uk:{
-    home:"ГОЛОВНА",
-    mining:"МАЙНІНГ",
-    games:"ІГРИ",
-    earn:"ЗАРОБІТОК",
-    giveaways:"РОЗІГРАШІ",
-    friends:"ДРУЗІ",
-    wallet:"ГОТУНОК",
-    profile:"ПРОФІЛЬ",
-    settings:"НАЛАШТУВАННЯ",
-    level:"РІВЕНЬ 1",
-    mineDesc:"Заробляй ZMB",
-    gamesDesc:"Грай та отримуй",
-    earnDesc:"Реклама і завдання",
-    giveDesc:"Вигравай нагороди",
-    recentPayouts:"Останні виплати",
-    miningSub:"Пасивна генерація ZMB",
-    perSecond:"за секунду",
-    rate:"ШВИДКІСТЬ",
-    session:"СЕСІЯ",
-    offlineMining:"Офлайн-майнінг",
-    offlineText:"Майнінг розраховується за часом, тому закриття Mini App не зупиняє демо-сесію."
-  }
-};
+    }else{
 
-function applyLanguage(){
-  document.querySelectorAll("[data-i18n]").forEach(el=>{
-    const key=el.dataset.i18n;
-    if(I18N[state.language]?.[key]) el.textContent=I18N[state.language][key];
+      base[k]=source[k];
+
+    }
+
   });
 
-  document.documentElement.lang=state.language;
-
-  document.querySelectorAll(".langBtn").forEach(b=>{
-    b.classList.toggle("active",b.dataset.lang===state.language);
-  });
-
-  saveState();
+  return base;
 }
+
 
 /* =========================================================
    USER
 ========================================================= */
 
-function getName(){
-  if(!tgUser) return "Survivor";
-  return tgUser.first_name || tgUser.username || "Survivor";
-}
+const user=tg?.initDataUnsafe?.user || {};
 
-function getPlayerId(){
-  if(tgUser?.id) return String(tgUser.id);
-  return "DEMO-"+Math.floor(100000+Math.random()*899999);
-}
+const userName=
+  user.first_name ||
+  user.username ||
+  "Survivor";
 
-function avatarHTML(){
-  if(tgUser?.photo_url){
-    return `<img src="${escapeAttr(tgUser.photo_url)}" alt="">`;
+const userId=user.id || "DEMO";
+
+function setupUser(){
+
+  document.getElementById("headerName").textContent=userName;
+  document.getElementById("profileName").textContent=userName;
+  document.getElementById("profileId").textContent=
+    "Player ID: "+userId;
+
+  if(user.photo_url){
+
+    document.getElementById("headerAvatar").innerHTML=
+      `<img src="${user.photo_url}">`;
+
+    document.getElementById("profileAvatar").innerHTML=
+      `<img src="${user.photo_url}">`;
+
   }
 
-  return `
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
-    <circle cx="12" cy="8" r="3"/>
-    <path d="M5 21c.7-4.5 3-7 7-7s6.3 2.5 7 7"/>
-  </svg>`;
+  const ref=
+    "https://t.me/PAID_ZOMBIE_BOT?start=ref_"+userId;
+
+  document.getElementById("refLink").textContent=ref;
+
 }
 
-function updateUserUI(){
-  const name=getName();
+setupUser();
 
-  document.getElementById("headerName").textContent=name;
-  document.getElementById("profileName").textContent=name;
-  document.getElementById("profileId").textContent="Player ID: "+getPlayerId();
-
-  document.getElementById("headerAvatar").innerHTML=avatarHTML();
-  document.getElementById("profileAvatar").innerHTML=avatarHTML();
-}
 
 /* =========================================================
-   NUMBER / BALANCE
+   I18N
 ========================================================= */
 
-function fmt(n,d=7){
-  return Number(n||0).toFixed(d);
+const LANG={
+
+ru:{
+welcome:"С возвращением",
+network:"ZMB Network работает",
+balance:"Баланс",
+mining:"МАЙНИНГ",
+mineSub:"Начать добычу ZMB",
+games:"ИГРЫ",
+gamesSub:"Играй и получай",
+earn:"ЗАРАБОТОК",
+earnSub:"Реклама и задания",
+giveaways:"РОЗЫГРЫШИ",
+giveSub:"Участвуй и выигрывай",
+recentPayouts:"Последние выплаты",
+miningSubTitle:"Твоя майнинг-станция ZMB",
+gamesSubTitle:"Играй. Выживай. Получай ZMB.",
+zombieFlip:"ZOMBIE FLIP",
+flipDesc:"Пролетай между заражёнными колоннами",
+zombieRun:"ZOMBIE RUN",
+runDesc:"Беги и собирай монеты ZMB",
+dailyWheel:"DAILY WHEEL",
+wheelDesc:"Один спин каждый день",
+combo:"COMBO",
+comboDesc:"Найди сегодняшнюю комбинацию",
+play:"ИГРАТЬ",
+open:"ОТКРЫТЬ",
+ads:"РЕКЛАМА",
+promote:"PROMOTE",
+earnSubTitle:"Выполняй задания и получай ZMB",
+subscriptions:"Подписки",
+promoteChannel:"Продвижение Telegram-канала",
+channelLink:"КАНАЛ / ССЫЛКА",
+package:"ПАКЕТ",
+payment:"ОПЛАТА",
+friends:"ДРУЗЬЯ",
+friendsSub:"Приглашай выживших и зарабатывай вместе",
+yourReferral:"Твоя реферальная ссылка",
+copy:"КОПИРОВАТЬ",
+share:"ПОДЕЛИТЬСЯ",
+referrals:"РЕФЕРАЛЫ",
+yourFriends:"Твои друзья",
+topSub:"Глобальный рейтинг выживших",
+wallet:"КОШЕЛЁК",
+walletSub:"Управление балансами",
+swap:"ОБМЕН",
+withdraw:"ВЫВОД",
+history:"История транзакций",
+profile:"ПРОФИЛЬ",
+statistics:"СТАТИСТИКА",
+bonuses:"БОНУСЫ",
+support:"ПОДДЕРЖКА",
+faq:"FAQ",
+ourChannels:"НАШИ КАНАЛЫ",
+settings:"НАСТРОЙКИ",
+settingsSub:"Настрой приложение",
+language:"Язык",
+back:"НАЗАД",
+shop:"МАГАЗИН",
+boosts:"БУСТЫ",
+myTickets:"Мои билеты",
+ticketRule:"5 просмотренных реклам = 1 билет"
+},
+
+uk:{
+welcome:"З поверненням",
+network:"ZMB Network працює",
+balance:"Баланс",
+mining:"МАЙНІНГ",
+mineSub:"Почати видобуток ZMB",
+games:"ІГРИ",
+gamesSub:"Грай та отримуй",
+earn:"ЗАРОБІТОК",
+earnSub:"Реклама та завдання",
+giveaways:"РОЗІГРАШІ",
+giveSub:"Бери участь і вигравай",
+recentPayouts:"Останні виплати",
+miningSubTitle:"Твоя майнінг-станція ZMB",
+gamesSubTitle:"Грай. Виживай. Отримуй ZMB.",
+zombieFlip:"ZOMBIE FLIP",
+flipDesc:"Лети між зараженими колонами",
+zombieRun:"ZOMBIE RUN",
+runDesc:"Біжи та збирай монети ZMB",
+dailyWheel:"DAILY WHEEL",
+wheelDesc:"Один спін щодня",
+combo:"COMBO",
+comboDesc:"Знайди сьогоднішню комбінацію",
+play:"ГРАТИ",
+open:"ВІДКРИТИ",
+ads:"РЕКЛАМА",
+promote:"PROMOTE",
+earnSubTitle:"Виконуй завдання та отримуй ZMB",
+subscriptions:"Підписки",
+promoteChannel:"Просування Telegram-каналу",
+channelLink:"КАНАЛ / ПОСИЛАННЯ",
+package:"ПАКЕТ",
+payment:"ОПЛАТА",
+friends:"ДРУЗІ",
+friendsSub:"Запрошуй виживших та заробляйте разом",
+yourReferral:"Твоє реферальне посилання",
+copy:"КОПІЮВАТИ",
+share:"ПОДІЛИТИСЯ",
+referrals:"РЕФЕРАЛИ",
+yourFriends:"Твої друзі",
+topSub:"Глобальний рейтинг виживших",
+wallet:"ГАМАНЕЦЬ",
+walletSub:"Керування балансами",
+swap:"ОБМІН",
+withdraw:"ВИВІД",
+history:"Історія транзакцій",
+profile:"ПРОФІЛЬ",
+statistics:"СТАТИСТИКА",
+bonuses:"БОНУСИ",
+support:"ПІДТРИМКА",
+faq:"FAQ",
+ourChannels:"НАШІ КАНАЛИ",
+settings:"НАЛАШТУВАННЯ",
+settingsSub:"Налаштування застосунку",
+language:"Мова",
+back:"НАЗАД",
+shop:"МАГАЗИН",
+boosts:"БУСТИ",
+myTickets:"Мої квитки",
+ticketRule:"5 переглянутих реклам = 1 квиток"
+},
+
+en:{
+welcome:"Welcome back",
+network:"ZMB Network is online",
+balance:"Balance",
+mining:"MINING",
+mineSub:"Start earning ZMB",
+games:"GAMES",
+gamesSub:"Play & earn",
+earn:"EARN",
+earnSub:"Ads & tasks",
+giveaways:"GIVEAWAYS",
+giveSub:"Win rewards",
+recentPayouts:"Recent payouts",
+miningSubTitle:"Your ZMB mining station",
+gamesSubTitle:"Play. Survive. Earn ZMB.",
+zombieFlip:"ZOMBIE FLIP",
+flipDesc:"Fly through the infected zone",
+zombieRun:"ZOMBIE RUN",
+runDesc:"Run and collect ZMB coins",
+dailyWheel:"DAILY WHEEL",
+wheelDesc:"One spin every day",
+combo:"COMBO",
+comboDesc:"Find today's combination",
+play:"PLAY",
+open:"OPEN",
+ads:"ADS",
+promote:"PROMOTE",
+earnSubTitle:"Complete tasks and earn ZMB",
+subscriptions:"Subscriptions",
+promoteChannel:"Promote your Telegram channel",
+channelLink:"CHANNEL / LINK",
+package:"PACKAGE",
+payment:"PAYMENT",
+friends:"FRIENDS",
+friendsSub:"Invite survivors and earn together",
+yourReferral:"Your referral link",
+copy:"COPY",
+share:"SHARE",
+referrals:"REFERRALS",
+yourFriends:"Your friends",
+topSub:"Global survivor rankings",
+wallet:"WALLET",
+walletSub:"Manage your balances",
+swap:"SWAP",
+withdraw:"WITHDRAW",
+history:"Transaction history",
+profile:"PROFILE",
+statistics:"STATISTICS",
+bonuses:"BONUSES",
+support:"SUPPORT",
+faq:"FAQ",
+ourChannels:"OUR CHANNELS",
+settings:"SETTINGS",
+settingsSub:"Customize your experience",
+language:"Language",
+back:"BACK",
+shop:"SHOP",
+boosts:"BOOSTS",
+myTickets:"My tickets",
+ticketRule:"5 watched ads = 1 ticket"
 }
 
-function updateBalance(){
-  document.getElementById("headerBalance").textContent=fmt(state.zmb,7);
-  document.getElementById("headerTon").textContent=fmt(state.ton,4);
+};
 
-  document.getElementById("walletZmb").textContent=fmt(state.zmb,7)+" ZMB";
-  document.getElementById("walletTon").textContent=fmt(state.ton,4)+" TON";
+function applyLanguage(){
 
-  const progress=Math.min(100,(state.zmb%100));
-  document.getElementById("levelProgress").style.width=progress+"%";
-  document.getElementById("levelProgressText").textContent=
-    `${Math.floor(state.zmb)} / 100 ZMB`;
+  const dict=LANG[state.lang]||LANG.ru;
+
+  document.querySelectorAll("[data-i18n]").forEach(el=>{
+
+    const key=el.dataset.i18n;
+
+    if(dict[key]) el.textContent=dict[key];
+
+  });
+
+  document.querySelectorAll("[data-lang]").forEach(btn=>{
+    btn.classList.toggle(
+      "active",
+      btn.dataset.lang===state.lang
+    );
+  });
+
 }
+
+applyLanguage();
+
+
+/* =========================================================
+   BALANCES
+========================================================= */
+
+function miningEarned(){
+
+  if(!state.mining.active) return 0;
+
+  const elapsed=
+    Math.max(0,Date.now()-state.mining.startedAt)/1000;
+
+  return elapsed*state.mining.speed;
+
+}
+
+function currentZmb(){
+
+  return state.zmb + miningEarned();
+
+}
+
+function updateBalances(){
+
+  const zmb=currentZmb();
+
+  const zmbText=zmb.toFixed(7)+" ZMB";
+  const tonText=state.ton.toFixed(4)+" TON";
+
+  document.getElementById("headerZmb").textContent=zmbText;
+  document.getElementById("headerTon").textContent=tonText;
+
+  document.getElementById("homeZmb").textContent=zmbText;
+  document.getElementById("homeTon").textContent=tonText;
+
+  document.getElementById("walletZmb").textContent=
+    zmb.toFixed(7);
+
+  document.getElementById("walletTon").textContent=
+    tonText;
+
+  const xp=state.xp%100;
+  const level=Math.floor(state.xp/100)+1;
+
+  document.getElementById("levelText").textContent=
+    "LEVEL "+level;
+
+  document.getElementById("headerLevel").textContent=
+    "LEVEL "+level;
+
+  document.getElementById("levelXp").textContent=
+    xp+" / 100 XP";
+
+  document.getElementById("levelProgress").style.width=
+    xp+"%";
+
+  updateMiningDisplay();
+
+}
+
+function updateMiningDisplay(){
+
+  const value=miningEarned();
+
+  document.getElementById("miningValue").textContent=
+    value.toFixed(7);
+
+  document.getElementById("miningStatus").textContent=
+    state.mining.active
+      ? "● MINING ACTIVE"
+      : "● READY";
+
+  const btn=document.getElementById("miningButton");
+
+  btn.textContent=
+    state.mining.active
+      ? "CLAIM"
+      : "START MINING";
+
+}
+
+setInterval(updateBalances,200);
+
 
 /* =========================================================
    MINING
 ========================================================= */
 
-function getMiningEarned(){
-  if(!state.miningActive || !state.miningStartedAt) return 0;
-
-  const elapsed=Math.max(0,(Date.now()-state.miningStartedAt)/1000);
-  return elapsed*CONFIG.miningRate;
-}
-
 function startMining(){
-  if(state.miningActive){
-    toast("Mining is already active");
+
+  if(state.mining.active){
+
+    claimMining();
+
     return;
+
   }
 
-  /*
-    Здесь позже будет настоящий rewarded ad.
-    Сейчас просто имитация просмотра.
-  */
-  showAdSimulation(()=>{
-    state.miningActive=true;
-    state.miningStartedAt=Date.now();
-    state.miningClaimed=0;
+  openAdSimulation(()=>{
+
+    state.mining.active=true;
+    state.mining.startedAt=Date.now();
+
     saveState();
-    renderMining();
-    toast("MINING STARTED");
+
+    toast("Mining started · ZMB Core online");
+
   });
+
 }
 
 function claimMining(){
-  if(!state.miningActive){
-    toast("Start mining first");
-    return;
-  }
 
-  const earned=getMiningEarned();
+  if(!state.mining.active) return;
 
-  state.zmb+=earned;
-  state.miningClaimed+=earned;
-  state.miningActive=false;
-  state.miningStartedAt=null;
+  const amount=miningEarned();
 
-  addHistory("Mining claim",earned+" ZMB");
+  state.zmb+=amount;
+
+  state.mining.active=false;
+  state.mining.startedAt=0;
+
+  state.xp+=Math.max(1,Math.floor(amount*1000000));
+
   saveState();
 
-  updateBalance();
-  renderMining();
+  addHistory(
+    "MINING",
+    "+"+amount.toFixed(7)+" ZMB"
+  );
 
-  toast("CLAIMED +"+fmt(earned,7)+" ZMB");
+  updateBalances();
+
+  toast("CLAIMED +"+amount.toFixed(7)+" ZMB");
+
 }
 
-function renderMining(){
-  const active=state.miningActive;
-  const earned=getMiningEarned();
+document.getElementById("miningButton")
+.addEventListener("click",startMining);
 
-  document.getElementById("miningValue").textContent=fmt(earned,7);
-  document.getElementById("mineRate").textContent=fmt(CONFIG.miningRate,7);
-  document.getElementById("mineSession").textContent=fmt(earned,7);
-
-  document.getElementById("miningStatusText").textContent=
-    active ? "MINING ACTIVE" : "MINING OFFLINE";
-
-  const btn=document.getElementById("miningButton");
-
-  if(active){
-    btn.textContent="CLAIM";
-    btn.dataset.action="claimMining";
-  }else{
-    btn.textContent="START MINING";
-    btn.dataset.action="startMining";
-  }
-
-  if(active){
-    const seconds=Math.floor((Date.now()-state.miningStartedAt)/1000);
-    document.getElementById("miningTimer").textContent=formatTime(seconds);
-  }else{
-    document.getElementById("miningTimer").textContent="00:00:00";
-  }
-}
-
-setInterval(()=>{
-  if(state.miningActive){
-    renderMining();
-    updateBalance();
-  }
-},250);
 
 /* =========================================================
-   HOME PAYOUT FEED
+   MINING SHOP
 ========================================================= */
 
-let payoutFeed=[
-  {name:"zmb_player",amount:"14.20"},
-  {name:"deadinside",amount:"8.70"},
-  {name:"CryptoZombie",amount:"25.50"},
-  {name:"greenwalker",amount:"6.30"},
-  {name:"survivor_x",amount:"41.00"},
-  {name:"nightzombie",amount:"12.80"}
+const MINERS=[
+
+{
+ name:"Basic Miner",
+ desc:"Starter mining unit",
+ price:100,
+ speed:.0000001
+},
+
+{
+ name:"Green Reactor",
+ desc:"Higher ZMB production",
+ price:500,
+ speed:.0000005
+},
+
+{
+ name:"ZMB Core",
+ desc:"Advanced mining unit",
+ price:2000,
+ speed:.000002
+}
+
 ];
 
+const BOOSTS=[
+
+{
+ name:"2× Speed",
+ desc:"Mining speed boost",
+ price:250
+},
+
+{
+ name:"Lucky Core",
+ desc:"Permanent mining bonus",
+ price:750
+},
+
+{
+ name:"Quantum Boost",
+ desc:"High level accelerator",
+ price:1500
+}
+
+];
+
+function renderMiningShop(){
+
+  document.getElementById("miningShop").innerHTML=
+    MINERS.map((m,i)=>`
+
+      <div class="item">
+
+        <div class="item-icon">${ICONS.pick}</div>
+
+        <div class="item-info">
+          <strong>${m.name}</strong>
+          <span>${m.desc} · ${m.price} ZMB</span>
+        </div>
+
+        <button data-buy-miner="${i}">
+          BUY
+        </button>
+
+      </div>
+
+    `).join("");
+
+  document.getElementById("miningBoosts").innerHTML=
+    BOOSTS.map((b,i)=>`
+
+      <div class="item">
+
+        <div class="item-icon">${ICONS.settings}</div>
+
+        <div class="item-info">
+          <strong>${b.name}</strong>
+          <span>${b.desc} · ${b.price} ZMB</span>
+        </div>
+
+        <button data-buy-boost="${i}">
+          BUY
+        </button>
+
+      </div>
+
+    `).join("")+
+
+    `<div class="section-head">
+      <h3>MY BOOSTERS</h3>
+    </div>`+
+
+    (state.ownedBoosts.length
+      ?state.ownedBoosts.map(x=>`
+        <div class="item">
+          <div class="item-icon">${ICONS.settings}</div>
+          <div class="item-info">
+            <strong>${x}</strong>
+            <span>ACTIVE / OWNED</span>
+          </div>
+        </div>
+      `).join("")
+      :`<div class="glass card" style="color:var(--muted);font-size:12px">
+          No boosters yet
+        </div>`
+    )+
+
+    `<div class="section-head">
+      <h3>MY MINERS</h3>
+    </div>`+
+
+    state.ownedMiners.map(x=>`
+      <div class="item">
+        <div class="item-icon">${ICONS.pick}</div>
+        <div class="item-info">
+          <strong>${x}</strong>
+          <span>OWNED MINER</span>
+        </div>
+      </div>
+    `).join("");
+
+}
+
+renderMiningShop();
+
+document.addEventListener("click",e=>{
+
+  const miner=e.target.closest("[data-buy-miner]");
+
+  if(miner){
+
+    const m=MINERS[Number(miner.dataset.buyMiner)];
+
+    if(currentZmb()<m.price){
+
+      toast("Not enough ZMB");
+      return;
+
+    }
+
+    state.zmb-=m.price;
+
+    state.ownedMiners.push(m.name);
+
+    state.mining.speed=Math.max(
+      state.mining.speed,
+      m.speed
+    );
+
+    saveState();
+    renderMiningShop();
+    updateBalances();
+
+    toast(m.name+" purchased");
+
+  }
+
+
+  const boost=e.target.closest("[data-buy-boost]");
+
+  if(boost){
+
+    const b=BOOSTS[Number(boost.dataset.buyBoost)];
+
+    if(currentZmb()<b.price){
+
+      toast("Not enough ZMB");
+      return;
+
+    }
+
+    state.zmb-=b.price;
+    state.ownedBoosts.push(b.name);
+
+    if(b.name==="2× Speed"){
+      state.mining.speed*=2;
+    }
+
+    if(b.name==="Lucky Core"){
+      state.mining.speed*=1.5;
+    }
+
+    if(b.name==="Quantum Boost"){
+      state.mining.speed*=2.5;
+    }
+
+    saveState();
+    renderMiningShop();
+    updateBalances();
+
+    toast(b.name+" activated");
+
+  }
+
+});
+
+
+document.querySelectorAll("[data-mining-tab]").forEach(btn=>{
+
+  btn.addEventListener("click",()=>{
+
+    document.querySelectorAll("[data-mining-tab]")
+      .forEach(x=>x.classList.remove("active"));
+
+    btn.classList.add("active");
+
+    const shop=btn.dataset.miningTab==="shop";
+
+    document.getElementById("miningShop").style.display=
+      shop?"block":"none";
+
+    document.getElementById("miningBoosts").style.display=
+      shop?"none":"block";
+
+  });
+
+});
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+const screens=[
+  "home",
+  "top",
+  "friends",
+  "wallet",
+  "profile"
+];
+
+const nav=document.createElement("nav");
+nav.className="bottom-nav";
+
+const navItems=[
+  ["home","HOME","home"],
+  ["top","TOP","chart"],
+  ["friends","FRIENDS","support"],
+  ["wallet","WALLET","wallet"],
+  ["profile","PROFILE","settings"]
+];
+
+nav.innerHTML=navItems.map(x=>`
+
+<button class="nav-btn ${x[0]==="home"?"active":""}" data-screen="${x[0]}">
+
+  ${ICONS[x[2]]}
+
+  <span>${x[1]}</span>
+
+</button>
+
+`).join("");
+
+document.body.appendChild(nav);
+
+
+function openScreen(name){
+
+  document.querySelectorAll(".screen")
+    .forEach(x=>x.classList.remove("active"));
+
+  const target=document.getElementById("screen-"+name);
+
+  if(!target) return;
+
+  target.classList.add("active");
+
+  nav.querySelectorAll(".nav-btn")
+    .forEach(x=>{
+
+      x.classList.toggle(
+        "active",
+        x.dataset.screen===name
+      );
+
+    });
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+  if(name==="top") renderTop();
+  if(name==="friends") renderReferrals();
+  if(name==="wallet") renderHistory();
+  if(name==="giveaways") renderGiveaways();
+
+}
+
+document.addEventListener("click",e=>{
+
+  const btn=e.target.closest("[data-screen]");
+
+  if(btn){
+    openScreen(btn.dataset.screen);
+  }
+
+});
+
+
+/* =========================================================
+   PAYOUT FEED
+========================================================= */
+
+const payoutNames=[
+  "Shadow",
+  "Nexus",
+  "ZombieX",
+  "Toxic",
+  "Hunter",
+  "DeadPixel",
+  "Ghost",
+  "CryptoKid",
+  "Survivor",
+  "NightFox",
+  "Raven",
+  "Zero"
+];
+
+const payouts=[];
+
 function randomPayout(){
-  const name=PAYOUT_NAMES[Math.floor(Math.random()*PAYOUT_NAMES.length)];
-  const amount=(2+Math.random()*48).toFixed(2);
+
+  const name=
+    payoutNames[
+      Math.floor(Math.random()*payoutNames.length)
+    ];
+
+  const amount=
+    (Math.random()*4+0.15).toFixed(4);
 
   return {
     name,
     amount,
     time:"just now"
   };
+
 }
 
 function renderPayouts(){
-  const feed=document.getElementById("payoutFeed");
 
-  feed.innerHTML=payoutFeed.slice(0,7).map(p=>`
-    <div class="payout">
-      <div class="payoutAvatar">${escapeHTML(p.name.slice(0,2).toUpperCase())}</div>
-      <div class="payoutInfo">
-        <div class="payoutName">${escapeHTML(p.name)}</div>
-        <div class="payoutTime">${escapeHTML(p.time || "recently")}</div>
+  document.getElementById("payoutList").innerHTML=
+    payouts.slice(0,8).map(p=>`
+
+      <div class="payout">
+
+        <div class="payout-left">
+
+          <div class="payout-avatar">
+            ${p.name.slice(0,1)}
+          </div>
+
+          <div>
+            <div class="payout-name">${p.name}</div>
+            <div class="payout-time">${p.time}</div>
+          </div>
+
+        </div>
+
+        <div>
+          <div class="payout-amount">
+            +${p.amount} TON
+          </div>
+
+          <div class="payout-status">
+            COMPLETED
+          </div>
+        </div>
+
       </div>
-      <div class="payoutAmount">
-        +${escapeHTML(p.amount)} ZMB
-        <div class="payoutStatus">COMPLETED</div>
-      </div>
-    </div>
-  `).join("");
+
+    `).join("");
+
 }
 
-function startPayoutFeed(){
+for(let i=0;i<6;i++){
+
+  const p=randomPayout();
+
+  p.time=(i+1)+"m ago";
+
+  payouts.push(p);
+
+}
+
+renderPayouts();
+
+function schedulePayout(){
+
+  const p=randomPayout();
+
+  payouts.unshift(p);
+
+  if(payouts.length>12)
+    payouts.pop();
+
   renderPayouts();
 
-  const next=()=>{
-    const p=randomPayout();
-    payoutFeed.unshift(p);
-    payoutFeed=payoutFeed.slice(0,8);
-    renderPayouts();
+  setTimeout(
+    schedulePayout,
+    3000+Math.random()*7000
+  );
 
-    setTimeout(next,3000+Math.random()*7000);
-  };
-
-  setTimeout(next,3000+Math.random()*7000);
 }
+
+setTimeout(
+  schedulePayout,
+  3000+Math.random()*7000
+);
+
 
 /* =========================================================
-   NAVIGATION
+   AD SIMULATION
 ========================================================= */
 
-function showScreen(id){
-  document.querySelectorAll(".screen").forEach(s=>{
-    s.classList.toggle("active",s.id===id);
-  });
+function openAdSimulation(callback){
 
-  document.querySelectorAll(".navBtn").forEach(b=>{
-    b.classList.toggle("active",b.dataset.go===id);
-  });
-
-  window.scrollTo({top:0,behavior:"smooth"});
-
-  if(id==="home") renderHome();
-  if(id==="mining") renderMining();
-  if(id==="top") renderTop(currentTop);
-  if(id==="friends") renderFriends();
-  if(id==="wallet") renderWallet();
-  if(id==="giveaways") renderGiveaways();
-}
-
-function renderHome(){
-  updateBalance();
-}
-
-/* =========================================================
-   EARN
-========================================================= */
-
-function renderEarn(){
-  for(const n of [1,2]){
-    const count=state.ads[n]||0;
-    document.getElementById("ad"+n+"Count").textContent=count;
-    document.getElementById("ad"+n+"Progress").style.width=(count/20*100)+"%";
-  }
-
-  const tasks=document.getElementById("subTasks");
-
-  tasks.innerHTML=SUB_TASKS.map(t=>{
-    const done=!!state.subscriptions[t.id];
-
-    return `
-      <div class="task card">
-        <div class="taskIcon">◉</div>
-        <div class="taskMain">
-          <b>${escapeHTML(t.title)}</b>
-          <small>Telegram subscription · +${CONFIG.subReward} ZMB</small>
-        </div>
-        <button class="smallBtn" data-action="subTask" data-id="${t.id}">
-          ${done?"CLAIMED":"CHECK"}
-        </button>
-      </div>
-    `;
-  }).join("");
-}
-
-function watchAd(network){
-  const n=Number(network);
-
-  if((state.ads[n]||0)>=20){
-    toast("Daily limit reached");
-    return;
-  }
-
-  showAdSimulation(()=>{
-    state.ads[n]=(state.ads[n]||0)+1;
-
-    state.zmb+=CONFIG.adReward;
-
-    const totalAds=(state.ads[1]||0)+(state.ads[2]||0);
-
-    if(totalAds%5===0){
-      state.tickets++;
-      toast("+0.5 ZMB · +1 TICKET");
-    }else{
-      toast("+0.5 ZMB");
-    }
-
-    addHistory("Ad reward","0.5 ZMB");
-    saveState();
-    renderEarn();
-    renderGiveaways();
-    updateBalance();
-  });
-}
-
-function showAdSimulation(callback){
-  openModal(`
-    <div class="modalHead">
-      <div class="modalTitle">ADVERTISEMENT</div>
-      <button class="close" data-action="closeModal">×</button>
-    </div>
-
-    <div style="padding:28px 10px;text-align:center">
-      <div style="width:70px;height:70px;border-radius:22px;background:#102319;color:var(--green);display:grid;place-items:center;margin:auto;font-size:25px;font-weight:950">AD</div>
-      <div style="font-size:18px;font-weight:900;margin-top:15px">Rewarded Ad</div>
-      <div style="font-size:12px;color:var(--muted);margin-top:6px">Demo advertisement</div>
-      <div id="adTimer" style="font-size:30px;font-weight:950;color:var(--green);margin:20px">3</div>
-    </div>
-  `);
+  const modal=document.getElementById("modal");
+  const content=document.getElementById("modalContent");
 
   let left=3;
+
+  content.innerHTML=`
+
+    <div class="modal-top">
+      <div class="modal-title">ADVERTISEMENT</div>
+      <button class="close" data-close>×</button>
+    </div>
+
+    <div class="ad-loader">
+
+      <div class="loader-ring"></div>
+
+      <div style="font-weight:900">
+        Rewarded ad
+      </div>
+
+      <div style="color:var(--muted);font-size:12px;margin-top:6px">
+        Please wait ${left}s
+      </div>
+
+    </div>
+
+  `;
+
+  modal.classList.add("open");
+
   const timer=setInterval(()=>{
+
     left--;
-    const el=document.getElementById("adTimer");
-    if(el)el.textContent=left;
+
+    const text=content.querySelector(".ad-loader div:nth-child(3)");
+
+    if(text)
+      text.textContent=
+        left>0
+        ?`Please wait ${left}s`
+        :"Reward confirmed";
 
     if(left<=0){
+
       clearInterval(timer);
-      closeModal();
-      callback();
+
+      setTimeout(()=>{
+
+        modal.classList.remove("open");
+
+        callback();
+
+      },400);
+
     }
+
   },1000);
+
 }
 
-document.addEventListener("click",e=>{
-  const tab=e.target.closest("[data-earn-tab]");
-  if(tab){
-    document.querySelectorAll("[data-earn-tab]").forEach(x=>x.classList.remove("active"));
-    tab.classList.add("active");
-
-    const ads=tab.dataset.earnTab==="ads";
-    document.getElementById("earnAds").style.display=ads?"block":"none";
-    document.getElementById("earnPromote").style.display=ads?"none":"block";
-  }
-
-  const pkg=e.target.closest("[data-package]");
-  if(pkg){
-    document.querySelectorAll(".package").forEach(x=>x.classList.remove("selected"));
-    pkg.classList.add("selected");
-  }
-});
-
-function subTask(id){
-  id=Number(id);
-
-  if(state.subscriptions[id]){
-    toast("Already claimed");
-    return;
-  }
-
-  state.subscriptions[id]=true;
-  state.zmb+=CONFIG.subReward;
-
-  addHistory("Subscription task",CONFIG.subReward+" ZMB");
-
-  saveState();
-  renderEarn();
-  updateBalance();
-
-  toast("+"+CONFIG.subReward+" ZMB");
-}
-
-function createPromo(){
-  const channel=document.getElementById("promoChannel").value.trim();
-  const budget=document.getElementById("promoBudget").value.trim();
-  const payment=document.getElementById("promoPayment").value;
-
-  if(!channel){
-    toast("Enter Telegram channel");
-    return;
-  }
-
-  if(!budget || Number(budget)<=0){
-    toast("Enter budget");
-    return;
-  }
-
-  closeModal();
-
-  openModal(`
-    <div class="modalHead">
-      <div class="modalTitle">CAMPAIGN CREATED</div>
-      <button class="close" data-action="closeModal">×</button>
-    </div>
-
-    <div style="text-align:center;padding:15px 5px">
-      <div style="width:70px;height:70px;border-radius:22px;background:#102319;color:var(--green);display:grid;place-items:center;margin:auto;font-size:30px">✓</div>
-      <div style="font-size:18px;font-weight:900;margin-top:15px">${escapeHTML(channel)}</div>
-      <div style="font-size:13px;color:var(--muted);margin-top:7px">
-        Demo payment: ${escapeHTML(budget)} ${escapeHTML(payment)}
-      </div>
-      <button class="primary" style="margin-top:20px" data-action="closeModal">DONE</button>
-    </div>
-  `);
-}
 
 /* =========================================================
-   WALLET / SWAP / WITHDRAW
+   ADS
 ========================================================= */
 
-function renderWallet(){
-  updateBalance();
+function watchAd(network){
 
-  const list=document.getElementById("historyList");
+  if(state.ads[network]>=20){
 
-  if(!state.history.length){
-    list.innerHTML=`<div class="empty">No transactions yet</div>`;
+    toast("Daily limit reached");
     return;
+
   }
 
-  list.innerHTML=state.history.slice(0,20).map(h=>`
-    <div class="historyItem">
-      <div class="historyIcon">${h.icon||"↗"}</div>
-      <div class="historyMain">
-        <b>${escapeHTML(h.title)}</b>
-        <small>${escapeHTML(h.date)}</small>
-      </div>
-      <div class="historyAmount">${escapeHTML(h.amount)}</div>
-    </div>
-  `).join("");
-}
+  openAdSimulation(()=>{
 
-function addHistory(title,amount){
-  state.history.unshift({
-    title,
-    amount,
-    date:new Date().toLocaleString(),
-    icon:"↗"
+    state.ads[network]++;
+    state.ads.total++;
+
+    state.zmb+=.5;
+
+    if(state.ads.total%5===0){
+
+      state.tickets++;
+
+      toast("+0.5 ZMB · +1 GIVEAWAY TICKET");
+
+    }else{
+
+      toast("+0.5 ZMB");
+
+    }
+
+    saveState();
+    renderAds();
+    updateBalances();
+
   });
 
-  state.history=state.history.slice(0,50);
 }
+
+function renderAds(){
+
+  for(const n of [1,2]){
+
+    const count=state.ads[n];
+
+    document.getElementById("adCount"+n).textContent=
+      count+" / 20";
+
+    document.getElementById("adProgress"+n).style.width=
+      count/20*100+"%";
+
+  }
+
+}
+
+renderAds();
+
+const SUB_TASKS=[
+  {name:"Telegram Channel #1",reward:2},
+  {name:"Telegram Channel #2",reward:2},
+  {name:"Telegram Channel #3",reward:2}
+];
+
+function renderSubscriptions(){
+
+  document.getElementById("subscriptionTasks").innerHTML=
+    SUB_TASKS.map((x,i)=>`
+
+      <div class="task">
+
+        <div class="menu-icon">
+          ${ICONS.telegram}
+        </div>
+
+        <div class="task-main">
+          <strong>${x.name}</strong>
+          <span>+${x.reward} ZMB</span>
+        </div>
+
+        <button data-sub="${i}">
+          CHECK
+        </button>
+
+      </div>
+
+    `).join("");
+
+}
+
+renderSubscriptions();
+
+document.addEventListener("click",e=>{
+
+  const ad=e.target.closest("[data-action='watchAd']");
+
+  if(ad){
+
+    watchAd(Number(ad.dataset.network));
+
+  }
+
+  const sub=e.target.closest("[data-sub]");
+
+  if(sub){
+
+    const index=sub.dataset.sub;
+
+    const key="sub_"+index;
+
+    if(localStorage.getItem(key)){
+
+      toast("Already claimed");
+      return;
+
+    }
+
+    localStorage.setItem(key,"1");
+
+    state.zmb+=SUB_TASKS[index].reward;
+
+    saveState();
+    updateBalances();
+
+    sub.querySelector("button").textContent="DONE";
+
+    toast("+"+SUB_TASKS[index].reward+" ZMB");
+
+  }
+
+});
+
+
+/* =========================================================
+   PROMOTE
+========================================================= */
+
+function createPromo(){
+
+  const link=document.getElementById("promoteLink").value.trim();
+  const pkg=document.getElementById("promotePackage").value;
+  const method=document.getElementById("promotePayment").value;
+
+  if(!link){
+
+    toast("Enter your Telegram channel");
+    return;
+
+  }
+
+  showInfo(
+    "PROMOTION",
+    `
+    <p style="color:var(--muted);font-size:13px">
+      Campaign prepared for:
+    </p>
+
+    <div class="ref-link">${link}</div>
+
+    <p>
+      Package: <b>${pkg} TON</b>
+    </p>
+
+    <p>
+      Payment: <b>${method}</b>
+    </p>
+
+    <p style="color:var(--muted);font-size:11px">
+      Demo mode: payment is not connected yet.
+    </p>
+
+    <button class="primary" data-close>
+      OK
+    </button>
+    `
+  );
+
+}
+
+
+/* =========================================================
+   WALLET
+========================================================= */
 
 function openSwap(){
-  openModal(`
-    <div class="modalHead">
-      <div class="modalTitle">SWAP</div>
-      <button class="close" data-action="closeModal">×</button>
+
+  showInfo(
+    "SWAP",
+    `
+
+    <label class="label">FROM</label>
+
+    <select class="input" id="swapFrom">
+      <option value="zmb">ZMB</option>
+      <option value="ton">TON</option>
+    </select>
+
+    <label class="label">TO</label>
+
+    <select class="input" id="swapTo">
+      <option value="ton">TON</option>
+      <option value="zmb">ZMB</option>
+    </select>
+
+    <label class="label">AMOUNT</label>
+
+    <input
+      class="input"
+      id="swapAmount"
+      type="number"
+      step="any"
+      placeholder="0.0000000"
+    >
+
+    <div style="color:var(--muted);font-size:11px;margin:12px 0">
+      DEMO RATE: 1 TON = 1000 ZMB
     </div>
 
-    <div class="field">
-      <label>FROM</label>
-      <select id="swapFrom">
-        <option value="ZMB">ZMB</option>
-        <option value="TON">TON</option>
-        <option value="GRAM">GRAM</option>
-      </select>
-    </div>
+    <button class="primary" data-action="performSwap">
+      SWAP
+    </button>
 
-    <div style="text-align:center;color:var(--green);font-size:22px;margin:-2px 0 8px">↓</div>
+    `
+  );
 
-    <div class="field">
-      <label>TO</label>
-      <select id="swapTo">
-        <option value="TON">TON</option>
-        <option value="ZMB">ZMB</option>
-        <option value="GRAM">GRAM</option>
-      </select>
-    </div>
-
-    <div class="field">
-      <label>AMOUNT</label>
-      <input id="swapAmount" type="number" min="0" step="any" placeholder="0.0000000">
-    </div>
-
-    <div class="card" style="padding:13px;margin-bottom:13px">
-      <div style="font-size:11px;color:var(--muted)">DEMO RATE</div>
-      <div id="swapPreview" style="font-size:16px;font-weight:900;margin-top:5px">Enter amount</div>
-    </div>
-
-    <button class="primary" data-action="doSwap">SWAP</button>
-  `);
-
-  ["swapFrom","swapTo","swapAmount"].forEach(id=>{
-    document.getElementById(id).addEventListener("input",updateSwapPreview);
-    document.getElementById(id).addEventListener("change",updateSwapPreview);
-  });
 }
 
-function swapRate(from,to){
-  if(from===to)return 1;
+function performSwap(){
 
-  /*
-    Демо-экономика.
-    Реальные курсы потом должны приходить с backend.
-  */
-
-  if(from==="ZMB" && to==="TON")return 1/1000;
-  if(from==="TON" && to==="ZMB")return 1000;
-
-  if(from==="GRAM" && to==="TON")return .01;
-  if(from==="TON" && to==="GRAM")return 100;
-
-  if(from==="ZMB" && to==="GRAM")return .01;
-  if(from==="GRAM" && to==="ZMB")return 100;
-
-  return 1;
-}
-
-function updateSwapPreview(){
-  const from=document.getElementById("swapFrom")?.value;
-  const to=document.getElementById("swapTo")?.value;
-  const amount=Number(document.getElementById("swapAmount")?.value||0);
-
-  if(!from||!to)return;
-
-  const result=amount*swapRate(from,to);
-
-  document.getElementById("swapPreview").textContent=
-    `${fmt(amount,7)} ${from} → ${fmt(result,7)} ${to}`;
-}
-
-function doSwap(){
   const from=document.getElementById("swapFrom").value;
   const to=document.getElementById("swapTo").value;
-  const amount=Number(document.getElementById("swapAmount").value);
-
-  if(from===to){
-    toast("Choose different assets");
-    return;
-  }
+  const amount=Number(
+    document.getElementById("swapAmount").value
+  );
 
   if(!amount || amount<=0){
+
     toast("Enter amount");
     return;
+
   }
 
-  if(Number(state[from.toLowerCase()]||0)<amount){
-    toast("Insufficient balance");
+  if(from==="zmb" && to==="ton"){
+
+    if(currentZmb()<amount){
+
+      toast("Not enough ZMB");
+      return;
+
+    }
+
+    state.zmb-=amount;
+    state.ton+=amount/1000;
+
+  }
+
+  else if(from==="ton" && to==="zmb"){
+
+    if(state.ton<amount){
+
+      toast("Not enough TON");
+      return;
+
+    }
+
+    state.ton-=amount;
+    state.zmb+=amount*1000;
+
+  }
+
+  else{
+
+    toast("Choose different assets");
     return;
+
   }
-
-  const result=amount*swapRate(from,to);
-
-  state[from.toLowerCase()]-=amount;
-  state[to.toLowerCase()]+=result;
-
-  addHistory(`Swap ${from} → ${to}`,`+${fmt(result,7)} ${to}`);
 
   saveState();
-  updateBalance();
-  closeModal();
-  renderWallet();
 
-  toast(`SWAP +${fmt(result,7)} ${to}`);
+  addHistory(
+    "SWAP",
+    from.toUpperCase()+" → "+to.toUpperCase()
+  );
+
+  closeModal();
+  updateBalances();
+
+  toast("Swap completed");
+
 }
 
 function openWithdraw(){
-  openModal(`
-    <div class="modalHead">
-      <div class="modalTitle">WITHDRAW</div>
-      <button class="close" data-action="closeModal">×</button>
-    </div>
 
-    <div class="field">
-      <label>TON ADDRESS</label>
-      <input id="withdrawAddress" placeholder="Enter TON wallet address">
-    </div>
+  showInfo(
+    "WITHDRAW TON",
+    `
 
-    <div class="field">
-      <label>AMOUNT ZMB</label>
-      <input id="withdrawAmount" type="number" min="0" step="any" placeholder="${CONFIG.withdrawalMinimum}">
-    </div>
-
-    <div class="card" style="padding:15px;margin-bottom:14px">
-      <div style="display:flex;justify-content:space-between;font-size:12px">
-        <span style="color:var(--muted)">Minimum</span>
-        <b>${CONFIG.withdrawalMinimum} ZMB</b>
+    <div class="glass card" style="padding:13px;margin-bottom:12px">
+      <div style="color:var(--muted);font-size:11px">
+        AVAILABLE
       </div>
-      <div style="display:flex;justify-content:space-between;font-size:12px;margin-top:9px">
-        <span style="color:var(--muted)">Network fee</span>
-        <b>Demo</b>
-      </div>
-      <div style="display:flex;justify-content:space-between;font-size:12px;margin-top:9px">
-        <span style="color:var(--muted)">Receive</span>
-        <b id="withdrawReceive">0 TON</b>
+
+      <div style="color:var(--blue);font-size:23px;font-weight:950;margin-top:4px">
+        ${state.ton.toFixed(4)} TON
       </div>
     </div>
 
-    <button class="primary" data-action="doWithdraw">REQUEST WITHDRAW</button>
+    <label class="label">TON ADDRESS</label>
 
-    <div style="font-size:10px;color:var(--muted);text-align:center;margin-top:12px">
-      Demo interface. No real blockchain transaction is sent.
+    <input
+      class="input"
+      id="withdrawAddress"
+      placeholder="Enter TON wallet address"
+    >
+
+    <label class="label">AMOUNT · TON</label>
+
+    <input
+      class="input"
+      id="withdrawAmount"
+      type="number"
+      step="0.0001"
+      placeholder="0.0000"
+    >
+
+    <div style="color:var(--muted);font-size:11px;margin:12px 0">
+      Minimum: 0.10 TON · Network fee: demo
     </div>
-  `);
 
-  document.getElementById("withdrawAmount").addEventListener("input",()=>{
-    const amount=Number(document.getElementById("withdrawAmount").value||0);
-    document.getElementById("withdrawReceive").textContent=
-      fmt(amount*swapRate("ZMB","TON"),7)+" TON";
-  });
+    <button class="primary" data-action="performWithdraw">
+      CONFIRM WITHDRAW
+    </button>
+
+    `
+  );
+
 }
 
-function doWithdraw(){
-  const address=document.getElementById("withdrawAddress").value.trim();
-  const amount=Number(document.getElementById("withdrawAmount").value);
+function performWithdraw(){
 
-  if(address.length<10){
+  const address=
+    document.getElementById("withdrawAddress").value.trim();
+
+  const amount=Number(
+    document.getElementById("withdrawAmount").value
+  );
+
+  if(!address){
+
     toast("Enter TON address");
     return;
+
   }
 
-  if(!amount || amount<CONFIG.withdrawalMinimum){
-    toast(`Minimum ${CONFIG.withdrawalMinimum} ZMB`);
+  if(!amount || amount<.1){
+
+    toast("Minimum withdrawal is 0.10 TON");
     return;
+
   }
 
-  if(amount>state.zmb){
-    toast("Insufficient ZMB");
+  if(amount>state.ton){
+
+    toast("Not enough TON");
     return;
+
   }
 
-  state.zmb-=amount;
-
-  const receive=amount*swapRate("ZMB","TON");
-
-  addHistory("Withdrawal request",`-${fmt(amount,7)} ZMB`);
+  state.ton-=amount;
 
   saveState();
-  updateBalance();
+
+  addHistory(
+    "WITHDRAW",
+    "-"+amount.toFixed(4)+" TON"
+  );
+
   closeModal();
-  renderWallet();
+  updateBalances();
 
-  openModal(`
-    <div class="modalHead">
-      <div class="modalTitle">REQUEST SENT</div>
-      <button class="close" data-action="closeModal">×</button>
-    </div>
+  toast(
+    "Withdrawal created · TON "+amount.toFixed(4)
+  );
 
-    <div style="text-align:center;padding:12px">
-      <div style="font-size:45px;color:var(--green)">✓</div>
-      <div style="font-size:18px;font-weight:900">Withdrawal queued</div>
-      <div style="font-size:12px;color:var(--muted);margin-top:8px">
-        ${fmt(receive,7)} TON
-      </div>
-      <button class="primary" style="margin-top:20px" data-action="closeModal">DONE</button>
-    </div>
-  `);
 }
+
+
+/* =========================================================
+   HISTORY
+========================================================= */
+
+function addHistory(type,value){
+
+  state.history.unshift({
+    type,
+    value,
+    time:new Date().toLocaleTimeString([],{
+      hour:"2-digit",
+      minute:"2-digit"
+    })
+  });
+
+  state.history=state.history.slice(0,20);
+
+  saveState();
+
+  renderHistory();
+
+}
+
+function renderHistory(){
+
+  const box=document.getElementById("historyList");
+
+  if(!state.history.length){
+
+    box.innerHTML=`
+      <div class="glass card" style="color:var(--muted);font-size:12px">
+        No transactions yet
+      </div>
+    `;
+
+    return;
+
+  }
+
+  box.innerHTML=state.history.map(x=>`
+
+    <div class="item">
+
+      <div class="item-icon">
+        ${ICONS.swap}
+      </div>
+
+      <div class="item-info">
+        <strong>${x.type}</strong>
+        <span>${x.time}</span>
+      </div>
+
+      <b style="font-size:12px;color:var(--green)">
+        ${x.value}
+      </b>
+
+    </div>
+
+  `).join("");
+
+}
+
+
+/* =========================================================
+   GAMES
+========================================================= */
+
+let gameType=null;
+let gameRunning=false;
+let gameRAF=null;
+
+const gameCanvas=document.getElementById("gameCanvas");
+const ctx=gameCanvas.getContext("2d");
+
+
+/* ---------- ZOMBIE MODEL ---------- */
+
+function drawZombie(c,x,y,s=1){
+
+  c.save();
+  c.translate(x,y);
+
+  /* shadow */
+  c.fillStyle="rgba(0,0,0,.3)";
+  c.beginPath();
+  c.ellipse(0,27*s,18*s,5*s,0,0,Math.PI*2);
+  c.fill();
+
+  /* body */
+  c.fillStyle="#376f4a";
+  c.beginPath();
+  c.roundRect(
+    -15*s,
+    -2*s,
+    30*s,
+    30*s,
+    8*s
+  );
+  c.fill();
+
+  /* neck */
+  c.fillStyle="#6fa37b";
+  c.fillRect(-7*s,-12*s,14*s,10*s);
+
+  /* head */
+  c.fillStyle="#77b887";
+  c.beginPath();
+  c.arc(0,-18*s,17*s,0,Math.PI*2);
+  c.fill();
+
+  /* ear */
+  c.beginPath();
+  c.arc(-16*s,-18*s,5*s,0,Math.PI*2);
+  c.fill();
+
+  c.beginPath();
+  c.arc(16*s,-18*s,5*s,0,Math.PI*2);
+  c.fill();
+
+  /* hair */
+  c.fillStyle="#17281c";
+  c.beginPath();
+  c.arc(0,-25*s,15*s,Math.PI,Math.PI*2);
+  c.fill();
+
+  /* eyes */
+  c.fillStyle="#09100b";
+
+  c.beginPath();
+  c.arc(-6*s,-19*s,3*s,0,Math.PI*2);
+  c.fill();
+
+  c.beginPath();
+  c.arc(7*s,-19*s,3*s,0,Math.PI*2);
+  c.fill();
+
+  /* mouth */
+  c.strokeStyle="#162a1b";
+  c.lineWidth=2*s;
+  c.beginPath();
+  c.moveTo(-6*s,-9*s);
+  c.lineTo(7*s,-9*s);
+  c.stroke();
+
+  /* arms */
+  c.strokeStyle="#6fa37b";
+  c.lineWidth=7*s;
+  c.lineCap="round";
+
+  c.beginPath();
+  c.moveTo(-12*s,4*s);
+  c.lineTo(-25*s,13*s);
+  c.stroke();
+
+  c.beginPath();
+  c.moveTo(12*s,4*s);
+  c.lineTo(25*s,13*s);
+  c.stroke();
+
+  /* legs */
+  c.beginPath();
+  c.moveTo(-8*s,25*s);
+  c.lineTo(-13*s,42*s);
+  c.stroke();
+
+  c.beginPath();
+  c.moveTo(8*s,25*s);
+  c.lineTo(13*s,42*s);
+  c.stroke();
+
+  c.restore();
+
+}
+
+
+/* ---------- SOUND ---------- */
+
+let audioCtx=null;
+
+function jumpSound(){
+
+  try{
+
+    audioCtx ||= new AudioContext();
+
+    const osc=audioCtx.createOscillator();
+    const gain=audioCtx.createGain();
+
+    osc.frequency.setValueAtTime(
+      420,
+      audioCtx.currentTime
+    );
+
+    osc.frequency.exponentialRampToValueAtTime(
+      720,
+      audioCtx.currentTime+.12
+    );
+
+    gain.gain.setValueAtTime(
+      .0001,
+      audioCtx.currentTime
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+      .08,
+      audioCtx.currentTime+.01
+    );
+
+    gain.gain.exponentialRampToValueAtTime(
+      .0001,
+      audioCtx.currentTime+.14
+    );
+
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+
+    osc.start();
+    osc.stop(audioCtx.currentTime+.15);
+
+  }catch(e){}
+
+}
+
+
+/* ---------- FLIP ---------- */
+
+let flip={};
+
+function startFlip(){
+
+  gameType="flip";
+
+  document.getElementById("gameTitle").textContent=
+    "ZOMBIE FLIP";
+
+  document.getElementById("gameOverlay")
+    .classList.remove("show");
+
+  flip={
+    x:125,
+    y:300,
+    vy:0,
+    gravity:.43,
+    flap:-8,
+    pipes:[],
+    timer:0,
+    score:0,
+    speed:3.2,
+    dead:false
+  };
+
+  gameRunning=true;
+
+  resizeGame();
+
+  cancelAnimationFrame(gameRAF);
+
+  gameLoop();
+
+}
+
+function flap(){
+
+  if(!gameRunning) return;
+
+  if(gameType==="flip"){
+
+    flip.vy=flip.flap;
+
+  }else{
+
+    if(run.onGround){
+
+      run.vy=-11;
+      run.onGround=false;
+
+    }
+
+  }
+
+  jumpSound();
+
+}
+
+function gameLoop(){
+
+  if(!gameRunning) return;
+
+  if(gameType==="flip")
+    updateFlip();
+
+  if(gameType==="run")
+    updateRun();
+
+  drawGame();
+
+  gameRAF=requestAnimationFrame(gameLoop);
+
+}
+
+function updateFlip(){
+
+  flip.vy+=flip.gravity;
+  flip.y+=flip.vy;
+
+  flip.timer++;
+
+  if(flip.timer%105===0){
+
+    const gap=190;
+    const top=
+      80+Math.random()*240;
+
+    flip.pipes.push({
+      x:gameCanvas.width+40,
+      top,
+      bottom:top+gap,
+      passed:false
+    });
+
+  }
+
+  flip.pipes.forEach(p=>{
+
+    p.x-=flip.speed;
+
+    if(!p.passed && p.x+62<flip.x){
+
+      p.passed=true;
+      flip.score++;
+
+    }
+
+  });
+
+  flip.pipes=
+    flip.pipes.filter(p=>p.x>-90);
+
+  const zx=flip.x;
+  const zy=flip.y;
+
+  if(zy<20 || zy>gameCanvas.height-20){
+
+    endGame();
+    return;
+
+  }
+
+  for(const p of flip.pipes){
+
+    const hitX=
+      zx+18>p.x &&
+      zx-18<p.x+62;
+
+    const hitY=
+      zy-35<p.top ||
+      zy+35>p.bottom;
+
+    if(hitX&&hitY){
+
+      endGame();
+      return;
+
+    }
+
+  }
+
+}
+
+
+/* ---------- RUN ---------- */
+
+let run={};
+
+function startRun(){
+
+  gameType="run";
+
+  document.getElementById("gameTitle").textContent=
+    "ZOMBIE RUN";
+
+  document.getElementById("gameOverlay")
+    .classList.remove("show");
+
+  run={
+    x:120,
+    y:0,
+    vy:0,
+    gravity:.65,
+    onGround:true,
+    obstacles:[],
+    coins:[],
+    timer:0,
+    score:0,
+    coinsCollected:0,
+    speed:5,
+    dead:false
+  };
+
+  run.y=gameCanvas.height-105;
+
+  gameRunning=true;
+
+  resizeGame();
+
+  cancelAnimationFrame(gameRAF);
+
+  gameLoop();
+
+}
+
+function updateRun(){
+
+  const ground=gameCanvas.height-62;
+
+  run.timer++;
+
+  run.vy+=run.gravity;
+  run.y+=run.vy;
+
+  if(run.y>=ground-43){
+
+    run.y=ground-43;
+    run.vy=0;
+    run.onGround=true;
+
+  }
+
+  if(run.timer%85===0){
+
+    run.obstacles.push({
+      x:gameCanvas.width+30,
+      w:30+Math.random()*25,
+      h:30+Math.random()*35
+    });
+
+  }
+
+  if(run.timer%70===0){
+
+    run.coins.push({
+      x:gameCanvas.width+30,
+      y:ground-80-Math.random()*100,
+      taken:false
+    });
+
+  }
+
+  run.obstacles.forEach(o=>{
+    o.x-=run.speed;
+  });
+
+  run.coins.forEach(c=>{
+    c.x-=run.speed;
+  });
+
+  run.obstacles=
+    run.obstacles.filter(o=>o.x>-80);
+
+  run.coins=
+    run.coins.filter(c=>c.x>-50&&!c.taken);
+
+  for(const o of run.obstacles){
+
+    const zombieLeft=run.x-18;
+    const zombieRight=run.x+18;
+    const zombieBottom=run.y+42;
+    const zombieTop=run.y-10;
+
+    if(
+      zombieRight>o.x &&
+      zombieLeft<o.x+o.w &&
+      zombieBottom>ground-o.h &&
+      zombieTop<ground
+    ){
+
+      endGame();
+      return;
+
+    }
+
+  }
+
+  for(const c of run.coins){
+
+    if(
+      Math.abs(c.x-run.x)<30 &&
+      Math.abs(c.y-run.y)<45
+    ){
+
+      c.taken=true;
+      run.coinsCollected++;
+      run.score+=10;
+
+    }
+
+  }
+
+  if(run.timer%400===0)
+    run.speed+=.25;
+
+}
+
+
+/* ---------- DRAW GAME ---------- */
+
+function drawGame(){
+
+  const c=ctx;
+  const w=gameCanvas.width;
+  const h=gameCanvas.height;
+
+  c.clearRect(0,0,w,h);
+
+  const grd=c.createLinearGradient(0,0,0,h);
+
+  grd.addColorStop(0,"#07150d");
+  grd.addColorStop(1,"#020604");
+
+  c.fillStyle=grd;
+  c.fillRect(0,0,w,h);
+
+  /* background particles */
+
+  c.fillStyle="rgba(92,255,141,.07)";
+
+  for(let i=0;i<20;i++){
+
+    const x=(i*97)%w;
+    const y=(i*137)%h;
+
+    c.beginPath();
+    c.arc(x,y,2,0,Math.PI*2);
+    c.fill();
+
+  }
+
+  if(gameType==="flip")
+    drawFlip(c,w,h);
+
+  if(gameType==="run")
+    drawRun(c,w,h);
+
+  updateGameHud();
+
+}
+
+function drawFlip(c,w,h){
+
+  flip.pipes.forEach(p=>{
+
+    const pipeGrad=c.createLinearGradient(
+      p.x,0,p.x+62,0
+    );
+
+    pipeGrad.addColorStop(0,"#173d25");
+    pipeGrad.addColorStop(.5,"#2f8147");
+    pipeGrad.addColorStop(1,"#102c1b");
+
+    c.fillStyle=pipeGrad;
+
+    c.fillRect(p.x,0,62,p.top-12);
+    c.fillRect(
+      p.x,
+      p.bottom+12,
+      62,
+      h-p.bottom
+    );
+
+    c.fillStyle="#43975b";
+
+    c.fillRect(
+      p.x-6,
+      p.top-18,
+      74,
+      18
+    );
+
+    c.fillRect(
+      p.x-6,
+      p.bottom,
+      74,
+      18
+    );
+
+  });
+
+  drawZombie(c,flip.x,flip.y,.85);
+
+}
+
+function drawRun(c,w,h){
+
+  const ground=h-62;
+
+  c.fillStyle="#0d2315";
+  c.fillRect(0,ground,w,h-ground);
+
+  c.strokeStyle="rgba(92,255,141,.12)";
+  c.lineWidth=2;
+
+  for(let x=0;x<w;x+=40){
+
+    c.beginPath();
+    c.moveTo(x,ground+12);
+    c.lineTo(x+20,ground+12);
+    c.stroke();
+
+  }
+
+  run.obstacles.forEach(o=>{
+
+    c.fillStyle="#2b663c";
+
+    c.beginPath();
+    c.roundRect(
+      o.x,
+      ground-o.h,
+      o.w,
+      o.h,
+      7
+    );
+
+    c.fill();
+
+    c.fillStyle="#4d955f";
+
+    c.beginPath();
+    c.moveTo(o.x+o.w/2,ground-o.h);
+    c.lineTo(o.x+o.w/2-7,ground-o.h-17);
+    c.lineTo(o.x+o.w/2,ground-o.h-6);
+    c.lineTo(o.x+o.w/2+7,ground-o.h-18);
+    c.lineTo(o.x+o.w/2+4,ground-o.h);
+    c.fill();
+
+  });
+
+  run.coins.forEach(cn=>{
+
+    c.save();
+    c.translate(cn.x,cn.y);
+
+    c.fillStyle="#b9ff50";
+
+    c.beginPath();
+    c.arc(
+      0,
+      0,
+      10,
+      0,
+      Math.PI*2
+    );
+
+    c.fill();
+
+    c.fillStyle="#183c22";
+    c.font="bold 10px Arial";
+    c.textAlign="center";
+    c.textBaseline="middle";
+    c.fillText("Z",0,1);
+
+    c.restore();
+
+  });
+
+  drawZombie(c,run.x,run.y,.82);
+
+}
+
+function updateGameHud(){
+
+  let score=0;
+  let reward=0;
+
+  if(gameType==="flip"){
+
+    score=flip.score;
+    reward=score*.01;
+
+  }
+
+  if(gameType==="run"){
+
+    score=run.score;
+    reward=run.coinsCollected*.02;
+
+  }
+
+  document.getElementById("gameScore").textContent=score;
+
+  document.getElementById("gameReward").textContent=
+    reward.toFixed(7)+" ZMB";
+
+  document.getElementById("gameScoreTop").textContent=
+    reward.toFixed(7)+" ZMB";
+
+}
+
+
+/* ---------- END GAME ---------- */
+
+function endGame(){
+
+  if(!gameRunning) return;
+
+  gameRunning=false;
+
+  cancelAnimationFrame(gameRAF);
+
+  let reward=0;
+  let score=0;
+
+  if(gameType==="flip"){
+
+    score=flip.score;
+    reward=score*.01;
+
+    state.games.flipGames++;
+    state.games.flipBest=
+      Math.max(state.games.flipBest,score);
+
+  }
+
+  if(gameType==="run"){
+
+    score=run.score;
+    reward=run.coinsCollected*.02;
+
+    state.games.runGames++;
+    state.games.runBest=
+      Math.max(state.games.runBest,score);
+
+  }
+
+  if(reward>0){
+
+    state.zmb+=reward;
+    state.xp+=score;
+
+    addHistory(
+      gameType==="flip"?"ZOMBIE FLIP":"ZOMBIE RUN",
+      "+"+reward.toFixed(7)+" ZMB"
+    );
+
+  }
+
+  saveState();
+  updateBalances();
+
+  document.getElementById("gameOverText").textContent=
+    gameType==="flip"
+      ?`Score: ${score} · Earned: ${reward.toFixed(7)} ZMB`
+      :`Coins: ${run.coinsCollected} · Earned: ${reward.toFixed(7)} ZMB`;
+
+  document.getElementById("gameOverlay")
+    .classList.add("show");
+
+}
+
+
+/* ---------- GAME EVENTS ---------- */
+
+function resizeGame(){
+
+  const box=gameCanvas.parentElement;
+
+  const width=Math.min(
+    600,
+    box.clientWidth
+  );
+
+  const ratio=760/600;
+
+  gameCanvas.style.height=
+    width*ratio+"px";
+
+}
+
+window.addEventListener("resize",resizeGame);
+
+gameCanvas.addEventListener("pointerdown",e=>{
+
+  e.preventDefault();
+
+  flap();
+
+});
+
+document.addEventListener("keydown",e=>{
+
+  if(
+    e.code==="Space" ||
+    e.code==="ArrowUp"
+  ){
+
+    if(
+      document.getElementById("gameModal")
+        .classList.contains("open")
+    ){
+
+      e.preventDefault();
+      flap();
+
+    }
+
+  }
+
+});
+
+
+document.getElementById("gameRestart")
+.addEventListener("click",()=>{
+
+  if(gameType==="flip")
+    startFlip();
+
+  else
+    startRun();
+
+});
+
+
+document.getElementById("gameClose")
+.addEventListener("click",()=>{
+
+  gameRunning=false;
+
+  cancelAnimationFrame(gameRAF);
+
+  document.getElementById("gameModal")
+    .classList.remove("open");
+
+});
+
+
+/* =========================================================
+   WHEEL
+========================================================= */
+
+function openWheel(){
+
+  const rewards=[
+    "0.1 ZMB",
+    "0.5 ZMB",
+    "1 ZMB",
+    "2 ZMB",
+    "5 ZMB",
+    "0.05 TON",
+    "BONUS",
+    "0.2 ZMB"
+  ];
+
+  const canvas=document.createElement("canvas");
+  canvas.width=540;
+  canvas.height=540;
+
+  const c=canvas.getContext("2d");
+
+  const cx=270;
+  const cy=270;
+  const r=245;
+
+  const colors=[
+    "#0d2919",
+    "#123b22",
+    "#17492a",
+    "#0b2115",
+    "#1a5130",
+    "#0e321d",
+    "#21613a",
+    "#103c22"
+  ];
+
+  rewards.forEach((reward,i)=>{
+
+    const a=
+      i/rewards.length*Math.PI*2-Math.PI/2;
+
+    const b=
+      (i+1)/rewards.length*Math.PI*2-Math.PI/2;
+
+    c.beginPath();
+    c.moveTo(cx,cy);
+    c.arc(cx,cy,r,a,b);
+    c.closePath();
+
+    c.fillStyle=colors[i];
+    c.fill();
+
+    c.strokeStyle="rgba(92,255,141,.25)";
+    c.stroke();
+
+    c.save();
+
+    c.translate(cx,cy);
+    c.rotate((a+b)/2);
+
+    c.fillStyle="#eafff0";
+    c.font="bold 21px Arial";
+    c.textAlign="right";
+    c.fillText(reward,220,7);
+
+    c.restore();
+
+  });
+
+  c.beginPath();
+  c.arc(cx,cy,32,0,Math.PI*2);
+  c.fillStyle="#5cff8d";
+  c.fill();
+
+  c.fillStyle="#021006";
+  c.font="bold 15px Arial";
+  c.textAlign="center";
+  c.textBaseline="middle";
+  c.fillText("ZMB",cx,cy);
+
+  showInfo(
+    "DAILY WHEEL",
+    `
+
+    <div class="wheel-wrap">
+
+      <div class="wheel-pointer"></div>
+
+      <canvas id="wheelCanvas" width="540" height="540"></canvas>
+
+    </div>
+
+    <button class="primary" id="spinWheel">
+      SPIN
+    </button>
+
+    `
+  );
+
+  document.getElementById("wheelCanvas")
+    .replaceWith(canvas);
+
+  canvas.id="wheelCanvas";
+  canvas.style.width="270px";
+  canvas.style.height="270px";
+
+  document.getElementById("spinWheel")
+    .addEventListener("click",()=>{
+
+      if(
+        Date.now()-state.wheelLast<
+        24*60*60*1000
+      ){
+
+        toast("Wheel available once every 24h");
+        return;
+
+      }
+
+      const index=
+        Math.floor(Math.random()*rewards.length);
+
+      const rotation=
+        360*5+
+        (360-(index*360/rewards.length+22.5));
+
+      canvas.style.transform=
+        `rotate(${rotation}deg)`;
+
+      document.getElementById("spinWheel").disabled=true;
+
+      setTimeout(()=>{
+
+        const reward=rewards[index];
+
+        if(reward.includes("TON")){
+
+          state.ton+=parseFloat(reward);
+
+        }else if(reward.includes("BONUS")){
+
+          state.zmb+=2;
+
+        }else{
+
+          state.zmb+=parseFloat(reward);
+
+        }
+
+        state.wheelLast=Date.now();
+
+        saveState();
+        updateBalances();
+
+        toast("Wheel reward: "+reward);
+
+        closeModal();
+
+      },4100);
+
+    });
+
+}
+
+
+/* =========================================================
+   COMBO
+========================================================= */
+
+/*
+  DAILY COMBO
+  ----------------------------------------------------------
+  Пока frontend demo использует это значение.
+
+  Например:
+      [2,4,5]
+
+  означает, что сегодня правильные карточки:
+      2 + 4 + 5
+
+  Позже backend / Telegram bot должен передавать сюда
+  значение дня. Для удобного тестирования также поддержан:
+      ?combo=2,4,5
+*/
+
+const urlCombo=
+  new URLSearchParams(location.search).get("combo");
+
+const DAILY_COMBO=
+  urlCombo
+  ?urlCombo
+      .split(",")
+      .map(Number)
+      .filter(x=>x>=1&&x<=5)
+  :[2,4,5];
+
+function todayKey(){
+
+  return new Date().toISOString().slice(0,10);
+
+}
+
+function openCombo(){
+
+  const today=todayKey();
+
+  if(state.comboDate!==today){
+
+    state.comboDate=today;
+    state.comboSelected=[];
+
+    saveState();
+
+  }
+
+  showInfo(
+    "DAILY COMBO",
+    `
+
+    <p style="color:var(--muted);font-size:12px">
+      Select exactly 3 cards.
+    </p>
+
+    <div class="combo-cards">
+
+      ${[1,2,3,4,5].map(n=>`
+
+        <button
+          class="combo-card ${state.comboSelected.includes(n)?"selected":""}"
+          data-combo="${n}"
+        >
+
+          ${ICONS.cards}
+
+          <span>#${n}</span>
+
+        </button>
+
+      `).join("")}
+
+    </div>
+
+    <div style="height:15px"></div>
+
+    <button
+      class="primary"
+      id="confirmCombo"
+    >
+      CONFIRM COMBO
+    </button>
+
+    `
+  );
+
+}
+
+function selectCombo(n){
+
+  if(state.comboSelected.includes(n)){
+
+    state.comboSelected=
+      state.comboSelected.filter(x=>x!==n);
+
+  }else{
+
+    if(state.comboSelected.length>=3){
+
+      toast("Choose exactly 3 cards");
+      return;
+
+    }
+
+    state.comboSelected.push(n);
+
+  }
+
+  saveState();
+
+  openCombo();
+
+}
+
+function confirmCombo(){
+
+  if(state.comboSelected.length!==3){
+
+    toast("Select exactly 3 cards");
+    return;
+
+  }
+
+  const a=[...state.comboSelected].sort(
+    (x,y)=>x-y
+  );
+
+  const b=[...DAILY_COMBO].sort(
+    (x,y)=>x-y
+  );
+
+  const correct=
+    JSON.stringify(a)===JSON.stringify(b);
+
+  if(correct){
+
+    state.zmb+=5;
+    state.xp+=50;
+
+    addHistory(
+      "DAILY COMBO",
+      "+5 ZMB"
+    );
+
+    toast("COMBO CORRECT · +5 ZMB");
+
+  }else{
+
+    toast("Wrong combination");
+
+  }
+
+  state.comboSelected=[];
+
+  saveState();
+  updateBalances();
+  closeModal();
+
+}
+
 
 /* =========================================================
    TOP
 ========================================================= */
 
-let currentTop="zmb";
-
-const fakeUsers=[
-  ["ZombieLord",9821],
-  ["ZMBMaster",8412],
-  ["NightWalker",7234],
-  ["GreenGhost",6910],
-  ["DeadPixel",6021],
-  ["Survivor77",5740],
-  ["ZMBHunter",5200],
-  ["VirusKing",4890],
-  ["ToxicWalker",4410],
-  ["LastOne",4020],
-  ["ZombieX",3780],
-  ["Unknown",3510]
-];
-
 function renderTop(type="zmb"){
-  currentTop=type;
 
-  document.querySelectorAll(".topTab").forEach(x=>{
-    x.classList.toggle("active",x.dataset.topTab===type);
-  });
+  const users=[];
 
-  const list=document.getElementById("topList");
+  for(let i=1;i<=50;i++){
 
-  let users=fakeUsers.map((u,i)=>({
-    name:u[0],
-    value:
-      type==="zmb" ? u[1] :
-      type==="ref" ? Math.floor(u[1]/180) :
-      Math.floor(u[1]/3),
-  }));
+    users.push({
+      name:[
+        "Shadow",
+        "Nexus",
+        "Zombie",
+        "Hunter",
+        "Toxic",
+        "Raven",
+        "Ghost",
+        "Pixel",
+        "DeadMan",
+        "Survivor"
+      ][i%10]+(i>10?i:""),
 
-  users=users.sort((a,b)=>b.value-a.value).slice(0,12);
+      zmb:
+        Math.max(
+          10,
+          10000-i*123+Math.random()*500
+        ),
 
-  list.innerHTML=users.map((u,i)=>`
-    <div class="rankItem card">
-      <div class="rank">${i+1}</div>
-      <div class="rankAvatar">${escapeHTML(u.name.slice(0,2).toUpperCase())}</div>
-      <div class="rankInfo">
-        <b>${escapeHTML(u.name)}</b>
-        <small>${type==="zmb"?"ZMB balance":type==="ref"?"referrals":"game score"}</small>
+      ref:
+        Math.max(
+          1,
+          300-i*4
+        ),
+
+      games:
+        Math.max(
+          100,
+          9000-i*137
+        )
+
+    });
+
+  }
+
+  const sorted=
+    [...users].sort((a,b)=>{
+
+      if(type==="zmb")
+        return b.zmb-a.zmb;
+
+      if(type==="ref")
+        return b.ref-a.ref;
+
+      return b.games-a.games;
+
+    });
+
+  document.getElementById("topList").innerHTML=
+    sorted.map((u,i)=>`
+
+      <div class="rank">
+
+        <div class="rank-num">
+          ${i+1}
+        </div>
+
+        <div class="rank-avatar">
+          ${u.name.slice(0,2).toUpperCase()}
+        </div>
+
+        <div class="rank-user">
+          <strong>${u.name}</strong>
+          <span>LEVEL ${Math.floor(i/5)+3}</span>
+        </div>
+
+        <div class="rank-score">
+
+          ${
+            type==="zmb"
+              ?u.zmb.toFixed(2)+" ZMB"
+              :type==="ref"
+                ?u.ref+" REF"
+                :u.games+" PTS"
+          }
+
+        </div>
+
       </div>
-      <div class="rankValue">
-        ${type==="zmb"?fmt(u.value,0):u.value}
-      </div>
-    </div>
-  `).join("");
 
-  const myValue=type==="zmb"?Math.floor(state.zmb):
-                type==="ref"?state.referrals.length:
-                Math.max(state.games.flipBest,state.games.runBest);
+    `).join("");
 
-  list.insertAdjacentHTML("beforeend",`
-    <div class="rankItem card currentRank">
-      <div class="rank">#${Math.floor(37+Math.random()*8)}</div>
-      <div class="rankAvatar">${escapeHTML(getName().slice(0,2).toUpperCase())}</div>
-      <div class="rankInfo">
-        <b>${escapeHTML(getName())} · YOU</b>
-        <small>Current position</small>
-      </div>
-      <div class="rankValue">${myValue}</div>
-    </div>
-  `);
 }
+
 
 /* =========================================================
-   FRIENDS
+   REFERRALS
 ========================================================= */
 
-function renderFriends(){
-  const username=tgUser?.username || "survivor";
-  const botName="paid_zombie_bot";
+function renderReferrals(){
 
-  document.getElementById("refLink").textContent=
-    `https://t.me/${botName}?start=${username}`;
+  document.getElementById("refCount").textContent=
+    state.referrals;
 
-  document.getElementById("refCount").textContent=state.referrals.length;
-  document.getElementById("refEarned").textContent=fmt(state.referralEarned,4);
+  document.getElementById("refEarn").textContent=
+    "0.0000";
 
-  const list=document.getElementById("friendsList");
+  const friends=[
+    "Shadow",
+    "Nexus",
+    "Toxic"
+  ].slice(0,state.referrals);
 
-  if(!state.referrals.length){
-    list.innerHTML=`<div class="empty">No referrals yet</div>`;
-    return;
-  }
+  document.getElementById("referralList").innerHTML=
+    friends.length
+    ?friends.map(x=>`
 
-  list.innerHTML=state.referrals.map(name=>`
-    <div class="friendItem">
-      <div class="rankAvatar">${escapeHTML(name.slice(0,2).toUpperCase())}</div>
-      <div style="flex:1;font-weight:850">${escapeHTML(name)}</div>
-      <div style="font-size:11px;color:var(--green)">ACTIVE</div>
-    </div>
-  `).join("");
+      <div class="item">
+
+        <div class="rank-avatar">
+          ${x.slice(0,2).toUpperCase()}
+        </div>
+
+        <div class="item-info">
+          <strong>${x}</strong>
+          <span>REFERRED USER</span>
+        </div>
+
+      </div>
+
+    `).join("")
+    :
+    `<div class="glass card" style="color:var(--muted);font-size:12px">
+      No referrals yet
+    </div>`;
+
 }
 
-async function copyRef(){
-  const text=document.getElementById("refLink").textContent;
-
-  try{
-    await navigator.clipboard.writeText(text);
-    toast("Referral link copied");
-  }catch(e){
-    toast(text);
-  }
-}
-
-function shareRef(){
-  const text=encodeURIComponent("Join PAID ZOMBIE and earn ZMB!");
-  const url=encodeURIComponent(document.getElementById("refLink").textContent);
-
-  if(tg?.openTelegramLink){
-    tg.openTelegramLink(`https://t.me/share/url?url=${url}&text=${text}`);
-  }else{
-    window.open(`https://t.me/share/url?url=${url}&text=${text}`,"_blank");
-  }
-}
 
 /* =========================================================
    GIVEAWAYS
 ========================================================= */
 
 function renderGiveaways(){
-  document.getElementById("ticketCount").textContent=state.tickets;
+
+  document.getElementById("ticketCount").textContent=
+    state.tickets;
 
   const giveaways=[
-    {id:1,prize:"500 ZMB",participants:183,countdown:"03:42:18"},
-    {id:2,prize:"1 TON",participants:92,countdown:"11:08:44"},
-    {id:3,prize:"2,500 ZMB",participants:411,countdown:"1d 04:19:20"}
+    {
+      prize:"10 TON",
+      people:482,
+      time:"02:41:19"
+    },
+    {
+      prize:"5 TON",
+      people:219,
+      time:"11:18:42"
+    },
+    {
+      prize:"1000 ZMB",
+      people:903,
+      time:"19:04:11"
+    }
   ];
 
-  document.getElementById("giveawayList").innerHTML=giveaways.map(g=>{
-    const joined=!!state.giveaways[g.id];
+  document.getElementById("giveawayList").innerHTML=
+    giveaways.map((g,i)=>`
 
-    return `
-      <div class="giveaway card">
-        <div class="giveawayPrize">${g.prize}</div>
-        <div class="giveawayMeta">
-          <div class="badge">👥 ${g.participants} participants</div>
-          <div class="badge">⏱ ${g.countdown}</div>
+      <div class="glass giveaway">
+
+        <div class="giveaway-prize">
+          ${g.prize}
         </div>
-        <button class="${joined?"secondary":"primary"}" data-action="joinGiveaway" data-id="${g.id}">
-          ${joined?"PARTICIPATING":"PARTICIPATE"}
-        </button>
-      </div>
-    `;
-  }).join("");
-}
 
-function joinGiveaway(id){
-  id=Number(id);
-
-  if(state.giveaways[id]){
-    toast("Already participating");
-    return;
-  }
-
-  if(state.tickets<1){
-    toast("You need 1 ticket");
-    return;
-  }
-
-  state.tickets--;
-  state.giveaways[id]=true;
-
-  saveState();
-  renderGiveaways();
-
-  toast("Ticket used");
-}
-
-/* =========================================================
-   DAILY COMBO
-========================================================= */
-
-function todayKey(){
-  return new Date().toISOString().slice(0,10);
-}
-
-function openCombo(){
-  if(state.comboDate!==todayKey()){
-    state.comboDate=todayKey();
-    state.comboSelected=[];
-    state.comboClaimed=false;
-    saveState();
-  }
-
-  renderComboModal();
-}
-
-function renderComboModal(){
-  const selected=state.comboSelected;
-
-  openModal(`
-    <div class="modalHead">
-      <div>
-        <div class="modalTitle">DAILY COMBO</div>
-        <div style="font-size:11px;color:var(--muted);margin-top:4px">Select exactly 3 cards</div>
-      </div>
-      <button class="close" data-action="closeModal">×</button>
-    </div>
-
-    <div class="comboGrid">
-      ${[1,2,3,4,5].map(n=>`
-        <button class="comboCard ${selected.includes(n)?"selected":""}"
-                data-action="comboPick" data-num="${n}">
-          <div class="comboNum">${n}</div>
-          <small>${selected.includes(n)?"SELECTED":"CARD"}</small>
-        </button>
-      `).join("")}
-    </div>
-
-    <div style="font-size:12px;color:var(--muted);text-align:center;margin:15px 0">
-      ${selected.length}/3 selected
-    </div>
-
-    <button class="${selected.length===3 && !state.comboClaimed?"primary":"secondary"}"
-            data-action="confirmCombo">
-      ${state.comboClaimed?"COMPLETED":"CONFIRM COMBO"}
-    </button>
-  `);
-}
-
-function comboPick(num){
-  num=Number(num);
-
-  if(state.comboClaimed)return;
-
-  if(state.comboSelected.includes(num)){
-    state.comboSelected=state.comboSelected.filter(x=>x!==num);
-  }else{
-    if(state.comboSelected.length>=3){
-      toast("Select only 3 cards");
-      return;
-    }
-    state.comboSelected.push(num);
-  }
-
-  saveState();
-  renderComboModal();
-}
-
-function confirmCombo(){
-  if(state.comboSelected.length!==3){
-    toast("Select exactly 3 cards");
-    return;
-  }
-
-  const a=[...state.comboSelected].sort();
-  const correct=[...DAILY_COMBO].sort();
-
-  if(JSON.stringify(a)===JSON.stringify(correct)){
-    state.zmb+=10;
-    state.comboClaimed=true;
-    addHistory("Daily combo","+10 ZMB");
-    saveState();
-    closeModal();
-    updateBalance();
-    toast("CORRECT COMBO · +10 ZMB");
-  }else{
-    toast("Wrong combination");
-  }
-}
-
-/* =========================================================
-   DAILY WHEEL
-========================================================= */
-
-function canSpinWheel(){
-  return Date.now()-Number(state.wheelLast||0)>=CONFIG.wheelCooldown;
-}
-
-function openWheel(){
-  openModal(`
-    <div class="modalHead">
-      <div>
-        <div class="modalTitle">DAILY WHEEL</div>
-        <div style="font-size:11px;color:var(--muted);margin-top:4px">One free spin every 24 hours</div>
-      </div>
-      <button class="close" data-action="closeModal">×</button>
-    </div>
-
-    <div class="pointer"></div>
-
-    <div class="wheel" id="wheel">
-      <div class="wheelLabels">
-        <span style="transform:rotate(0deg) translateX(86px)">1 ZMB</span>
-        <span style="transform:rotate(90deg) translateX(86px)">5 ZMB</span>
-        <span style="transform:rotate(180deg) translateX(86px)">10 ZMB</span>
-        <span style="transform:rotate(270deg) translateX(86px)">2 ZMB</span>
-      </div>
-    </div>
-
-    <button class="${canSpinWheel()?"primary":"secondary"}"
-            data-action="spinWheel">
-      ${canSpinWheel()?"SPIN":"AVAILABLE TOMORROW"}
-    </button>
-  `);
-}
-
-function spinWheel(){
-  if(!canSpinWheel()){
-    toast("Wheel available every 24h");
-    return;
-  }
-
-  const wheel=document.getElementById("wheel");
-  if(!wheel)return;
-
-  const rewards=[1,5,10,2];
-  const index=Math.floor(Math.random()*rewards.length);
-  const reward=rewards[index];
-
-  wheel.style.transform=
-    `rotate(${1440 + index*90 + Math.random()*25}deg)`;
-
-  state.wheelLast=Date.now();
-
-  setTimeout(()=>{
-    state.zmb+=reward;
-    addHistory("Daily wheel",`+${reward} ZMB`);
-    saveState();
-    updateBalance();
-    closeModal();
-    toast(`WHEEL REWARD +${reward} ZMB`);
-  },4200);
-}
-
-/* =========================================================
-   GAMES
-========================================================= */
-
-let gameLoop=null;
-let gameState=null;
-
-function openGame(type){
-  stopGame();
-
-  const title=type==="flip"?"ZOMBIE FLIP":"ZOMBIE RUN";
-
-  openModal(`
-    <div class="modalHead">
-      <div>
-        <div class="modalTitle">${title}</div>
-        <div style="font-size:11px;color:var(--muted);margin-top:4px">
-          ${type==="flip"?"Tap / SPACE to fly":"Tap / SPACE / ↑ to jump"}
+        <div class="giveaway-meta">
+          ${g.people} participants · ${g.time}
         </div>
+
+        <button
+          class="primary"
+          data-giveaway="${i}"
+        >
+          PARTICIPATE · 1 TICKET
+        </button>
+
       </div>
-      <button class="close" data-action="closeGame">×</button>
-    </div>
 
-    <div class="gameWrap">
-      <canvas id="gameCanvas" width="480" height="460"></canvas>
-    </div>
+    `).join("");
 
-    <div class="gameInfo">
-      <div class="gameScore" id="gameScore">0</div>
-      <div class="gameHint" id="gameHint">TAP TO START</div>
-    </div>
-
-    <div class="gameButtons">
-      <button class="secondary" data-action="gameAction">PLAY</button>
-      <button class="secondary" data-action="closeGame">CLOSE</button>
-    </div>
-  `);
-
-  requestAnimationFrame(()=>{
-    if(type==="flip")initFlipGame();
-    else initRunGame();
-  });
 }
 
-function stopGame(){
-  if(gameLoop){
-    cancelAnimationFrame(gameLoop);
-    gameLoop=null;
-  }
-  gameState=null;
-}
+document.addEventListener("click",e=>{
 
-function gameAction(){
-  if(!gameState)return;
+  const g=e.target.closest("[data-giveaway]");
 
-  if(!gameState.started){
-    gameState.started=true;
-    gameState.over=false;
-    gameState.last=performance.now();
-    document.getElementById("gameHint").textContent="PLAYING";
-    beep("jump");
-    return;
-  }
+  if(g){
 
-  if(gameState.type==="flip"){
-    gameState.vy=-430;
-    beep("jump");
-  }else{
-    if(gameState.onGround){
-      gameState.vy=-610;
-      gameState.onGround=false;
-      beep("jump");
-    }
-  }
-}
+    if(state.tickets<=0){
 
-/* ---- FLIP ---- */
-
-function initFlipGame(){
-  const canvas=document.getElementById("gameCanvas");
-  const ctx=canvas.getContext("2d");
-
-  gameState={
-    type:"flip",
-    started:false,
-    over:false,
-    x:120,
-    y:220,
-    vy:0,
-    gravity:1250,
-    speed:190,
-    pipes:[],
-    score:0,
-    spawn:0,
-    last:performance.now()
-  };
-
-  const flap=()=>{
-    if(gameState.over){
-      resetFlip();
+      toast("You need a giveaway ticket");
       return;
+
     }
 
-    if(!gameState.started){
-      gameState.started=true;
-      document.getElementById("gameHint").textContent="PLAYING";
-    }
+    state.tickets--;
 
-    gameState.vy=-430;
-    beep("jump");
-  };
-
-  canvas.onpointerdown=flap;
-
-  const loop=(time)=>{
-    if(!gameState)return;
-
-    const dt=Math.min(.033,(time-gameState.last)/1000);
-    gameState.last=time;
-
-    if(gameState.started&&!gameState.over){
-      updateFlip(dt);
-    }
-
-    drawFlip(ctx,canvas);
-    gameLoop=requestAnimationFrame(loop);
-  };
-
-  gameLoop=requestAnimationFrame(loop);
-}
-
-function resetFlip(){
-  gameState.y=220;
-  gameState.vy=0;
-  gameState.pipes=[];
-  gameState.score=0;
-  gameState.spawn=0;
-  gameState.started=true;
-  gameState.over=false;
-  document.getElementById("gameHint").textContent="PLAYING";
-}
-
-function updateFlip(dt){
-  const g=gameState;
-
-  g.vy+=g.gravity*dt;
-  g.y+=g.vy*dt;
-
-  g.spawn-=dt;
-
-  if(g.spawn<=0){
-    const gap=145;
-    const top=55+Math.random()*180;
-
-    g.pipes.push({
-      x:500,
-      top,
-      gap,
-      passed:false
-    });
-
-    g.spawn=1.55;
-  }
-
-  g.pipes.forEach(p=>{
-    p.x-=g.speed*dt;
-
-    if(!p.passed&&p.x+58<g.x){
-      p.passed=true;
-      g.score++;
-      document.getElementById("gameScore").textContent=g.score;
-    }
-  });
-
-  g.pipes=g.pipes.filter(p=>p.x>-80);
-
-  if(g.y<0||g.y>430){
-    flipGameOver();
-    return;
-  }
-
-  for(const p of g.pipes){
-    const zx=g.x;
-    const zy=g.y;
-    const zw=35;
-    const zh=35;
-
-    const hitX=zx+zw>p.x&&zx<p.x+58;
-    const hitTop=zy<p.top;
-    const hitBottom=zy+zh>p.top+p.gap;
-
-    if(hitX&&(hitTop||hitBottom)){
-      flipGameOver();
-      return;
-    }
-  }
-}
-
-function flipGameOver(){
-  gameState.over=true;
-  document.getElementById("gameHint").textContent="GAME OVER · TAP TO RESTART";
-
-  if(gameState.score>state.games.flipBest){
-    state.games.flipBest=gameState.score;
     saveState();
+    renderGiveaways();
+
+    toast("You're in the giveaway!");
+
   }
 
-  const reward=Math.floor(gameState.score*.25);
-  if(reward>0){
-    state.zmb+=reward;
-    addHistory("Zombie Flip",`+${reward} ZMB`);
-    saveState();
-    updateBalance();
-  }
-}
+});
 
-function drawFlip(ctx,c){
-  ctx.clearRect(0,0,c.width,c.height);
-
-  const grad=ctx.createLinearGradient(0,0,0,c.height);
-  grad.addColorStop(0,"#0b1b12");
-  grad.addColorStop(1,"#020604");
-  ctx.fillStyle=grad;
-  ctx.fillRect(0,0,c.width,c.height);
-
-  // stars
-  ctx.fillStyle="rgba(150,255,180,.35)";
-  for(let i=0;i<35;i++){
-    const x=(i*97)%c.width;
-    const y=(i*53)%300;
-    ctx.fillRect(x,y,2,2);
-  }
-
-  // ground
-  ctx.fillStyle="#07130c";
-  ctx.fillRect(0,430,c.width,30);
-
-  // pipes
-  for(const p of gameState.pipes){
-    drawPipe(ctx,p.x,0,58,p.top);
-    drawPipe(ctx,p.x,p.top+p.gap,58,430-(p.top+p.gap));
-  }
-
-  drawZombie(ctx,gameState.x,gameState.y,1.0,gameState.vy<0);
-
-  ctx.fillStyle="rgba(114,255,155,.7)";
-  ctx.font="900 13px system-ui";
-  ctx.fillText("ZOMBIE FLIP",16,25);
-}
-
-function drawPipe(ctx,x,y,w,h){
-  ctx.fillStyle="#12351f";
-  ctx.fillRect(x,y,w,h);
-  ctx.fillStyle="#1d5c31";
-  ctx.fillRect(x+5,y,10,h);
-  ctx.fillStyle="#0a2112";
-  ctx.fillRect(x-5,y+h-16,w+10,16);
-}
-
-function drawZombie(ctx,x,y,scale=1,up=false){
-  ctx.save();
-  ctx.translate(x,y);
-  ctx.scale(scale,scale);
-
-  // shadow
-  ctx.fillStyle="rgba(0,0,0,.35)";
-  ctx.beginPath();
-  ctx.ellipse(18,39,18,5,0,0,Math.PI*2);
-  ctx.fill();
-
-  // body
-  ctx.fillStyle="#3d9b55";
-  roundRect(ctx,8,12,22,25,6);
-  ctx.fill();
-
-  // jacket
-  ctx.fillStyle="#172b20";
-  roundRect(ctx,7,20,24,17,5);
-  ctx.fill();
-
-  // head
-  ctx.fillStyle="#68c87d";
-  roundRect(ctx,6,-10,27,27,8);
-  ctx.fill();
-
-  // hair
-  ctx.fillStyle="#17221a";
-  ctx.fillRect(8,-13,23,7);
-
-  // eyes
-  ctx.fillStyle="#dffff0";
-  ctx.fillRect(12,-2,6,5);
-  ctx.fillRect(22,-2,6,5);
-
-  ctx.fillStyle="#071008";
-  ctx.fillRect(14,-1,2,3);
-  ctx.fillRect(24,-1,2,3);
-
-  // mouth
-  ctx.fillStyle="#071008";
-  ctx.fillRect(14,8,13,3);
-
-  // arms
-  ctx.strokeStyle="#58b96c";
-  ctx.lineWidth=5;
-  ctx.lineCap="round";
-  ctx.beginPath();
-  ctx.moveTo(9,23);ctx.lineTo(1,up?14:31);
-  ctx.moveTo(30,23);ctx.lineTo(38,up?14:31);
-  ctx.stroke();
-
-  ctx.restore();
-}
-
-function roundRect(ctx,x,y,w,h,r){
-  ctx.beginPath();
-  ctx.roundRect(x,y,w,h,r);
-  ctx.fill();
-}
-
-/* ---- RUN ---- */
-
-function initRunGame(){
-  const canvas=document.getElementById("gameCanvas");
-  const ctx=canvas.getContext("2d");
-
-  gameState={
-    type:"run",
-    started:false,
-    over:false,
-    x:75,
-    y:350,
-    vy:0,
-    gravity:1700,
-    ground:385,
-    speed:260,
-    distance:0,
-    score:0,
-    obstacles:[],
-    coins:[],
-    obstacleTimer:0,
-    coinTimer:0,
-    onGround:true,
-    last:performance.now()
-  };
-
-  const jump=()=>{
-    if(gameState.over){
-      resetRun();
-      return;
-    }
-
-    if(!gameState.started){
-      gameState.started=true;
-      document.getElementById("gameHint").textContent="RUNNING";
-    }
-
-    if(gameState.onGround){
-      gameState.vy=-610;
-      gameState.onGround=false;
-      beep("jump");
-    }
-  };
-
-  canvas.onpointerdown=jump;
-
-  const loop=(time)=>{
-    if(!gameState)return;
-
-    const dt=Math.min(.033,(time-gameState.last)/1000);
-    gameState.last=time;
-
-    if(gameState.started&&!gameState.over){
-      updateRun(dt);
-    }
-
-    drawRun(ctx,canvas);
-    gameLoop=requestAnimationFrame(loop);
-  };
-
-  gameLoop=requestAnimationFrame(loop);
-}
-
-function resetRun(){
-  gameState.y=350;
-  gameState.vy=0;
-  gameState.obstacles=[];
-  gameState.coins=[];
-  gameState.score=0;
-  gameState.distance=0;
-  gameState.obstacleTimer=.7;
-  gameState.coinTimer=1;
-  gameState.started=true;
-  gameState.over=false;
-  gameState.onGround=true;
-  document.getElementById("gameHint").textContent="RUNNING";
-}
-
-function updateRun(dt){
-  const g=gameState;
-
-  g.distance+=g.speed*dt;
-  g.speed=Math.min(430,260+g.distance*.015);
-
-  g.vy+=g.gravity*dt;
-  g.y+=g.vy*dt;
-
-  if(g.y>=g.ground-35){
-    g.y=g.ground-35;
-    g.vy=0;
-    g.onGround=true;
-  }else{
-    g.onGround=false;
-  }
-
-  g.obstacleTimer-=dt;
-  if(g.obstacleTimer<=0){
-    g.obstacles.push({
-      x:500,
-      w:25+Math.random()*20,
-      h:30+Math.random()*30
-    });
-
-    g.obstacleTimer=.9+Math.random()*1.2;
-  }
-
-  g.coinTimer-=dt;
-  if(g.coinTimer<=0){
-    g.coins.push({
-      x:500,
-      y:260+Math.random()*80,
-      taken:false
-    });
-    g.coinTimer=.6+Math.random()*1.3;
-  }
-
-  g.obstacles.forEach(o=>o.x-=g.speed*dt);
-  g.coins.forEach(o=>o.x-=g.speed*dt);
-
-  g.obstacles=g.obstacles.filter(o=>o.x>-60);
-  g.coins=g.coins.filter(o=>o.x>-30&&!o.taken);
-
-  // collision
-  for(const o of g.obstacles){
-    const px=g.x+8, py=g.y;
-    const pw=30, ph=34;
-
-    if(
-      px+pw>o.x &&
-      px<o.x+o.w &&
-      py+ph>g.ground-o.h &&
-      py<g.ground
-    ){
-      runGameOver();
-      return;
-    }
-  }
-
-  for(const coin of g.coins){
-    const dx=(g.x+20)-coin.x;
-    const dy=(g.y+15)-coin.y;
-
-    if(Math.sqrt(dx*dx+dy*dy)<28){
-      coin.taken=true;
-      g.score++;
-      state.zmb+=.5;
-      document.getElementById("gameScore").textContent=g.score;
-      updateBalance();
-      beep("coin");
-    }
-  }
-
-  document.getElementById("gameScore").textContent=g.score;
-}
-
-function runGameOver(){
-  gameState.over=true;
-  document.getElementById("gameHint").textContent="GAME OVER · TAP TO RESTART";
-
-  if(gameState.score>state.games.runBest){
-    state.games.runBest=gameState.score;
-    saveState();
-  }
-
-  const reward=Math.floor(gameState.score*.5);
-
-  if(reward>0){
-    state.zmb+=reward;
-    addHistory("Zombie Run",`+${reward} ZMB`);
-    saveState();
-    updateBalance();
-  }
-}
-
-function drawRun(ctx,c){
-  ctx.clearRect(0,0,c.width,c.height);
-
-  const grad=ctx.createLinearGradient(0,0,0,c.height);
-  grad.addColorStop(0,"#0c1c12");
-  grad.addColorStop(1,"#020604");
-  ctx.fillStyle=grad;
-  ctx.fillRect(0,0,c.width,c.height);
-
-  // moon
-  ctx.fillStyle="rgba(174,255,194,.13)";
-  ctx.beginPath();
-  ctx.arc(390,85,42,0,Math.PI*2);
-  ctx.fill();
-
-  // background hills
-  ctx.fillStyle="#08150d";
-  ctx.beginPath();
-  ctx.moveTo(0,385);
-  for(let x=0;x<=480;x+=40){
-    ctx.lineTo(x,340+Math.sin(x*.025)*25);
-  }
-  ctx.lineTo(480,385);
-  ctx.closePath();
-  ctx.fill();
-
-  // ground
-  ctx.fillStyle="#10251a";
-  ctx.fillRect(0,385,480,75);
-
-  // moving ground lines
-  ctx.strokeStyle="#1b4028";
-  ctx.lineWidth=2;
-
-  for(let x=-(gameState.distance%40);x<480;x+=40){
-    ctx.beginPath();
-    ctx.moveTo(x,405);
-    ctx.lineTo(x+18,405);
-    ctx.stroke();
-  }
-
-  // obstacles
-  for(const o of gameState.obstacles){
-    drawBush(ctx,o.x,385-o.h,o.w,o.h);
-  }
-
-  // coins
-  for(const coin of gameState.coins){
-    drawCoin(ctx,coin.x,coin.y);
-  }
-
-  drawZombie(ctx,gameState.x,gameState.y,1.05,!gameState.onGround);
-
-  ctx.fillStyle="rgba(114,255,155,.7)";
-  ctx.font="900 13px system-ui";
-  ctx.fillText("ZOMBIE RUN",16,25);
-}
-
-function drawBush(ctx,x,y,w,h){
-  ctx.fillStyle="#215f32";
-  ctx.beginPath();
-  ctx.roundRect(x,y,w,h,7);
-  ctx.fill();
-
-  ctx.fillStyle="#347e43";
-  ctx.beginPath();
-  ctx.arc(x+w*.25,y+12,12,0,Math.PI*2);
-  ctx.arc(x+w*.55,y+7,15,0,Math.PI*2);
-  ctx.arc(x+w*.82,y+14,11,0,Math.PI*2);
-  ctx.fill();
-}
-
-function drawCoin(ctx,x,y){
-  ctx.save();
-  ctx.translate(x,y);
-
-  ctx.fillStyle="#7aff9e";
-  ctx.shadowColor="#7aff9e";
-  ctx.shadowBlur=15;
-
-  ctx.beginPath();
-  ctx.arc(0,0,9,0,Math.PI*2);
-  ctx.fill();
-
-  ctx.shadowBlur=0;
-  ctx.fillStyle="#071008";
-  ctx.font="900 10px system-ui";
-  ctx.textAlign="center";
-  ctx.textBaseline="middle";
-  ctx.fillText("Z",0,1);
-
-  ctx.restore();
-}
-
-/* =========================================================
-   SOUND
-========================================================= */
-
-let audioCtx=null;
-
-function beep(type){
-  try{
-    audioCtx=audioCtx||new (window.AudioContext||window.webkitAudioContext)();
-
-    const osc=audioCtx.createOscillator();
-    const gain=audioCtx.createGain();
-
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-
-    const now=audioCtx.currentTime;
-
-    if(type==="jump"){
-      osc.frequency.setValueAtTime(440,now);
-      osc.frequency.exponentialRampToValueAtTime(700,now+.09);
-    }else{
-      osc.frequency.setValueAtTime(720,now);
-      osc.frequency.exponentialRampToValueAtTime(980,now+.08);
-    }
-
-    gain.gain.setValueAtTime(.0001,now);
-    gain.gain.exponentialRampToValueAtTime(.07,now+.01);
-    gain.gain.exponentialRampToValueAtTime(.0001,now+.12);
-
-    osc.start(now);
-    osc.stop(now+.13);
-  }catch(e){}
-}
 
 /* =========================================================
    PROFILE MODALS
 ========================================================= */
 
 function openStats(){
-  openModal(`
-    <div class="modalHead">
-      <div class="modalTitle">STATISTICS</div>
-      <button class="close" data-action="closeModal">×</button>
+
+  showInfo(
+    "STATISTICS",
+    `
+
+    <div class="stat-grid">
+
+      <div class="stat">
+        <b>${state.games.flipGames}</b>
+        <span>FLIP GAMES</span>
+      </div>
+
+      <div class="stat">
+        <b>${state.games.runGames}</b>
+        <span>RUN GAMES</span>
+      </div>
+
+      <div class="stat">
+        <b>${state.games.flipBest}</b>
+        <span>FLIP BEST</span>
+      </div>
+
+      <div class="stat">
+        <b>${state.games.runBest}</b>
+        <span>RUN BEST</span>
+      </div>
+
     </div>
 
-    <div class="miningDetails">
-      <div class="statBox"><small>ZMB BALANCE</small><b>${fmt(state.zmb,4)}</b></div>
-      <div class="statBox"><small>TON</small><b>${fmt(state.ton,4)}</b></div>
-      <div class="statBox"><small>FLIP BEST</small><b>${state.games.flipBest}</b></div>
-      <div class="statBox"><small>RUN BEST</small><b>${state.games.runBest}</b></div>
-      <div class="statBox"><small>ADS</small><b>${state.ads[1]+state.ads[2]}</b></div>
-      <div class="statBox"><small>REFERRALS</small><b>${state.referrals.length}</b></div>
-    </div>
-  `);
+    `
+  );
+
 }
 
 function openBonuses(){
-  openModal(`
-    <div class="modalHead">
-      <div class="modalTitle">BONUSES</div>
-      <button class="close" data-action="closeModal">×</button>
-    </div>
 
-    <div class="task card">
-      <div class="taskIcon">✦</div>
-      <div class="taskMain">
-        <b>DAILY BONUS</b>
-        <small>Demo bonus system</small>
+  showInfo(
+    "BONUSES",
+    `
+    <div class="glass card">
+      <div class="card-title">Daily bonus</div>
+      <div style="color:var(--muted);font-size:12px">
+        Daily Wheel and Combo are available every day.
       </div>
-      <button class="smallBtn" data-action="dailyBonus">CLAIM</button>
     </div>
-  `);
-}
+    `
+  );
 
-function dailyBonus(){
-  const key="dailyBonus_"+todayKey();
-
-  if(localStorage.getItem(key)){
-    toast("Already claimed today");
-    return;
-  }
-
-  localStorage.setItem(key,"1");
-
-  state.zmb+=5;
-  addHistory("Daily bonus","+5 ZMB");
-  saveState();
-  updateBalance();
-  closeModal();
-
-  toast("+5 ZMB BONUS");
 }
 
 function openSupport(){
-  openModal(`
-    <div class="modalHead">
-      <div class="modalTitle">SUPPORT</div>
-      <button class="close" data-action="closeModal">×</button>
-    </div>
 
-    <div class="card" style="padding:18px">
-      <div style="font-size:15px;font-weight:900">Need help?</div>
-      <div style="font-size:12px;color:var(--muted);line-height:1.6;margin-top:7px">
-        This is the demo support section. Later connect it to your Telegram support account.
-      </div>
-      <button class="primary" style="margin-top:15px" data-action="closeModal">OK</button>
-    </div>
-  `);
+  showInfo(
+    "SUPPORT",
+    `
+    <p style="color:var(--muted);font-size:13px">
+      Support center will be connected to the Telegram bot.
+    </p>
+
+    <button class="primary" data-close>
+      OK
+    </button>
+    `
+  );
+
 }
 
 function openFaq(){
-  openModal(`
-    <div class="modalHead">
-      <div class="modalTitle">FAQ</div>
-      <button class="close" data-action="closeModal">×</button>
-    </div>
 
-    <div class="card" style="padding:16px;margin-bottom:8px">
+  showInfo(
+    "FAQ",
+    `
+    <div class="glass card">
       <b>How does mining work?</b>
-      <div style="font-size:12px;color:var(--muted);margin-top:6px">
-        Start a session and the demo calculates ZMB using elapsed time.
-      </div>
+      <p style="color:var(--muted);font-size:12px">
+        Start mining and your session keeps accumulating while you are outside the Mini App.
+      </p>
     </div>
 
-    <div class="card" style="padding:16px;margin-bottom:8px">
-      <b>Does mining stop when I leave?</b>
-      <div style="font-size:12px;color:var(--muted);margin-top:6px">
-        No. The session timestamp is saved locally and calculated when you return.
-      </div>
+    <div class="glass card">
+      <b>How do ads work?</b>
+      <p style="color:var(--muted);font-size:12px">
+        Each completed demo ad gives 0.5 ZMB.
+      </p>
     </div>
 
-    <div class="card" style="padding:16px">
-      <b>Are withdrawals real?</b>
-      <div style="font-size:12px;color:var(--muted);margin-top:6px">
-        Not in this frontend demo. Real withdrawals require a secure backend.
-      </div>
+    <div class="glass card">
+      <b>How do withdrawals work?</b>
+      <p style="color:var(--muted);font-size:12px">
+        TON withdrawals are currently visual demo operations.
+      </p>
     </div>
-  `);
+    `
+  );
+
 }
 
 function openChannels(){
-  openModal(`
-    <div class="modalHead">
-      <div class="modalTitle">OUR CHANNELS</div>
-      <button class="close" data-action="closeModal">×</button>
-    </div>
 
-    <div class="task card">
-      <div class="taskIcon">◉</div>
-      <div class="taskMain">
-        <b>PAID ZOMBIE</b>
-        <small>Official channel placeholder</small>
+  showInfo(
+    "OUR CHANNELS",
+    `
+    <div class="task">
+      <div class="menu-icon">
+        ${ICONS.telegram}
+      </div>
+      <div class="task-main">
+        <strong>PAID ZOMBIE</strong>
+        <span>Official channel</span>
       </div>
     </div>
-  `);
+
+    <button class="primary" data-close>
+      CLOSE
+    </button>
+    `
+  );
+
 }
 
+function openSettings(){
+  openScreen("settings");
+}
+
+
 /* =========================================================
-   MODAL
+   MODALS
 ========================================================= */
 
-function openModal(html){
-  document.getElementById("modal").innerHTML=html;
-  document.getElementById("modalBack").classList.add("show");
+function showInfo(title,html){
+
+  const modal=document.getElementById("modal");
+
+  document.getElementById("modalContent").innerHTML=`
+
+    <div class="modal-top">
+
+      <div class="modal-title">
+        ${title}
+      </div>
+
+      <button class="close" data-close>
+        ×
+      </button>
+
+    </div>
+
+    ${html}
+
+  `;
+
+  modal.classList.add("open");
+
 }
 
 function closeModal(){
-  document.getElementById("modalBack").classList.remove("show");
-  stopGame();
+
+  document.getElementById("modal")
+    .classList.remove("open");
+
 }
 
-document.getElementById("modalBack").addEventListener("click",e=>{
-  if(e.target.id==="modalBack")closeModal();
-});
-
-/* =========================================================
-   EVENTS
-========================================================= */
-
 document.addEventListener("click",e=>{
-  const go=e.target.closest("[data-go]");
-  if(go){
-    showScreen(go.dataset.go);
-    return;
-  }
 
-  const lang=e.target.closest("[data-lang]");
-  if(lang){
-    state.language=lang.dataset.lang;
-    applyLanguage();
-    toast(
-      state.language==="ru"?"Язык изменён":
-      state.language==="uk"?"Мову змінено":
-      "Language changed"
-    );
-    return;
-  }
-
-  const top=e.target.closest("[data-top-tab]");
-  if(top){
-    renderTop(top.dataset.topTab);
-    return;
-  }
+  if(e.target.closest("[data-close]"))
+    closeModal();
 
   const action=e.target.closest("[data-action]");
-  if(!action)return;
+
+  if(!action) return;
 
   const a=action.dataset.action;
 
-  if(a==="startMining")startMining();
-  if(a==="claimMining")claimMining();
+  if(a==="openFlip"){
 
-  if(a==="watchAd")watchAd(action.dataset.network);
-  if(a==="subTask")subTask(action.dataset.id);
-  if(a==="createPromo")createPromo();
+    document.getElementById("gameModal")
+      .classList.add("open");
 
-  if(a==="openGame")openGame(action.dataset.game);
-  if(a==="gameAction")gameAction();
-  if(a==="closeGame")closeModal();
+    startFlip();
 
-  if(a==="openWheel")openWheel();
-  if(a==="spinWheel")spinWheel();
+  }
 
-  if(a==="openCombo")openCombo();
-  if(a==="comboPick")comboPick(action.dataset.num);
-  if(a==="confirmCombo")confirmCombo();
+  if(a==="openRun"){
 
-  if(a==="openSwap")openSwap();
-  if(a==="doSwap")doSwap();
+    document.getElementById("gameModal")
+      .classList.add("open");
 
-  if(a==="openWithdraw")openWithdraw();
-  if(a==="doWithdraw")doWithdraw();
+    startRun();
 
-  if(a==="copyRef")copyRef();
-  if(a==="shareRef")shareRef();
+  }
 
-  if(a==="joinGiveaway")joinGiveaway(action.dataset.id);
+  if(a==="openWheel")
+    openWheel();
 
-  if(a==="openStats")openStats();
-  if(a==="openBonuses")openBonuses();
-  if(a==="dailyBonus")dailyBonus();
-  if(a==="openSupport")openSupport();
-  if(a==="openFaq")openFaq();
-  if(a==="openChannels")openChannels();
+  if(a==="openCombo")
+    openCombo();
 
-  if(a==="closeModal")closeModal();
+  if(a==="openSwap")
+    openSwap();
+
+  if(a==="performSwap")
+    performSwap();
+
+  if(a==="openWithdraw")
+    openWithdraw();
+
+  if(a==="performWithdraw")
+    performWithdraw();
+
+  if(a==="openStats")
+    openStats();
+
+  if(a==="openBonuses")
+    openBonuses();
+
+  if(a==="openSupport")
+    openSupport();
+
+  if(a==="openFaq")
+    openFaq();
+
+  if(a==="openChannels")
+    openChannels();
+
+  if(a==="openSettings")
+    openSettings();
+
+  if(a==="copyRef"){
+
+    navigator.clipboard
+      ?.writeText(
+        document.getElementById("refLink").textContent
+      );
+
+    toast("Referral link copied");
+
+  }
+
+  if(a==="shareRef"){
+
+    const link=
+      document.getElementById("refLink").textContent;
+
+    if(tg){
+
+      tg.openTelegramLink(
+        "https://t.me/share/url?url="+
+        encodeURIComponent(link)
+      );
+
+    }else{
+
+      navigator.clipboard?.writeText(link);
+
+      toast("Referral link copied");
+
+    }
+
+  }
+
+  if(a==="createPromo")
+    createPromo();
+
 });
+
+
+document.addEventListener("click",e=>{
+
+  const combo=e.target.closest("[data-combo]");
+
+  if(combo){
+
+    selectCombo(Number(combo.dataset.combo));
+
+  }
+
+  if(e.target.id==="confirmCombo")
+    confirmCombo();
+
+});
+
 
 /* =========================================================
-   KEYBOARD
+   EARN TABS
 ========================================================= */
 
-document.addEventListener("keydown",e=>{
-  if(!gameState)return;
+document.querySelectorAll("[data-earn-tab]").forEach(btn=>{
 
-  if(
-    e.code==="Space" ||
-    e.code==="ArrowUp"
-  ){
-    e.preventDefault();
-    gameAction();
-  }
+  btn.addEventListener("click",()=>{
+
+    document.querySelectorAll("[data-earn-tab]")
+      .forEach(x=>x.classList.remove("active"));
+
+    btn.classList.add("active");
+
+    const ads=btn.dataset.earnTab==="ads";
+
+    document.getElementById("earnAds").style.display=
+      ads?"block":"none";
+
+    document.getElementById("earnPromote").style.display=
+      ads?"none":"block";
+
+  });
+
 });
+
+
+/* =========================================================
+   LANGUAGE
+========================================================= */
+
+document.querySelectorAll("[data-lang]").forEach(btn=>{
+
+  btn.addEventListener("click",()=>{
+
+    state.lang=btn.dataset.lang;
+
+    saveState();
+
+    applyLanguage();
+
+    toast(
+      state.lang==="ru"
+      ?"Язык изменён"
+      :state.lang==="uk"
+        ?"Мову змінено"
+        :"Language changed"
+    );
+
+  });
+
+});
+
+
+/* =========================================================
+   CORE ANIMATION
+========================================================= */
+
+const core=document.getElementById("coreCanvas");
+const cc=core.getContext("2d");
+
+let cw=0;
+let ch=0;
+
+function resizeCore(){
+
+  const rect=core.getBoundingClientRect();
+
+  const dpr=Math.min(
+    window.devicePixelRatio||1,
+    2
+  );
+
+  cw=rect.width;
+  ch=rect.height;
+
+  core.width=cw*dpr;
+  core.height=ch*dpr;
+
+  cc.setTransform(
+    dpr,0,0,dpr,0,0
+  );
+
+}
+
+window.addEventListener("resize",resizeCore);
+
+resizeCore();
+
+const particles=
+  Array.from({length:55},()=>({
+
+    a:Math.random()*Math.PI*2,
+    r:30+Math.random()*125,
+    z:Math.random(),
+    speed:.001+Math.random()*.004,
+    size:1+Math.random()*2
+
+  }));
+
+let coreT=0;
+
+function drawCore(){
+
+  coreT+=.012;
+
+  cc.clearRect(0,0,cw,ch);
+
+  const cx=cw/2;
+  const cy=ch/2;
+
+  /* ambient glow */
+
+  const glow=cc.createRadialGradient(
+    cx,cy,10,
+    cx,cy,145
+  );
+
+  glow.addColorStop(
+    0,
+    "rgba(92,255,141,.13)"
+  );
+
+  glow.addColorStop(
+    .5,
+    "rgba(40,220,110,.035)"
+  );
+
+  glow.addColorStop(
+    1,
+    "transparent"
+  );
+
+  cc.fillStyle=glow;
+  cc.fillRect(0,0,cw,ch);
+
+
+  /* orbital rings */
+
+  for(let i=0;i<4;i++){
+
+    cc.save();
+
+    cc.translate(cx,cy);
+    cc.rotate(
+      coreT*(i%2?-.6:.6)+i
+    );
+
+    cc.strokeStyle=
+      `rgba(92,255,141,${.10-i*.015})`;
+
+    cc.lineWidth=1.2;
+
+    cc.beginPath();
+
+    cc.ellipse(
+      0,
+      0,
+      45+i*20,
+      15+i*9,
+      i*.35,
+      0,
+      Math.PI*2
+    );
+
+    cc.stroke();
+
+    cc.restore();
+
+  }
+
+
+  /* central reactor */
+
+  const pulse=
+    1+Math.sin(coreT*2)*.045;
+
+  const radius=46*pulse;
+
+  const g=cc.createRadialGradient(
+    cx-radius*.3,
+    cy-radius*.3,
+    3,
+    cx,
+    cy,
+    radius
+  );
+
+  g.addColorStop(
+    0,
+    "rgba(215,255,225,.95)"
+  );
+
+  g.addColorStop(
+    .18,
+    "rgba(92,255,141,.9)"
+  );
+
+  g.addColorStop(
+    .55,
+    "rgba(30,210,95,.18)"
+  );
+
+  g.addColorStop(
+    1,
+    "rgba(20,100,50,0)"
+  );
+
+  cc.fillStyle=g;
+
+  cc.beginPath();
+  cc.arc(cx,cy,radius,0,Math.PI*2);
+  cc.fill();
+
+
+  /* rotating crystalline pieces */
+
+  for(let i=0;i<9;i++){
+
+    const a=
+      coreT*(i%2?.7:-.5)+
+      i*Math.PI*2/9;
+
+    const dist=65+Math.sin(
+      coreT+i
+    )*12;
+
+    const x=cx+Math.cos(a)*dist;
+    const y=cy+Math.sin(a)*dist*.52;
+
+    cc.save();
+
+    cc.translate(x,y);
+    cc.rotate(a);
+
+    cc.fillStyle=
+      "rgba(92,255,141,.72)";
+
+    cc.beginPath();
+
+    cc.moveTo(0,-5);
+    cc.lineTo(5,0);
+    cc.lineTo(0,7);
+    cc.lineTo(-5,0);
+    cc.closePath();
+
+    cc.fill();
+
+    cc.restore();
+
+  }
+
+
+  /* particles */
+
+  particles.forEach(p=>{
+
+    p.a+=p.speed;
+
+    const depth=
+      .55+.45*Math.sin(coreT+p.a*2);
+
+    const x=
+      cx+
+      Math.cos(p.a)*p.r;
+
+    const y=
+      cy+
+      Math.sin(p.a)*p.r*.5;
+
+    cc.globalAlpha=
+      .18+.5*depth;
+
+    cc.fillStyle="#76ff9c";
+
+    cc.beginPath();
+
+    cc.arc(
+      x,
+      y,
+      p.size*depth,
+      0,
+      Math.PI*2
+    );
+
+    cc.fill();
+
+  });
+
+  cc.globalAlpha=1;
+
+  requestAnimationFrame(drawCore);
+
+}
+
+drawCore();
+
+
+/* =========================================================
+   INITIAL RENDER
+========================================================= */
+
+renderTop();
+renderReferrals();
+renderHistory();
+renderGiveaways();
+updateBalances();
+renderAds();
+
+setTimeout(()=>{
+
+  if(state.mining.active){
+
+    toast("Mining session restored");
+
+  }
+
+},800);
+
+
+/* =========================================================
+   TELEGRAM HAPTICS
+========================================================= */
+
+document.addEventListener("click",()=>{
+
+  try{
+    tg?.HapticFeedback?.impactOccurred("light");
+  }catch(e){}
+
+});
+
 
 /* =========================================================
    TOAST
 ========================================================= */
 
-let toastTimer=null;
+let toastTimer;
 
 function toast(text){
+
   const el=document.getElementById("toast");
 
   el.textContent=text;
   el.classList.add("show");
 
   clearTimeout(toastTimer);
+
   toastTimer=setTimeout(()=>{
+
     el.classList.remove("show");
-  },2300);
+
+  },2200);
+
 }
+
 
 /* =========================================================
-   UTILS
+   OUTSIDE CLICK
 ========================================================= */
 
-function formatTime(seconds){
-  seconds=Math.max(0,Math.floor(seconds));
+document.getElementById("modal")
+.addEventListener("click",e=>{
 
-  const h=Math.floor(seconds/3600);
-  const m=Math.floor((seconds%3600)/60);
-  const s=seconds%60;
+  if(e.target.id==="modal")
+    closeModal();
 
-  return [h,m,s].map(x=>String(x).padStart(2,"0")).join(":");
-}
+});
 
-function escapeHTML(str){
-  return String(str)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-}
-
-function escapeAttr(str){
-  return escapeHTML(str);
-}
 
 /* =========================================================
-   INIT
+   GAME OPEN ACTIONS
 ========================================================= */
 
-function init(){
-  updateUserUI();
-  updateBalance();
-  renderMining();
-  renderEarn();
-  renderTop("zmb");
-  renderFriends();
-  renderWallet();
-  renderGiveaways();
-  applyLanguage();
-  startPayoutFeed();
+document.addEventListener("click",e=>{
 
-  /*
-    Реальная интеграция Telegram:
-    - initDataUnsafe используется только для UI.
-    - на production backend нужно валидировать
-      Telegram.WebApp.initData на сервере.
-  */
+  if(e.target.closest("[data-action='openFlip']")){
 
-  console.log("PAID ZOMBIE initialized");
-}
+    document.getElementById("gameModal")
+      .classList.add("open");
 
-init();
+  }
+
+  if(e.target.closest("[data-action='openRun']")){
+
+    document.getElementById("gameModal")
+      .classList.add("open");
+
+  }
+
+});
+
 
 })();
 </script>
