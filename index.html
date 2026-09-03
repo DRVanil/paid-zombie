@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#030604">
 <title>PAID ZOMBIE</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -12,11 +13,14 @@
     --bg:#030604;
     --panel:#080d09;
     --panel2:#0c130e;
+    --panel3:#101a13;
     --green:#35ff86;
     --green2:#1fd66b;
     --text:#effff5;
     --muted:#708277;
-    --line:rgba(53,255,134,.18);
+    --dim:#3e4c43;
+    --line:rgba(53,255,134,.15);
+    --line2:rgba(53,255,134,.28);
     --red:#ff5369;
     --gold:#ffd34e;
     --blue:#55aaff;
@@ -44,232 +48,355 @@ body{
 
 button{
     font:inherit;
+    border:0;
+    outline:0;
 }
 
-.app{
+button:active{
+    transform:scale(.97);
+}
+
+#app{
     width:100%;
     max-width:520px;
     min-height:100vh;
     margin:auto;
-    padding:
-        max(12px,env(safe-area-inset-top))
-        14px
-        calc(88px + env(safe-area-inset-bottom))
-        14px;
-
-    background:
-        radial-gradient(circle at 50% -10%,rgba(53,255,134,.08),transparent 34%),
-        linear-gradient(180deg,#030604,#020302);
+    padding-bottom:92px;
+    position:relative;
 }
 
-/* ================= HEADER ================= */
+/* =====================================================
+   HEADER
+===================================================== */
 
 .header{
+    height:64px;
     display:flex;
-    justify-content:space-between;
     align-items:center;
-    margin-bottom:13px;
+    justify-content:space-between;
+    padding:10px 16px;
+    border-bottom:1px solid rgba(53,255,134,.08);
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(3,6,4,.94);
+    backdrop-filter:blur(15px);
 }
 
-.user{
+.user-head{
     display:flex;
     align-items:center;
     gap:10px;
+    min-width:0;
 }
 
 .avatar{
-    width:43px;
-    height:43px;
+    width:38px;
+    height:38px;
     border-radius:50%;
-    overflow:hidden;
-    background:#101a13;
-    border:1px solid var(--green);
-    box-shadow:0 0 16px rgba(53,255,134,.18);
-    flex-shrink:0;
-}
-
-.avatar img{
-    width:100%;
-    height:100%;
     object-fit:cover;
+    background:#0c160f;
+    border:1px solid var(--line2);
 }
 
-.avatar-placeholder{
-    width:100%;
-    height:100%;
+.avatar-fallback{
+    width:38px;
+    height:38px;
+    border-radius:50%;
     display:flex;
-    justify-content:center;
     align-items:center;
-    font-size:21px;
-}
-
-.user-name{
-    font-size:14px;
+    justify-content:center;
+    color:var(--green);
+    background:#0b130d;
+    border:1px solid var(--line2);
     font-weight:900;
+    font-size:14px;
 }
 
-.user-level{
+.username{
+    max-width:150px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    font-size:12px;
+    font-weight:800;
+}
+
+.user-sub{
     color:var(--muted);
-    font-size:10px;
-    margin-top:3px;
+    font-size:9px;
+    margin-top:2px;
 }
 
-.balance{
+.balance-head{
     text-align:right;
-    cursor:pointer;
 }
 
 .balance-label{
     color:var(--muted);
-    font-size:9px;
+    font-size:8px;
+    letter-spacing:1.4px;
 }
 
 .balance-value{
     color:var(--green);
-    font-weight:950;
     font-size:16px;
+    font-weight:900;
+    margin-top:2px;
 }
 
-/* ================= SCREENS ================= */
+/* =====================================================
+   SCREENS
+===================================================== */
 
 .screen{
     display:none;
-    animation:appear .18s ease;
+    padding:14px;
 }
 
 .screen.active{
     display:block;
 }
 
-@keyframes appear{
-    from{
-        opacity:0;
-        transform:translateY(5px);
-    }
-    to{
-        opacity:1;
-        transform:none;
-    }
-}
-
-/* ================= BACK ================= */
-
-.back{
-    display:flex;
-    align-items:center;
-    gap:7px;
-    margin:3px 0 16px;
-    border:0;
-    background:transparent;
-    color:var(--muted);
-    font-size:12px;
-    font-weight:900;
-    padding:4px 0;
-}
-
-.back:active{
-    color:var(--green);
-}
-
-.title{
-    font-size:24px;
+.screen-title{
+    font-size:22px;
     font-weight:950;
-    margin-bottom:4px;
+    letter-spacing:-.5px;
+    margin:6px 2px 3px;
 }
 
-.subtitle{
+.screen-sub{
     color:var(--muted);
-    font-size:11px;
-    margin-bottom:15px;
+    font-size:10px;
+    margin:0 2px 16px;
 }
 
-/* ================= HOME ================= */
+.back-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    color:var(--muted);
+    font-size:10px;
+    font-weight:800;
+    padding:7px 0;
+    background:none;
+    cursor:pointer;
+}
+
+/* =====================================================
+   HOME
+===================================================== */
 
 .hero{
     position:relative;
-    height:255px;
+    min-height:265px;
     border:1px solid var(--line);
-    border-radius:25px;
+    border-radius:20px;
     overflow:hidden;
     background:
-        radial-gradient(circle at 50% 55%,rgba(53,255,134,.11),transparent 42%),
-        linear-gradient(145deg,#0a110d,#050806);
+        radial-gradient(circle at 50% 42%,rgba(53,255,134,.10),transparent 34%),
+        linear-gradient(145deg,#071009,#040705 65%);
     display:flex;
+    flex-direction:column;
     align-items:center;
     justify-content:center;
+    margin-bottom:12px;
 }
 
 .hero-grid{
     position:absolute;
     inset:0;
-    opacity:.18;
+    opacity:.22;
     background-image:
-        linear-gradient(rgba(53,255,134,.08) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(53,255,134,.08) 1px,transparent 1px);
-    background-size:35px 35px;
-    transform:perspective(400px) rotateX(55deg) scale(1.5);
-    transform-origin:center bottom;
-}
-
-.zombie-svg{
-    position:relative;
-    z-index:2;
-    width:205px;
-    height:205px;
-    animation:zombieFloat 3.5s ease-in-out infinite;
-    filter:drop-shadow(0 0 18px rgba(53,255,134,.2));
-}
-
-@keyframes zombieFloat{
-    0%,100%{transform:translateY(5px)}
-    50%{transform:translateY(-7px)}
+        linear-gradient(rgba(53,255,134,.06) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(53,255,134,.06) 1px,transparent 1px);
+    background-size:25px 25px;
+    mask-image:linear-gradient(to bottom,transparent,#000 30%,#000 70%,transparent);
 }
 
 .hero-label{
     position:absolute;
-    z-index:4;
-    bottom:28px;
-    font-size:12px;
-    letter-spacing:2px;
-    font-weight:950;
-    color:var(--green);
+    top:15px;
+    left:16px;
+    font-size:9px;
+    font-weight:900;
+    letter-spacing:1.8px;
+    color:var(--muted);
 }
 
 .hero-status{
     position:absolute;
-    bottom:11px;
-    z-index:4;
-    color:var(--muted);
-    font-size:9px;
-}
-
-.coin{
-    position:absolute;
-    z-index:3;
+    top:15px;
+    right:16px;
+    font-size:8px;
+    font-weight:900;
+    letter-spacing:1px;
     color:var(--green);
-    font-size:11px;
+}
+
+.hero-status::before{
+    content:"";
+    width:6px;
+    height:6px;
+    display:inline-block;
+    border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 8px var(--green);
+    margin-right:5px;
+}
+
+/* ZMB CORE */
+
+.zmb-core{
+    width:112px;
+    height:112px;
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.core-ring{
+    position:absolute;
+    border-radius:50%;
+    border:1px solid var(--line2);
+}
+
+.core-ring.r1{
+    inset:0;
+    border-top-color:var(--green);
+    animation:spin 7s linear infinite;
+}
+
+.core-ring.r2{
+    inset:11px;
+    border-right-color:var(--green);
+    border-style:dashed;
+    animation:spinReverse 5s linear infinite;
+}
+
+.core-ring.r3{
+    inset:23px;
+    border-bottom-color:var(--green);
+    animation:spin 3.5s linear infinite;
+}
+
+.core-center{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    border:1px solid var(--green);
+    background:#07120b;
+    box-shadow:
+        0 0 18px rgba(53,255,134,.4),
+        inset 0 0 14px rgba(53,255,134,.12);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--green);
+    font-size:9px;
     font-weight:950;
-    animation:coinFloat 2.5s ease-in-out infinite;
+    letter-spacing:1px;
 }
 
-.coin1{left:14%;top:35%}
-.coin2{right:15%;top:30%;animation-delay:.7s}
-.coin3{left:23%;bottom:31%;animation-delay:1.3s}
-.coin4{right:23%;bottom:35%;animation-delay:1.8s}
-
-@keyframes coinFloat{
-    0%,100%{opacity:.2;transform:translateY(6px)}
-    50%{opacity:.9;transform:translateY(-9px)}
+.core-center::after{
+    content:"";
+    position:absolute;
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 14px var(--green);
+    animation:pulse 1.5s infinite;
 }
 
-/* ================= LEVEL ================= */
+.core-label{
+    position:absolute;
+    bottom:-25px;
+    color:var(--muted);
+    font-size:8px;
+    letter-spacing:2px;
+    font-weight:900;
+    white-space:nowrap;
+}
+
+@keyframes spin{
+    to{transform:rotate(360deg)}
+}
+
+@keyframes spinReverse{
+    to{transform:rotate(-360deg)}
+}
+
+@keyframes pulse{
+    0%,100%{transform:scale(.7);opacity:.6}
+    50%{transform:scale(1.2);opacity:1}
+}
+
+.system-line{
+    position:absolute;
+    bottom:13px;
+    color:var(--green);
+    opacity:.65;
+    font-size:8px;
+    font-weight:900;
+    letter-spacing:1.2px;
+}
+
+.home-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+
+.module{
+    min-height:92px;
+    border-radius:15px;
+    border:1px solid var(--line);
+    background:linear-gradient(145deg,var(--panel2),var(--panel));
+    padding:14px;
+    text-align:left;
+    color:var(--text);
+    cursor:pointer;
+    position:relative;
+    overflow:hidden;
+}
+
+.module::after{
+    content:"";
+    position:absolute;
+    width:80px;
+    height:80px;
+    right:-35px;
+    bottom:-40px;
+    border-radius:50%;
+    background:rgba(53,255,134,.07);
+}
+
+.module-icon{
+    color:var(--green);
+    font-size:18px;
+    margin-bottom:8px;
+}
+
+.module-name{
+    font-size:12px;
+    font-weight:950;
+    letter-spacing:.5px;
+}
+
+.module-info{
+    color:var(--muted);
+    font-size:8px;
+    margin-top:4px;
+}
 
 .level-card{
-    margin-top:11px;
-    padding:13px;
+    margin-top:10px;
     border:1px solid var(--line);
     background:var(--panel);
-    border-radius:18px;
+    border-radius:15px;
+    padding:14px;
     cursor:pointer;
 }
 
@@ -279,907 +406,844 @@ button{
     align-items:center;
 }
 
-.level{
-    font-size:13px;
-    font-weight:950;
+.level-name{
+    font-size:11px;
+    font-weight:900;
 }
 
-.xp{
+.level-xp{
     color:var(--muted);
-    font-size:10px;
+    font-size:9px;
 }
 
 .progress{
-    height:8px;
-    border-radius:20px;
-    background:#111a14;
-    overflow:hidden;
-    margin-top:9px;
-}
-
-.progress div{
-    height:100%;
-    width:62%;
-    border-radius:20px;
-    background:linear-gradient(90deg,var(--green2),var(--green));
-    box-shadow:0 0 12px rgba(53,255,134,.4);
-}
-
-.level-bottom{
-    display:flex;
-    justify-content:space-between;
-    color:var(--muted);
-    font-size:9px;
-    margin-top:7px;
-}
-
-/* ================= HOME GRID ================= */
-
-.home-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:10px;
+    height:6px;
+    background:#131c16;
+    border-radius:10px;
     margin-top:11px;
+    overflow:hidden;
 }
 
-.home-button{
-    min-height:104px;
-    border:1px solid var(--line);
-    border-radius:20px;
-    background:linear-gradient(145deg,#0b120e,#070b08);
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    cursor:pointer;
-    transition:.15s;
+.progress-fill{
+    height:100%;
+    width:43%;
+    background:var(--green);
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(53,255,134,.35);
 }
 
-.home-button:active{
-    transform:scale(.97);
-    border-color:var(--green);
-}
-
-.home-icon{
-    font-size:30px;
-    margin-bottom:8px;
-}
-
-.home-title{
-    font-weight:950;
-    font-size:13px;
-}
-
-.home-sub{
-    color:var(--muted);
-    font-size:9px;
-    margin-top:4px;
-}
-
-/* ================= CARDS ================= */
+/* =====================================================
+   CARDS / COMMON
+===================================================== */
 
 .card{
     border:1px solid var(--line);
-    border-radius:19px;
     background:linear-gradient(145deg,var(--panel2),var(--panel));
+    border-radius:15px;
     padding:14px;
     margin-bottom:10px;
 }
 
-.row{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:10px;
-}
-
-.left{
-    display:flex;
-    align-items:center;
-    gap:11px;
-    min-width:0;
-}
-
-.icon-box{
-    width:46px;
-    height:46px;
-    flex-shrink:0;
-    border-radius:14px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    background:#101a13;
-    border:1px solid var(--line);
-    font-size:22px;
-}
-
 .card-title{
-    font-size:13px;
-    font-weight:950;
+    font-size:11px;
+    font-weight:900;
 }
 
-.card-desc{
+.card-sub{
     color:var(--muted);
-    font-size:10px;
-    margin-top:4px;
-    line-height:1.45;
-}
-
-.pill{
-    padding:6px 8px;
-    border-radius:8px;
-    background:#0c1d13;
-    color:var(--green);
     font-size:9px;
-    font-weight:950;
-    white-space:nowrap;
+    margin-top:4px;
 }
 
-.btn{
-    border:1px solid var(--line);
-    background:#0c1710;
-    border-radius:12px;
-    padding:11px 13px;
-    color:var(--text);
+.green{
+    color:var(--green);
+}
+
+.gold{
+    color:var(--gold);
+}
+
+.red{
+    color:var(--red);
+}
+
+.blue{
+    color:var(--blue);
+}
+
+.purple{
+    color:var(--purple);
+}
+
+.primary-btn{
+    width:100%;
+    padding:13px;
+    border-radius:11px;
+    background:var(--green);
+    color:#031007;
     font-size:11px;
     font-weight:950;
     cursor:pointer;
+    margin-top:10px;
 }
 
-.btn:active{
-    transform:scale(.97);
-}
-
-.btn.green{
-    background:var(--green);
-    border-color:var(--green);
-    color:#031008;
-}
-
-.btn.full{
+.secondary-btn{
     width:100%;
-}
-
-.btn.small{
-    padding:8px 10px;
-    font-size:9px;
-}
-
-/* ================= TABS ================= */
-
-.tabs{
-    display:flex;
-    gap:5px;
-    padding:4px;
-    border:1px solid var(--line);
-    background:#070b08;
-    border-radius:14px;
-    margin-bottom:12px;
-}
-
-.tab{
-    flex:1;
-    border:0;
-    background:transparent;
-    color:var(--muted);
-    padding:9px 3px;
-    border-radius:9px;
-    font-size:9px;
-    font-weight:950;
-}
-
-.tab.active{
-    background:var(--green);
-    color:#031008;
-}
-
-/* ================= MINING ================= */
-
-.mining-main{
-    text-align:center;
-    padding:20px 13px;
-    border:1px solid var(--line);
-    border-radius:23px;
-    background:
-        radial-gradient(circle,rgba(53,255,134,.1),transparent 55%),
-        var(--panel);
-    margin-bottom:11px;
-}
-
-.machine-svg{
-    width:110px;
-    height:110px;
-    animation:machinePulse 2s infinite ease-in-out;
-}
-
-@keyframes machinePulse{
-    50%{
-        filter:drop-shadow(0 0 17px rgba(53,255,134,.35));
-        transform:scale(1.025);
-    }
-}
-
-.mining-amount{
-    font-size:29px;
-    font-weight:950;
+    padding:12px;
+    border-radius:11px;
+    border:1px solid var(--line2);
+    background:rgba(53,255,134,.05);
     color:var(--green);
-    margin-top:5px;
-    letter-spacing:-1px;
-}
-
-.mining-per-hour{
-    color:var(--muted);
     font-size:10px;
-    margin-top:3px;
-}
-
-.mining-timer{
-    color:var(--muted);
-    font-size:10px;
+    font-weight:900;
+    cursor:pointer;
     margin-top:8px;
 }
 
-.mining-button{
-    margin-top:14px;
-    width:100%;
-    padding:15px;
-    border:0;
-    border-radius:14px;
-    background:var(--green);
-    color:#031008;
-    font-size:13px;
-    font-weight:950;
-    cursor:pointer;
+/* =====================================================
+   MINING
+===================================================== */
+
+.mining-visual{
+    height:210px;
+    border:1px solid var(--line);
+    border-radius:18px;
+    background:
+        radial-gradient(circle,rgba(53,255,134,.09),transparent 42%),
+        var(--panel);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:10px;
 }
 
-.mining-button.stop{
-    background:#101a14;
-    color:var(--green);
+.mining-core{
+    width:100px;
+    height:100px;
+    border-radius:50%;
     border:1px solid var(--green);
+    position:relative;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 0 35px rgba(53,255,134,.12);
 }
 
-.mining-message{
-    display:none;
-    margin-top:9px;
-    padding:10px;
-    border-radius:11px;
-    background:#211014;
-    border:1px solid rgba(255,83,105,.25);
-    color:#ff8796;
-    font-size:10px;
-    font-weight:800;
+.mining-core::before,
+.mining-core::after{
+    content:"";
+    position:absolute;
+    border-radius:50%;
+    border:1px dashed rgba(53,255,134,.3);
 }
 
-.mining-message.show{
-    display:block;
+.mining-core::before{
+    inset:-14px;
+    animation:spin 5s linear infinite;
+}
+
+.mining-core::after{
+    inset:-27px;
+    animation:spinReverse 8s linear infinite;
+}
+
+.mining-icon{
+    color:var(--green);
+    font-size:24px;
+    font-weight:950;
+}
+
+.mining-amount{
+    margin-top:35px;
+    font-size:18px;
+    font-weight:950;
+    color:var(--green);
+}
+
+.mining-rate{
+    color:var(--muted);
+    font-size:9px;
+    margin-top:3px;
 }
 
 .mining-stats{
     display:grid;
     grid-template-columns:repeat(3,1fr);
     gap:7px;
-    margin-top:13px;
+    margin-bottom:10px;
 }
 
 .stat{
-    padding:10px 5px;
-    text-align:center;
-    border-radius:13px;
-    background:#0a120d;
+    padding:11px 5px;
     border:1px solid var(--line);
-}
-
-.stat-value{
-    font-size:12px;
-    font-weight:950;
+    background:var(--panel);
+    border-radius:12px;
+    text-align:center;
 }
 
 .stat-label{
     color:var(--muted);
-    font-size:8px;
-    margin-top:4px;
+    font-size:7px;
+    letter-spacing:.8px;
 }
 
-.power{
-    padding:13px;
-    border:1px solid var(--line);
-    border-radius:17px;
-    background:var(--panel);
-    margin-bottom:11px;
-}
-
-.power-top{
-    display:flex;
-    justify-content:space-between;
+.stat-value{
     font-size:10px;
-    font-weight:950;
-}
-
-.power-bar{
-    height:8px;
-    margin-top:8px;
-    background:#111a14;
-    border-radius:20px;
-    overflow:hidden;
-}
-
-.power-bar div{
-    height:100%;
-    width:64%;
-    background:var(--green);
-}
-
-/* ================= MINERS ================= */
-
-.miner-art{
-    width:55px;
-    height:55px;
-    border-radius:16px;
-    background:#101a13;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:29px;
-}
-
-.rarity{
-    font-size:8px;
-    font-weight:950;
-    padding:5px 7px;
-    border-radius:7px;
-}
-
-.basic{color:var(--green);background:#102719}
-.medium{color:var(--blue);background:#0d1d2d}
-.epic{color:var(--purple);background:#1c1028}
-.mythic{color:#ffae50;background:#2b1809}
-.legendary{color:#ff5a6d;background:#2a0d12}
-
-.income{
-    margin-top:11px;
-    padding:10px;
-    border-radius:11px;
-    background:#0a170e;
-    border:1px solid rgba(53,255,134,.2);
-}
-
-.income-label{
-    color:var(--muted);
-    font-size:8px;
-}
-
-.income-value{
-    color:var(--green);
-    font-size:15px;
-    font-weight:950;
-    margin-top:3px;
-}
-
-/* ================= GAMES ================= */
-
-.game-card{
-    cursor:pointer;
-    min-height:88px;
-}
-
-.game-card:active{
-    transform:scale(.98);
-}
-
-/* ================= EARN ================= */
-
-.note{
-    padding:11px;
-    border:1px solid var(--line);
-    background:#09140d;
-    border-radius:14px;
-    color:var(--muted);
-    font-size:10px;
-    line-height:1.5;
-    margin-bottom:11px;
-}
-
-.ad-progress{
-    color:var(--green);
-    font-size:9px;
+    font-weight:900;
     margin-top:5px;
-    font-weight:900;
 }
 
-.promote{
-    text-align:center;
-    padding:25px 15px;
-    border:1px solid var(--line);
-    border-radius:21px;
-    background:linear-gradient(145deg,#0d1710,#080c09);
-}
-
-.promote-icon{
-    font-size:43px;
-}
-
-.promote h2{
-    margin:10px 0 5px;
-    font-size:19px;
-}
-
-.promote p{
-    color:var(--muted);
-    font-size:10px;
-    line-height:1.6;
-}
-
-/* ================= GIVEAWAYS ================= */
-
-.prize{
-    color:var(--green);
-    font-size:20px;
-    font-weight:950;
-    margin:12px 0;
-}
-
-.ticket{
-    color:var(--gold);
-    font-weight:950;
-}
-
-/* ================= TOP ================= */
-
-.rank{
-    display:flex;
-    align-items:center;
-    gap:9px;
-}
-
-.rank-number{
-    width:24px;
-    color:var(--muted);
-    text-align:center;
-    font-weight:950;
-    font-size:11px;
-}
-
-.rank-avatar{
-    width:37px;
-    height:37px;
-    border-radius:50%;
-    overflow:hidden;
-    background:#101a13;
-    border:1px solid var(--line);
-    flex-shrink:0;
-}
-
-.rank-avatar img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
-
-.rank-avatar-placeholder{
-    width:100%;
-    height:100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:17px;
-}
-
-.rank-name{
-    flex:1;
-    min-width:0;
-    font-size:11px;
-    font-weight:900;
-    overflow:hidden;
-    text-overflow:ellipsis;
-}
-
-.rank-value{
-    color:var(--green);
-    font-size:10px;
-    font-weight:950;
-}
-
-.my-rank{
-    border-color:var(--green);
-}
-
-/* ================= PROFILE ================= */
-
-.profile{
-    text-align:center;
-    padding:5px 0 18px;
-}
-
-.profile-avatar{
-    width:86px;
-    height:86px;
-    margin:auto;
-    overflow:hidden;
-    border-radius:50%;
-    border:2px solid var(--green);
-    background:#101a13;
-    box-shadow:0 0 25px rgba(53,255,134,.18);
-}
-
-.profile-avatar img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
-
-.profile-avatar-placeholder{
-    width:100%;
-    height:100%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:36px;
-}
-
-.profile-name{
-    margin-top:9px;
-    font-size:18px;
-    font-weight:950;
-}
-
-.profile-id{
-    color:var(--muted);
-    font-size:9px;
-    margin-top:4px;
-}
-
-.menu{
-    padding:2px 13px;
-}
-
-.menu-item{
+.miner{
     display:flex;
     align-items:center;
     gap:11px;
-    padding:14px 0;
-    border-bottom:1px solid rgba(53,255,134,.07);
+}
+
+.miner-art{
+    width:46px;
+    height:46px;
+    border-radius:12px;
+    border:1px solid var(--line2);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#09110c;
+    color:var(--green);
+    font-size:17px;
+    font-weight:950;
+}
+
+.miner-main{
+    flex:1;
+}
+
+.miner-name{
+    font-size:10px;
+    font-weight:900;
+}
+
+.miner-desc{
+    color:var(--muted);
+    font-size:8px;
+    margin-top:3px;
+}
+
+.miner-power{
+    text-align:right;
+    color:var(--green);
+    font-size:9px;
+    font-weight:900;
+}
+
+/* =====================================================
+   GAMES
+===================================================== */
+
+.game-card{
+    border:1px solid var(--line);
+    border-radius:17px;
+    background:linear-gradient(145deg,var(--panel2),var(--panel));
+    padding:15px;
+    margin-bottom:10px;
     cursor:pointer;
 }
 
-.menu-item:last-child{
-    border-bottom:0;
+.game-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 }
 
-.menu-icon{
-    width:30px;
-    text-align:center;
-    font-size:20px;
+.game-icon{
+    width:45px;
+    height:45px;
+    border-radius:12px;
+    border:1px solid var(--line2);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:19px;
+    color:var(--green);
+    background:#09110c;
 }
 
-.menu-text{
+.game-name{
     flex:1;
-    text-align:left;
+    margin-left:11px;
 }
 
-.menu-title{
+.game-title{
     font-size:12px;
     font-weight:950;
 }
 
-.menu-sub{
+.game-desc{
     color:var(--muted);
+    font-size:8px;
+    margin-top:4px;
+}
+
+.play{
+    color:var(--green);
     font-size:9px;
-    margin-top:3px;
+    font-weight:900;
 }
 
-.arrow{
-    color:var(--muted);
-    font-size:20px;
-}
-
-/* ================= WALLET ================= */
-
-.wallet-main{
-    text-align:center;
-    padding:23px 10px;
-    border:1px solid var(--line);
-    border-radius:22px;
-    background:var(--panel);
-    margin-bottom:11px;
-}
-
-.wallet-label{
-    color:var(--muted);
-    font-size:9px;
-}
-
-.wallet-value{
-    color:var(--green);
-    font-size:31px;
-    font-weight:950;
-    margin-top:6px;
-}
-
-.wallet-secondary{
-    color:var(--muted);
-    font-size:10px;
-    margin-top:5px;
-}
-
-.two-buttons{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:8px;
-    margin-bottom:11px;
-}
-
-/* ================= MODAL ================= */
-
-.modal-bg{
-    position:fixed;
-    z-index:100;
-    inset:0;
-    display:none;
-    align-items:flex-end;
-    justify-content:center;
-    background:rgba(0,0,0,.78);
-    backdrop-filter:blur(6px);
-}
-
-.modal-bg.show{
-    display:flex;
-}
-
-.modal{
-    width:min(520px,100%);
-    max-height:90vh;
-    overflow:auto;
-    padding:17px 14px calc(20px + env(safe-area-inset-bottom));
-    background:#080d09;
-    border:1px solid var(--line);
-    border-bottom:0;
-    border-radius:23px 23px 0 0;
-    animation:modalUp .2s ease;
-}
-
-@keyframes modalUp{
-    from{transform:translateY(30px);opacity:0}
-    to{transform:none;opacity:1}
-}
-
-.modal-head{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:14px;
-}
-
-.modal-title{
-    font-size:19px;
-    font-weight:950;
-}
-
-.close{
-    width:33px;
-    height:33px;
-    border:0;
-    border-radius:10px;
-    background:#111a14;
-    color:var(--text);
-}
-
-/* ================= WHEEL ================= */
-
-.wheel-wrap{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-}
-
-.wheel{
-    width:245px;
-    height:245px;
-    border-radius:50%;
-    position:relative;
-    border:7px solid #142319;
-    box-shadow:
-        0 0 0 2px var(--green),
-        0 0 35px rgba(53,255,134,.22);
-    overflow:hidden;
-    transition:transform 4s cubic-bezier(.15,.75,.1,1);
-    background:
-        conic-gradient(
-            #102417 0deg 45deg,
-            #14201a 45deg 90deg,
-            #0b1e13 90deg 135deg,
-            #15221a 135deg 180deg,
-            #102417 180deg 225deg,
-            #14201a 225deg 270deg,
-            #0b1e13 270deg 315deg,
-            #15221a 315deg 360deg
-        );
-}
-
-.wheel:after{
-    content:"";
-    position:absolute;
-    left:50%;
-    top:50%;
-    width:52px;
-    height:52px;
-    transform:translate(-50%,-50%);
-    background:#071009;
-    border:2px solid var(--green);
-    border-radius:50%;
-}
-
-.wheel-label{
-    position:absolute;
-    left:50%;
-    top:50%;
-    width:100%;
-    height:100%;
-    transform:translate(-50%,-50%);
-    display:flex;
-    align-items:flex-start;
-    justify-content:center;
-    padding-top:15px;
-    font-size:11px;
-    font-weight:950;
-    color:var(--green);
-}
-
-.pointer{
-    margin-bottom:-4px;
-    position:relative;
-    z-index:2;
-    color:var(--gold);
-    font-size:28px;
-}
-
-.wheel-result{
-    margin-top:17px;
-    text-align:center;
-    min-height:20px;
-    color:var(--green);
-    font-size:14px;
-    font-weight:950;
-}
-
-.cooldown{
-    color:var(--muted);
-    font-size:10px;
-    text-align:center;
-    margin-top:6px;
-}
-
-/* ================= MINI GAMES ================= */
+/* GAME PLAY */
 
 .game-area{
-    height:330px;
+    height:270px;
     border:1px solid var(--line);
-    border-radius:20px;
-    background:
-        linear-gradient(#071009 1px,transparent 1px),
-        linear-gradient(90deg,#071009 1px,transparent 1px);
-    background-size:30px 30px;
+    border-radius:16px;
     position:relative;
     overflow:hidden;
-    touch-action:none;
-}
-
-.game-ground{
-    position:absolute;
-    bottom:34px;
-    left:0;
-    right:0;
-    height:2px;
-    background:var(--green);
-    opacity:.4;
-}
-
-.game-player{
-    position:absolute;
-    left:55px;
-    bottom:36px;
-    width:40px;
-    height:40px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:30px;
-}
-
-.obstacle{
-    position:absolute;
-    bottom:36px;
-    right:-40px;
-    width:25px;
-    height:35px;
-    background:var(--green);
-    border-radius:5px;
+    background:
+        linear-gradient(rgba(53,255,134,.025) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(53,255,134,.025) 1px,transparent 1px),
+        #050906;
+    background-size:25px 25px;
 }
 
 .game-score{
     position:absolute;
     top:12px;
     left:12px;
-    font-size:12px;
-    font-weight:950;
     color:var(--green);
+    font-size:10px;
+    font-weight:900;
+    z-index:5;
 }
 
-.game-message{
+.game-object{
     position:absolute;
-    inset:0;
+    width:32px;
+    height:32px;
+    border-radius:9px;
+    background:var(--green);
+    color:#031007;
     display:flex;
-    flex-direction:column;
     align-items:center;
     justify-content:center;
-    background:rgba(3,6,4,.7);
-    backdrop-filter:blur(2px);
+    font-size:13px;
+    font-weight:950;
+}
+
+.game-ground{
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:36px;
+    height:1px;
+    background:rgba(53,255,134,.3);
+}
+
+/* =====================================================
+   EARN
+===================================================== */
+
+.earn-banner{
+    padding:17px;
+    border:1px solid var(--line2);
+    border-radius:17px;
+    background:
+        radial-gradient(circle at right,rgba(53,255,134,.11),transparent 45%),
+        var(--panel);
+    margin-bottom:10px;
+}
+
+.earn-big{
+    font-size:19px;
+    font-weight:950;
+}
+
+.earn-small{
+    color:var(--muted);
+    font-size:9px;
+    line-height:1.5;
+    margin-top:5px;
+}
+
+.task{
+    display:flex;
+    align-items:center;
+    gap:11px;
+}
+
+.task-icon{
+    width:40px;
+    height:40px;
+    border-radius:11px;
+    background:#0b130d;
+    border:1px solid var(--line);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--green);
+    font-weight:950;
+}
+
+.task-main{
+    flex:1;
+}
+
+.task-title{
+    font-size:10px;
+    font-weight:900;
+}
+
+.task-reward{
+    color:var(--green);
+    font-size:8px;
+    margin-top:4px;
+}
+
+.task-btn{
+    padding:8px 10px;
+    border-radius:8px;
+    border:1px solid var(--line2);
+    background:rgba(53,255,134,.05);
+    color:var(--green);
+    font-size:8px;
+    font-weight:900;
+}
+
+/* =====================================================
+   GIVEAWAYS
+===================================================== */
+
+.giveaway{
+    border:1px solid var(--line);
+    border-radius:15px;
+    padding:14px;
+    background:var(--panel);
+    margin-bottom:10px;
+}
+
+.giveaway-top{
+    display:flex;
+    justify-content:space-between;
+}
+
+.prize{
+    color:var(--gold);
+    font-size:13px;
+    font-weight:950;
+}
+
+.timer{
+    color:var(--red);
+    font-size:9px;
+    font-weight:900;
+}
+
+.giveaway-info{
+    color:var(--muted);
+    font-size:8px;
+    margin-top:7px;
+}
+
+.ticket-box{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:13px;
+    border:1px solid rgba(255,211,78,.16);
+    background:rgba(255,211,78,.03);
+    border-radius:13px;
+    margin-bottom:10px;
+}
+
+.ticket-number{
+    color:var(--gold);
+    font-size:16px;
+    font-weight:950;
+}
+
+/* =====================================================
+   FRIENDS
+===================================================== */
+
+.ref-box{
+    border:1px solid var(--line2);
+    background:var(--panel);
+    border-radius:15px;
+    padding:15px;
+    margin-bottom:10px;
+}
+
+.ref-link{
+    margin-top:9px;
+    padding:10px;
+    border-radius:9px;
+    background:#050906;
+    border:1px solid var(--line);
+    color:var(--muted);
+    font-size:8px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+}
+
+.ref-buttons{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:7px;
+    margin-top:8px;
+}
+
+.ref-buttons button{
+    padding:10px;
+    border-radius:9px;
+    border:1px solid var(--line);
+    background:rgba(53,255,134,.04);
+    color:var(--green);
+    font-size:9px;
+    font-weight:900;
+}
+
+.ref-stat{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+}
+
+.ref-stat .stat{
+    text-align:left;
+    padding:14px;
+}
+
+/* =====================================================
+   TOP
+===================================================== */
+
+.tabs{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:6px;
+    margin-bottom:10px;
+}
+
+.tab{
+    padding:10px 5px;
+    border:1px solid var(--line);
+    border-radius:9px;
+    background:var(--panel);
+    color:var(--muted);
+    font-size:8px;
+    font-weight:900;
+    cursor:pointer;
+}
+
+.tab.active{
+    background:rgba(53,255,134,.09);
+    color:var(--green);
+    border-color:var(--line2);
+}
+
+.rank{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:11px;
+    border-bottom:1px solid rgba(255,255,255,.035);
+}
+
+.rank:last-child{
+    border-bottom:0;
+}
+
+.rank-num{
+    width:25px;
+    color:var(--muted);
+    font-size:9px;
+    font-weight:900;
     text-align:center;
 }
 
-.game-message h2{
-    margin:0 0 6px;
+.rank-avatar{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    object-fit:cover;
+    background:#0b130d;
+    border:1px solid var(--line);
 }
 
-.game-message p{
+.rank-name{
+    flex:1;
+    font-size:9px;
+    font-weight:800;
+}
+
+.rank-value{
+    color:var(--green);
+    font-size:9px;
+    font-weight:900;
+}
+
+/* =====================================================
+   WALLET
+===================================================== */
+
+.wallet-main{
+    border:1px solid var(--line2);
+    border-radius:18px;
+    padding:20px;
+    background:
+        radial-gradient(circle at top right,rgba(53,255,134,.09),transparent 45%),
+        var(--panel);
+    margin-bottom:10px;
+}
+
+.wallet-label{
     color:var(--muted);
-    font-size:10px;
-    margin:0 0 13px;
+    font-size:8px;
+    letter-spacing:1.5px;
 }
 
-/* ================= BOTTOM NAV ================= */
+.wallet-balance{
+    color:var(--green);
+    font-size:27px;
+    font-weight:950;
+    margin-top:5px;
+}
+
+.wallet-usd{
+    color:var(--muted);
+    font-size:9px;
+    margin-top:3px;
+}
+
+.wallet-actions{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+}
+
+.wallet-action{
+    padding:13px;
+    border:1px solid var(--line);
+    background:var(--panel);
+    color:var(--green);
+    border-radius:12px;
+    font-size:10px;
+    font-weight:900;
+    cursor:pointer;
+}
+
+.tx{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 0;
+    border-bottom:1px solid rgba(255,255,255,.04);
+}
+
+.tx:last-child{
+    border-bottom:0;
+}
+
+.tx-name{
+    font-size:9px;
+    font-weight:800;
+}
+
+.tx-date{
+    color:var(--muted);
+    font-size:7px;
+    margin-top:3px;
+}
+
+.tx-value{
+    color:var(--green);
+    font-size:9px;
+    font-weight:900;
+}
+
+/* =====================================================
+   PROFILE
+===================================================== */
+
+.profile-card{
+    text-align:center;
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:22px;
+    background:var(--panel);
+    margin-bottom:10px;
+}
+
+.profile-avatar{
+    width:72px;
+    height:72px;
+    border-radius:50%;
+    object-fit:cover;
+    border:2px solid var(--line2);
+}
+
+.profile-name{
+    margin-top:9px;
+    font-size:14px;
+    font-weight:950;
+}
+
+.profile-id{
+    color:var(--muted);
+    font-size:8px;
+    margin-top:4px;
+}
+
+.profile-menu{
+    border:1px solid var(--line);
+    border-radius:15px;
+    overflow:hidden;
+    background:var(--panel);
+}
+
+.profile-item{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:14px;
+    border-bottom:1px solid rgba(255,255,255,.04);
+    background:none;
+    color:var(--text);
+    cursor:pointer;
+    text-align:left;
+}
+
+.profile-item:last-child{
+    border-bottom:0;
+}
+
+.profile-item-name{
+    font-size:10px;
+    font-weight:850;
+}
+
+.profile-arrow{
+    color:var(--muted);
+}
+
+.profile-footer{
+    text-align:center;
+    margin-top:18px;
+    padding:15px;
+    border-top:1px solid var(--line);
+}
+
+.profile-footer-brand{
+    color:var(--green);
+    font-size:11px;
+    font-weight:950;
+    letter-spacing:1.5px;
+}
+
+.profile-footer-text{
+    color:var(--muted);
+    font-size:8px;
+    line-height:1.8;
+    margin-top:5px;
+}
+
+/* =====================================================
+   SETTINGS
+===================================================== */
+
+.setting-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 0;
+    border-bottom:1px solid rgba(255,255,255,.04);
+}
+
+.setting-row:last-child{
+    border-bottom:0;
+}
+
+.setting-name{
+    font-size:10px;
+    font-weight:850;
+}
+
+.setting-value{
+    color:var(--muted);
+    font-size:8px;
+}
+
+/* =====================================================
+   BOTTOM NAV
+===================================================== */
 
 .bottom-nav{
     position:fixed;
-    z-index:50;
     left:50%;
     bottom:0;
     transform:translateX(-50%);
     width:min(520px,100%);
+    height:76px;
+    padding:
+        7px 8px
+        calc(7px + env(safe-area-inset-bottom));
+    background:rgba(4,7,5,.96);
+    border-top:1px solid rgba(53,255,134,.12);
+    backdrop-filter:blur(18px);
+    z-index:100;
     display:grid;
     grid-template-columns:repeat(5,1fr);
-    padding:7px 7px calc(7px + env(safe-area-inset-bottom));
-    background:rgba(3,6,4,.95);
-    backdrop-filter:blur(15px);
-    border-top:1px solid var(--line);
 }
 
-.nav{
-    border:0;
-    background:transparent;
-    color:#64746a;
-    font-size:8px;
-    font-weight:950;
-    padding:6px 2px;
+.nav-btn{
+    background:none;
+    color:var(--muted);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:4px;
+    cursor:pointer;
 }
 
 .nav-icon{
-    display:block;
-    font-size:19px;
-    margin-bottom:3px;
+    font-size:16px;
 }
 
-.nav.active{
+.nav-text{
+    font-size:7px;
+    font-weight:900;
+    letter-spacing:.6px;
+}
+
+.nav-btn.active{
     color:var(--green);
 }
 
-/* ================= TOAST ================= */
+/* =====================================================
+   TOAST
+===================================================== */
 
 .toast{
     position:fixed;
-    z-index:300;
     left:50%;
-    bottom:85px;
+    bottom:92px;
     transform:translate(-50%,20px);
     opacity:0;
     pointer-events:none;
-    background:#e7fff0;
-    color:#041008;
-    border-radius:12px;
+    z-index:999;
+    max-width:calc(100% - 30px);
     padding:10px 14px;
-    font-size:10px;
-    font-weight:950;
-    transition:.2s;
-    white-space:nowrap;
+    border:1px solid var(--line2);
+    border-radius:10px;
+    background:rgba(5,9,6,.97);
+    box-shadow:0 10px 30px rgba(0,0,0,.5);
+    color:var(--text);
+    font-size:9px;
+    font-weight:800;
+    text-align:center;
+    transition:.22s ease;
 }
 
 .toast.show{
@@ -1187,588 +1251,295 @@ button{
     transform:translate(-50%,0);
 }
 
-/* ================= RESPONSIVE ================= */
+/* =====================================================
+   MODAL
+===================================================== */
 
-@media(max-width:360px){
-    .hero{height:235px}
-    .zombie-svg{width:185px;height:185px}
-    .wheel{width:220px;height:220px}
+.modal{
+    position:fixed;
+    inset:0;
+    z-index:300;
+    background:rgba(0,0,0,.8);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:min(430px,100%);
+    max-height:85vh;
+    overflow:auto;
+    border:1px solid var(--line2);
+    border-radius:17px;
+    background:#080d09;
+    padding:18px;
+    box-shadow:0 20px 70px rgba(0,0,0,.7);
+}
+
+.modal-title{
+    font-size:15px;
+    font-weight:950;
+    color:var(--green);
+}
+
+.modal-sub{
+    color:var(--muted);
+    font-size:9px;
+    line-height:1.6;
+    margin-top:5px;
+}
+
+.close-modal{
+    width:100%;
+    padding:11px;
+    border-radius:10px;
+    border:1px solid var(--line);
+    background:rgba(53,255,134,.05);
+    color:var(--green);
+    font-size:9px;
+    font-weight:900;
+    margin-top:12px;
+}
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:380px){
+    .module{
+        min-height:86px;
+        padding:11px;
+    }
+
+    .hero{
+        min-height:250px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<div class="app">
+<div id="app">
 
-<!-- =========================================================
-     HEADER
-========================================================= -->
+    <!-- HEADER -->
+    <header class="header">
 
-<header class="header">
+        <div class="user-head">
 
-    <div class="user">
-        <div class="avatar" id="headerAvatar">
-            <div class="avatar-placeholder">🧟</div>
-        </div>
+            <div id="headerAvatar"></div>
 
-        <div>
-            <div class="user-name" id="headerUsername">@zombie</div>
-            <div class="user-level">
-                LEVEL <span id="headerLevel">12</span>
-            </div>
-        </div>
-    </div>
+            <div>
+                <div class="username" id="headerUsername">
+                    Survivor
+                </div>
 
-    <div class="balance" onclick="openScreen('wallet')">
-        <div class="balance-label">BALANCE</div>
-        <div class="balance-value">
-            <span id="headerBalance">12 450.0000</span> ZMB
-        </div>
-    </div>
-
-</header>
-
-
-<!-- =========================================================
-     HOME
-========================================================= -->
-
-<section id="home" class="screen active">
-
-    <div class="hero">
-
-        <div class="hero-grid"></div>
-
-        <div class="coin coin1">+ZMB</div>
-        <div class="coin coin2">+ZMB</div>
-        <div class="coin coin3">ZMB</div>
-        <div class="coin coin4">+ZMB</div>
-
-        <!-- SVG ZOMBIE -->
-        <svg class="zombie-svg" viewBox="0 0 220 220">
-
-            <defs>
-                <linearGradient id="skin" x1="0" x2="1">
-                    <stop offset="0" stop-color="#173d26"/>
-                    <stop offset="1" stop-color="#56c878"/>
-                </linearGradient>
-
-                <linearGradient id="coat" x1="0" x2="1">
-                    <stop offset="0" stop-color="#111b14"/>
-                    <stop offset="1" stop-color="#25352a"/>
-                </linearGradient>
-            </defs>
-
-            <!-- shoulders -->
-            <path
-                d="M32 208 Q42 165 73 153 L147 153 Q180 166 190 208Z"
-                fill="url(#coat)"
-                stroke="#35ff86"
-                stroke-width="2"/>
-
-            <!-- neck -->
-            <path
-                d="M86 145 L88 168 Q110 181 132 168 L134 145Z"
-                fill="url(#skin)"
-                stroke="#173c25"
-                stroke-width="3"/>
-
-            <!-- head -->
-            <path
-                d="M61 57 Q65 25 108 23 Q153 24 162 58 L157 125 Q150 151 111 158 Q72 151 63 126Z"
-                fill="url(#skin)"
-                stroke="#35ff86"
-                stroke-width="3"/>
-
-            <!-- ear -->
-            <path
-                d="M61 82 Q44 77 47 98 Q50 113 65 108"
-                fill="#347b49"
-                stroke="#35ff86"
-                stroke-width="2"/>
-
-            <!-- hair -->
-            <path
-                d="M63 64 Q70 26 110 27 Q145 25 160 60 L149 51 L138 61 L128 48 L113 60 L101 45 L86 60 L76 49Z"
-                fill="#07100a"/>
-
-            <!-- eyes -->
-            <ellipse cx="89" cy="86" rx="14" ry="11" fill="#071009"/>
-            <ellipse cx="137" cy="86" rx="14" ry="11" fill="#071009"/>
-
-            <circle cx="92" cy="86" r="5" fill="#35ff86"/>
-            <circle cx="134" cy="86" r="5" fill="#35ff86"/>
-
-            <!-- nose -->
-            <path
-                d="M112 86 L104 110 L116 112"
-                fill="none"
-                stroke="#173c25"
-                stroke-width="4"/>
-
-            <!-- mouth -->
-            <path
-                d="M82 121 Q111 139 143 119"
-                fill="none"
-                stroke="#071009"
-                stroke-width="6"/>
-
-            <path
-                d="M91 126 L96 134 M107 130 L109 137 M124 129 L123 136"
-                stroke="#d9ffe5"
-                stroke-width="3"/>
-
-            <!-- scar -->
-            <path
-                d="M70 70 L78 78 L72 89"
-                fill="none"
-                stroke="#0b2113"
-                stroke-width="4"/>
-
-            <!-- dollar -->
-            <circle
-                cx="167"
-                cy="144"
-                r="21"
-                fill="#153d24"
-                stroke="#35ff86"
-                stroke-width="2"/>
-
-            <text
-                x="167"
-                y="152"
-                text-anchor="middle"
-                font-size="24"
-                font-weight="900"
-                fill="#35ff86">$</text>
-
-        </svg>
-
-        <div class="hero-label">PAID ZOMBIE</div>
-        <div class="hero-status" id="heroStatus">
-            MINING READY
-        </div>
-
-    </div>
-
-
-    <div class="level-card" onclick="openModal('levelModal')">
-
-        <div class="level-top">
-            <div class="level">
-                LEVEL <span id="homeLevel">12</span>
+                <div class="user-sub">
+                    ZMB NETWORK MEMBER
+                </div>
             </div>
 
-            <div class="xp">
-                <span id="xpCurrent">1240</span> / 2000 XP
+        </div>
+
+        <div class="balance-head">
+
+            <div class="balance-label">
+                ZMB BALANCE
             </div>
+
+            <div class="balance-value">
+                <span id="headerBalance">0</span>
+            </div>
+
         </div>
 
-        <div class="progress">
-            <div id="xpBar"></div>
+    </header>
+
+
+    <!-- =================================================
+         HOME
+    ================================================== -->
+
+    <main id="homeScreen" class="screen active">
+
+        <div class="hero">
+
+            <div class="hero-grid"></div>
+
+            <div class="hero-label">
+                PAID ZOMBIE
+            </div>
+
+            <div class="hero-status">
+                SYSTEM ONLINE
+            </div>
+
+            <div class="zmb-core">
+
+                <div class="core-ring r1"></div>
+                <div class="core-ring r2"></div>
+                <div class="core-ring r3"></div>
+
+                <div class="core-center">
+                    ZMB
+                </div>
+
+                <div class="core-label">
+                    ZMB NETWORK CORE
+                </div>
+
+            </div>
+
+            <div class="system-line">
+                ● SYSTEM ONLINE · ZMB NETWORK
+            </div>
+
         </div>
 
-        <div class="level-bottom">
-            <span id="levelStatus">SURVIVOR</span>
-            <span>Tap to view rewards</span>
+
+        <div class="home-grid">
+
+            <button class="module" onclick="openScreen('mining')">
+
+                <div class="module-icon">⛏</div>
+
+                <div class="module-name">
+                    MINING
+                </div>
+
+                <div class="module-info">
+                    Mine ZMB with your miners
+                </div>
+
+            </button>
+
+
+            <button class="module" onclick="openScreen('games')">
+
+                <div class="module-icon">◈</div>
+
+                <div class="module-name">
+                    GAMES
+                </div>
+
+                <div class="module-info">
+                    Play & earn tickets
+                </div>
+
+            </button>
+
+
+            <button class="module" onclick="openScreen('earn')">
+
+                <div class="module-icon">⚡</div>
+
+                <div class="module-name">
+                    EARN
+                </div>
+
+                <div class="module-info">
+                    Tasks & rewarded ads
+                </div>
+
+            </button>
+
+
+            <button class="module" onclick="openScreen('giveaways')">
+
+                <div class="module-icon">✦</div>
+
+                <div class="module-name">
+                    GIVEAWAYS
+                </div>
+
+                <div class="module-info">
+                    Win NFT & ZMB prizes
+                </div>
+
+            </button>
+
         </div>
 
-    </div>
 
+        <div class="level-card" onclick="showLevel()">
 
-    <div class="home-grid">
+            <div class="level-top">
 
-        <div class="home-button" onclick="openScreen('mining')">
-            <div class="home-icon">⛏</div>
-            <div class="home-title">MINING</div>
-            <div class="home-sub">mine ZMB</div>
+                <div class="level-name">
+                    LEVEL 7 · SURVIVOR
+                </div>
+
+                <div class="level-xp">
+                    430 / 1000 XP
+                </div>
+
+            </div>
+
+            <div class="progress">
+                <div class="progress-fill"></div>
+            </div>
+
         </div>
 
-        <div class="home-button" onclick="openScreen('games')">
-            <div class="home-icon">🎮</div>
-            <div class="home-title">GAMES</div>
-            <div class="home-sub">play & earn</div>
-        </div>
-
-        <div class="home-button" onclick="openScreen('earn')">
-            <div class="home-icon">💰</div>
-            <div class="home-title">EARN</div>
-            <div class="home-sub">earn ZMB</div>
-        </div>
-
-        <div class="home-button" onclick="openScreen('giveaways')">
-            <div class="home-icon">🎁</div>
-            <div class="home-title">GIVEAWAYS</div>
-            <div class="home-sub">win rewards</div>
-        </div>
-
-    </div>
-
-</section>
+    </main>
 
 
-<!-- =========================================================
-     MINING
-========================================================= -->
+    <!-- =================================================
+         MINING
+    ================================================== -->
 
-<section id="mining" class="screen">
+    <section id="miningScreen" class="screen">
 
-    <button class="back" onclick="goHome()">← BACK</button>
-
-    <div class="title">⛏ MINING</div>
-    <div class="subtitle">Your zombie mining operation</div>
-
-    <div class="mining-main">
-
-        <svg class="machine-svg" viewBox="0 0 120 120">
-
-            <circle
-                cx="60"
-                cy="60"
-                r="43"
-                fill="#09120d"
-                stroke="#35ff86"
-                stroke-width="3"/>
-
-            <circle
-                cx="60"
-                cy="60"
-                r="29"
-                fill="none"
-                stroke="#1fd66b"
-                stroke-width="8"
-                stroke-dasharray="8 7"/>
-
-            <circle
-                cx="60"
-                cy="60"
-                r="10"
-                fill="#35ff86"/>
-
-            <path
-                d="M60 12V27 M60 93V108 M12 60H27 M93 60H108"
-                stroke="#35ff86"
-                stroke-width="4"/>
-
-        </svg>
-
-        <div class="mining-amount">
-            <span id="minedAmount">0.000000</span> ZMB
-        </div>
-
-        <div class="mining-per-hour">
-            +<span id="miningRate">0.000100</span> ZMB / hour
-        </div>
-
-        <div class="mining-timer" id="miningTimer">
-            Mining is not active
-        </div>
-
-        <button
-            id="startMiningButton"
-            class="mining-button"
-            onclick="startMining()">
-            START MINING
+        <button class="back-btn" onclick="goHome()">
+            ← BACK
         </button>
 
-        <div
-            id="miningMessage"
-            class="mining-message">
-            Advertisement not completed. Watch the ad to start mining.
+        <div class="screen-title">
+            MINING
         </div>
+
+        <div class="screen-sub">
+            ZMB NETWORK · COMPUTING PROTOCOL
+        </div>
+
+
+        <div class="mining-visual">
+
+            <div class="mining-core">
+                <div class="mining-icon">ZMB</div>
+            </div>
+
+            <div class="mining-amount" id="minedAmount">
+                0.0000000 ZMB
+            </div>
+
+            <div class="mining-rate">
+                +0.0001 ZMB / HOUR · DEMO
+            </div>
+
+        </div>
+
 
         <div class="mining-stats">
 
             <div class="stat">
-                <div class="stat-value" id="dayIncome">0.0024</div>
-                <div class="stat-label">PER DAY</div>
+                <div class="stat-label">DAY</div>
+                <div class="stat-value green">0.0024</div>
             </div>
 
             <div class="stat">
-                <div class="stat-value" id="weekIncome">0.0168</div>
-                <div class="stat-label">PER WEEK</div>
+                <div class="stat-label">WEEK</div>
+                <div class="stat-value green">0.0168</div>
             </div>
 
             <div class="stat">
-                <div class="stat-value" id="monthIncome">0.072</div>
-                <div class="stat-label">PER MONTH</div>
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div class="power">
-
-        <div class="power-top">
-            <span>⚡ MINING POWER</span>
-            <span>64 / 100</span>
-        </div>
-
-        <div class="power-bar">
-            <div></div>
-        </div>
-
-    </div>
-
-
-    <div class="two-buttons">
-
-        <button
-            class="btn green"
-            onclick="openModal('shopModal')">
-            MINER SHOP
-        </button>
-
-        <button
-            class="btn"
-            onclick="openModal('boostModal')">
-            BOOSTERS
-        </button>
-
-    </div>
-
-
-    <div class="subtitle">YOUR MINERS</div>
-
-
-    <div class="card">
-
-        <div class="row">
-
-            <div class="left">
-
-                <div class="miner-art">🧟</div>
-
-                <div>
-                    <div class="card-title">Rotter</div>
-                    <div class="card-desc">
-                        Basic · Power 10
-                    </div>
-                </div>
-
-            </div>
-
-            <span class="rarity basic">BASIC</span>
-
-        </div>
-
-        <div class="income">
-            <div class="income-label">ESTIMATED INCOME</div>
-            <div class="income-value">+0.000010 ZMB / HOUR</div>
-        </div>
-
-    </div>
-
-
-    <div class="card">
-
-        <div class="row">
-
-            <div class="left">
-
-                <div class="miner-art">🧟</div>
-
-                <div>
-                    <div class="card-title">Grave Worker</div>
-                    <div class="card-desc">
-                        Medium · Power 20
-                    </div>
-                </div>
-
-            </div>
-
-            <span class="rarity medium">MEDIUM</span>
-
-        </div>
-
-        <div class="income">
-            <div class="income-label">ESTIMATED INCOME</div>
-            <div class="income-value">+0.000025 ZMB / HOUR</div>
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================================================
-     GAMES
-========================================================= -->
-
-<section id="games" class="screen">
-
-    <button class="back" onclick="goHome()">← BACK</button>
-
-    <div class="title">🎮 GAMES</div>
-    <div class="subtitle">Play and compete with other zombies</div>
-
-
-    <div class="card game-card" onclick="openModal('comboModal')">
-
-        <div class="row">
-
-            <div class="left">
-
-                <div class="icon-box">🧩</div>
-
-                <div>
-                    <div class="card-title">COMBO</div>
-                    <div class="card-desc">
-                        Find today's combination in our channel
-                    </div>
-                </div>
-
-            </div>
-
-            <span class="pill">PLAY</span>
-
-        </div>
-
-    </div>
-
-
-    <div class="card game-card" onclick="openZombieFlip()">
-
-        <div class="row">
-
-            <div class="left">
-
-                <div class="icon-box">🧟</div>
-
-                <div>
-                    <div class="card-title">ZOMBIE FLIP</div>
-                    <div class="card-desc">
-                        Fly through the obstacles
-                    </div>
-                </div>
-
-            </div>
-
-            <span class="pill">PLAY</span>
-
-        </div>
-
-    </div>
-
-
-    <div class="card game-card" onclick="openDinoRun()">
-
-        <div class="row">
-
-            <div class="left">
-
-                <div class="icon-box">🦖</div>
-
-                <div>
-                    <div class="card-title">DINO RUN</div>
-                    <div class="card-desc">
-                        Run and beat your record
-                    </div>
-                </div>
-
-            </div>
-
-            <span class="pill">PLAY</span>
-
-        </div>
-
-    </div>
-
-
-    <div class="card game-card" onclick="openModal('wheelModal')">
-
-        <div class="row">
-
-            <div class="left">
-
-                <div class="icon-box">🎡</div>
-
-                <div>
-                    <div class="card-title">DAILY WHEEL</div>
-                    <div class="card-desc">
-                        One bonus spin every 24 hours
-                    </div>
-                </div>
-
-            </div>
-
-            <span class="pill">DAILY</span>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================================================
-     EARN
-========================================================= -->
-
-<section id="earn" class="screen">
-
-    <button class="back" onclick="goHome()">← BACK</button>
-
-    <div class="title">💰 EARN</div>
-    <div class="subtitle">Earn rewards from activity</div>
-
-
-    <div class="tabs">
-
-        <button
-            class="tab active"
-            onclick="switchEarn('earnTab',this)">
-            EARN
-        </button>
-
-        <button
-            class="tab"
-            onclick="switchEarn('promoteTab',this)">
-            PROMOTE
-        </button>
-
-    </div>
-
-
-    <div id="earnTab">
-
-        <div class="note">
-            🎟 Every <b style="color:var(--text)">5 confirmed ad views</b>
-            gives 1 giveaway ticket.
-        </div>
-
-
-        <div class="card">
-
-            <div class="row">
-
-                <div class="left">
-
-                    <div class="icon-box">📺</div>
-
-                    <div>
-                        <div class="card-title">AdsGram</div>
-
-                        <div class="card-desc">
-                            Advertising network
-                        </div>
-
-                        <div class="ad-progress">
-                            <span id="ads1">0</span> / 20 TODAY
-                        </div>
-                    </div>
-
-                </div>
-
-                <button
-                    class="btn green small"
-                    onclick="watchAd('AdsGram')">
-                    WATCH
-                </button>
-
+                <div class="stat-label">MONTH</div>
+                <div class="stat-value green">0.072</div>
             </div>
 
         </div>
@@ -1776,1362 +1547,1106 @@ button{
 
         <div class="card">
 
-            <div class="row">
-
-                <div class="left">
-
-                    <div class="icon-box">📺</div>
-
-                    <div>
-                        <div class="card-title">AD NETWORK #2</div>
-
-                        <div class="card-desc">
-                            Second advertising network
-                        </div>
-
-                        <div class="ad-progress">
-                            <span id="ads2">0</span> / 20 TODAY
-                        </div>
-                    </div>
-
-                </div>
-
-                <button
-                    class="btn green small"
-                    onclick="watchAd('Network #2')">
-                    WATCH
-                </button>
-
+            <div class="card-title">
+                NETWORK STATUS
             </div>
 
-        </div>
-
-
-        <div
-            class="card"
-            onclick="showToast('Subscription task will open here')">
-
-            <div class="row">
-
-                <div class="left">
-
-                    <div class="icon-box">📢</div>
-
-                    <div>
-                        <div class="card-title">SUBSCRIBE & EARN</div>
-                        <div class="card-desc">
-                            Subscribe to a channel and complete the task
-                        </div>
-                    </div>
-
-                </div>
-
-                <span class="pill">TASK</span>
-
+            <div class="card-sub green">
+                ● NETWORK ONLINE · ENGINE READY
             </div>
-
-        </div>
-
-
-        <div
-            class="card"
-            onclick="showToast('New promotional task')">
-
-            <div class="row">
-
-                <div class="left">
-
-                    <div class="icon-box">📢</div>
-
-                    <div>
-                        <div class="card-title">CHANNEL TASK</div>
-                        <div class="card-desc">
-                            Promotional channel task
-                        </div>
-                    </div>
-
-                </div>
-
-                <span class="pill">TASK</span>
-
-            </div>
-
-        </div>
-
-    </div>
-
-
-    <div id="promoteTab" style="display:none">
-
-        <div class="promote">
-
-            <div class="promote-icon">📢</div>
-
-            <h2>Promote your channel</h2>
-
-            <p>
-                Create a task for PAID ZOMBIE users.
-                Users subscribe to your channel and receive
-                a reward after completing the task.
-            </p>
 
             <button
-                class="btn green full"
-                onclick="openModal('promoteModal')">
-                CREATE PROMOTION
+                id="miningButton"
+                class="primary-btn"
+                onclick="toggleMining()"
+            >
+                START MINING
             </button>
 
         </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                MINING POWER
+            </div>
+
+            <div class="card-sub">
+                Active power is limited by your current cap.
+            </div>
+
+            <div class="progress">
+                <div
+                    id="powerProgress"
+                    class="progress-fill"
+                    style="width:32%"
+                ></div>
+            </div>
+
+            <div class="card-sub" style="margin-top:8px">
+                320 / 1000 POWER
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="card-title">
+                YOUR MINERS
+            </div>
+
+            <div style="height:10px"></div>
+
+
+            <div class="miner">
+
+                <div class="miner-art">01</div>
+
+                <div class="miner-main">
+                    <div class="miner-name">
+                        ROTTER
+                    </div>
+
+                    <div class="miner-desc">
+                        Basic mining unit
+                    </div>
+                </div>
+
+                <div class="miner-power">
+                    +40 PWR
+                </div>
+
+            </div>
+
+            <div style="height:12px"></div>
+
+
+            <div class="miner">
+
+                <div class="miner-art">02</div>
+
+                <div class="miner-main">
+                    <div class="miner-name">
+                        GRAVE WORKER
+                    </div>
+
+                    <div class="miner-desc">
+                        Medium mining unit
+                    </div>
+                </div>
+
+                <div class="miner-power">
+                    +90 PWR
+                </div>
+
+            </div>
+
+            <div style="height:12px"></div>
+
+
+            <div class="miner">
+
+                <div class="miner-art">03</div>
+
+                <div class="miner-main">
+                    <div class="miner-name">
+                        BRAIN EATER
+                    </div>
+
+                    <div class="miner-desc">
+                        Epic mining unit
+                    </div>
+                </div>
+
+                <div class="miner-power">
+                    +190 PWR
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         GAMES
+    ================================================== -->
+
+    <section id="gamesScreen" class="screen">
+
+        <button class="back-btn" onclick="goHome()">
+            ← BACK
+        </button>
+
+        <div class="screen-title">
+            GAMES
+        </div>
+
+        <div class="screen-sub">
+            PLAY · SCORE · EARN TICKETS
+        </div>
+
+
+        <div class="game-card" onclick="openGame('flip')">
+
+            <div class="game-head">
+
+                <div class="game-icon">
+                    Z
+                </div>
+
+                <div class="game-name">
+
+                    <div class="game-title">
+                        ZOMBIE FLIP
+                    </div>
+
+                    <div class="game-desc">
+                        Jump over obstacles and survive.
+                    </div>
+
+                </div>
+
+                <div class="play">
+                    PLAY →
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="game-card" onclick="openGame('dino')">
+
+            <div class="game-head">
+
+                <div class="game-icon">
+                    D
+                </div>
+
+                <div class="game-name">
+
+                    <div class="game-title">
+                        DINO RUN
+                    </div>
+
+                    <div class="game-desc">
+                        Run as far as possible.
+                    </div>
+
+                </div>
+
+                <div class="play">
+                    PLAY →
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="game-card" onclick="showToast('Daily Wheel is available once every 24 hours')">
+
+            <div class="game-head">
+
+                <div class="game-icon">
+                    ◉
+                </div>
+
+                <div class="game-name">
+
+                    <div class="game-title">
+                        DAILY WHEEL
+                    </div>
+
+                    <div class="game-desc">
+                        One daily spin. Rewards change daily.
+                    </div>
+
+                </div>
+
+                <div class="play">
+                    SPIN →
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="game-card" onclick="showToast('Today\\'s COMBO is posted in the PAID ZOMBIE channel')">
+
+            <div class="game-head">
+
+                <div class="game-icon">
+                    #
+                </div>
+
+                <div class="game-name">
+
+                    <div class="game-title">
+                        DAILY COMBO
+                    </div>
+
+                    <div class="game-desc">
+                        Find today's secret combination.
+                    </div>
+
+                </div>
+
+                <div class="play">
+                    OPEN →
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         GAME PLAY
+    ================================================== -->
+
+    <section id="gameScreen" class="screen">
+
+        <button class="back-btn" onclick="openScreen('games')">
+            ← GAMES
+        </button>
+
+        <div id="gameTitle" class="screen-title">
+            ZOMBIE FLIP
+        </div>
+
+        <div id="gameSub" class="screen-sub">
+            TAP TO JUMP
+        </div>
+
+
+        <div id="gameArea" class="game-area">
+
+            <div id="gameScore" class="game-score">
+                SCORE 0
+            </div>
+
+            <div id="player" class="game-object">
+                Z
+            </div>
+
+            <div id="obstacle" class="game-object">
+                X
+            </div>
+
+            <div class="game-ground"></div>
+
+        </div>
+
+
+        <button
+            class="primary-btn"
+            onclick="startGame()"
+        >
+            START GAME
+        </button>
+
+    </section>
+
+
+    <!-- =================================================
+         EARN
+    ================================================== -->
+
+    <section id="earnScreen" class="screen">
+
+        <button class="back-btn" onclick="goHome()">
+            ← BACK
+        </button>
+
+        <div class="screen-title">
+            EARN
+        </div>
+
+        <div class="screen-sub">
+            COMPLETE TASKS · WATCH REWARDED ADS
+        </div>
+
+
+        <div class="earn-banner">
+
+            <div class="earn-big">
+                DAILY EARN
+            </div>
+
+            <div class="earn-small">
+                Complete available tasks and rewarded ad sessions.
+                Rewards shown here are demo values until the backend economy is connected.
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="task">
+
+                <div class="task-icon">
+                    AD
+                </div>
+
+                <div class="task-main">
+
+                    <div class="task-title">
+                        REWARDED AD
+                    </div>
+
+                    <div class="task-reward">
+                        + ZMB · REWARD TBD
+                    </div>
+
+                </div>
+
+                <button
+                    class="task-btn"
+                    onclick="watchAd()"
+                >
+                    WATCH
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="task">
+
+                <div class="task-icon">
+                    TG
+                </div>
+
+                <div class="task-main">
+
+                    <div class="task-title">
+                        JOIN CHANNEL
+                    </div>
+
+                    <div class="task-reward">
+                        ZMB REWARD
+                    </div>
+
+                </div>
+
+                <button
+                    class="task-btn"
+                    onclick="showToast('Channel task will be connected to Telegram verification')"
+                >
+                    OPEN
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="task">
+
+                <div class="task-icon">
+                    ✦
+                </div>
+
+                <div class="task-main">
+
+                    <div class="task-title">
+                        PROMOTE
+                    </div>
+
+                    <div class="task-reward">
+                        Advertise your Telegram channel
+                    </div>
+
+                </div>
+
+                <button
+                    class="task-btn"
+                    onclick="showToast('PROMOTE marketplace is coming soon')"
+                >
+                    OPEN
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         GIVEAWAYS
+    ================================================== -->
+
+    <section id="giveawaysScreen" class="screen">
+
+        <button class="back-btn" onclick="goHome()">
+            ← BACK
+        </button>
+
+        <div class="screen-title">
+            GIVEAWAYS
+        </div>
+
+        <div class="screen-sub">
+            WATCH ADS · GET TICKETS · JOIN
+        </div>
+
+
+        <div class="ticket-box">
+
+            <div>
+                <div class="card-title">
+                    MY TICKETS
+                </div>
+
+                <div class="card-sub">
+                    5 watched ads = 1 ticket
+                </div>
+            </div>
+
+            <div class="ticket-number" id="ticketCount">
+                0
+            </div>
+
+        </div>
+
+
+        <div class="giveaway">
+
+            <div class="giveaway-top">
+
+                <div class="prize">
+                    5000 ZMB
+                </div>
+
+                <div class="timer">
+                    18:42:10
+                </div>
+
+            </div>
+
+            <div class="giveaway-info">
+                1 winner · 2,481 participants
+            </div>
+
+            <button
+                class="secondary-btn"
+                onclick="joinGiveaway()"
+            >
+                PARTICIPATE
+            </button>
+
+        </div>
+
+
+        <div class="giveaway">
+
+            <div class="giveaway-top">
+
+                <div class="prize">
+                    NFT PRIZE
+                </div>
+
+                <div class="timer">
+                    2D 04H
+                </div>
+
+            </div>
+
+            <div class="giveaway-info">
+                3 winners · Channel subscription required
+            </div>
+
+            <button
+                class="secondary-btn"
+                onclick="joinGiveaway()"
+            >
+                PARTICIPATE
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         FRIENDS
+    ================================================== -->
+
+    <section id="friendsScreen" class="screen">
+
+        <div class="screen-title">
+            FRIENDS
+        </div>
+
+        <div class="screen-sub">
+            INVITE SURVIVORS · EARN TOGETHER
+        </div>
+
+
+        <div class="ref-box">
+
+            <div class="card-title">
+                YOUR REFERRAL LINK
+            </div>
+
+            <div id="refLink" class="ref-link">
+                Loading...
+            </div>
+
+            <div class="ref-buttons">
+
+                <button onclick="copyReferral()">
+                    COPY
+                </button>
+
+                <button onclick="shareReferral()">
+                    SHARE
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="ref-stat">
+
+            <div class="stat">
+
+                <div class="stat-label">
+                    FRIENDS
+                </div>
+
+                <div
+                    id="refCount"
+                    class="stat-value green"
+                >
+                    0
+                </div>
+
+            </div>
+
+            <div class="stat">
+
+                <div class="stat-label">
+                    EARNED
+                </div>
+
+                <div class="stat-value green">
+                    0 ZMB
+                </div>
+
+            </div>
+
+        </div>
+
 
         <div class="card" style="margin-top:10px">
 
-            <div class="card-title">HOW IT WORKS</div>
+            <div class="card-title">
+                REFERRAL REWARD
+            </div>
 
-            <div class="card-desc" style="line-height:1.8;margin-top:8px">
-                1. Add your channel<br>
-                2. Choose the campaign budget<br>
-                3. Pay with TON / Stars<br>
-                4. Users complete the task<br>
-                5. Your channel gets subscribers
+            <div class="card-sub">
+                Demo referral rate: 10% of eligible referred earnings.
             </div>
 
         </div>
 
-    </div>
-
-</section>
+    </section>
 
 
-<!-- =========================================================
-     GIVEAWAYS
-========================================================= -->
+    <!-- =================================================
+         TOP
+    ================================================== -->
 
-<section id="giveaways" class="screen">
+    <section id="topScreen" class="screen">
 
-    <button class="back" onclick="goHome()">← BACK</button>
-
-    <div class="title">🎁 GIVEAWAYS</div>
-
-    <div class="subtitle">
-        Your tickets:
-        <span class="ticket" id="ticketCount">12</span> 🎟
-    </div>
-
-
-    <div class="card">
-
-        <div class="row">
-
-            <div class="left">
-
-                <div class="icon-box">🎁</div>
-
-                <div>
-                    <div class="card-title">ZOMBIE JACKPOT</div>
-                    <div class="card-desc">
-                        Active giveaway
-                    </div>
-                </div>
-
-            </div>
-
-            <span class="pill">ACTIVE</span>
-
+        <div class="screen-title">
+            TOP 50
         </div>
 
-        <div class="prize">
-            50 000 ZMB
+        <div class="screen-sub">
+            LEADERBOARD · SYNCHRONIZED
         </div>
 
-        <div class="row" style="font-size:9px;color:var(--muted)">
-            <span>👥 1 248 participants</span>
-            <span>⏱ 2d 14h</span>
-        </div>
 
-        <button
-            class="btn green full"
-            style="margin-top:12px"
-            onclick="openModal('giveawayModal')">
-            USE TICKET
-        </button>
-
-    </div>
-
-
-    <div class="card">
-
-        <div class="row">
-
-            <div class="left">
-
-                <div class="icon-box">💎</div>
-
-                <div>
-                    <div class="card-title">TON DROP</div>
-                    <div class="card-desc">
-                        Special giveaway
-                    </div>
-                </div>
-
-            </div>
-
-            <span class="pill">SOON</span>
-
-        </div>
-
-        <div class="prize">
-            5 TON
-        </div>
-
-    </div>
-
-
-    <div class="note">
-        🎟 5 confirmed ad views = 1 ticket.
-    </div>
-
-</section>
-
-
-<!-- =========================================================
-     TOP
-========================================================= -->
-
-<section id="top" class="screen">
-
-    <button class="back" onclick="goHome()">← BACK</button>
-
-    <div class="title">🏆 TOP 50</div>
-    <div class="subtitle">Best PAID ZOMBIE players</div>
-
-
-    <div class="tabs">
-
-        <button
-            class="tab active"
-            onclick="switchTop('zmb',this)">
-            TOP ZMB
-        </button>
-
-        <button
-            class="tab"
-            onclick="switchTop('ref',this)">
-            TOP REF
-        </button>
-
-        <button
-            class="tab"
-            onclick="switchTop('games',this)">
-            TOP GAMES
-        </button>
-
-    </div>
-
-
-    <div id="topList"></div>
-
-
-    <div class="card my-rank">
-
-        <div class="rank">
-
-            <div class="rank-number">#347</div>
-
-            <div class="rank-avatar" id="myRankAvatar">
-                <div class="rank-avatar-placeholder">🧟</div>
-            </div>
-
-            <div class="rank-name" id="myRankName">
-                @zombie
-            </div>
-
-            <div class="rank-value">
-                12 450
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- =========================================================
-     FRIENDS
-========================================================= -->
-
-<section id="friends" class="screen">
-
-    <button class="back" onclick="goHome()">← BACK</button>
-
-    <div class="title">👥 FRIENDS</div>
-    <div class="subtitle">Invite friends and earn rewards</div>
-
-
-    <div class="card">
-
-        <div class="card-title">
-            YOUR REFERRAL LINK
-        </div>
-
-        <div
-            id="referralLink"
-            style="
-            margin-top:10px;
-            padding:11px;
-            border-radius:11px;
-            border:1px solid var(--line);
-            background:#050805;
-            color:var(--muted);
-            font-size:9px;
-            word-break:break-all;
-            ">
-            https://t.me/PAIDZOMBIE_bot?start=000000
-        </div>
-
-        <div class="two-buttons" style="margin-top:10px;margin-bottom:0">
+        <div class="tabs">
 
             <button
-                class="btn"
-                onclick="copyReferral()">
-                COPY
+                class="tab active"
+                onclick="renderTop('zmb',this)"
+            >
+                TOP ZMB
             </button>
 
             <button
-                class="btn green"
-                onclick="shareReferral()">
-                SHARE
+                class="tab"
+                onclick="renderTop('ref',this)"
+            >
+                TOP REF
+            </button>
+
+            <button
+                class="tab"
+                onclick="renderTop('games',this)"
+            >
+                TOP GAMES
             </button>
 
         </div>
 
-    </div>
 
-
-    <div class="mining-stats">
-
-        <div class="stat">
-            <div class="stat-value">27</div>
-            <div class="stat-label">REFERRALS</div>
+        <div id="leaderboard" class="card" style="padding:4px">
         </div>
 
-        <div class="stat">
-            <div class="stat-value">10%</div>
-            <div class="stat-label">REF RATE</div>
-        </div>
 
-        <div class="stat">
-            <div class="stat-value">—</div>
-            <div class="stat-label">BONUS</div>
-        </div>
+        <div class="card">
 
-    </div>
-
-
-    <div class="subtitle" style="margin-top:19px">
-        MY REFERRALS
-    </div>
-
-    <div id="referrals"></div>
-
-</section>
-
-
-<!-- =========================================================
-     WALLET
-========================================================= -->
-
-<section id="wallet" class="screen">
-
-    <button class="back" onclick="goHome()">← BACK</button>
-
-    <div class="title">💳 WALLET</div>
-    <div class="subtitle">Manage your balance</div>
-
-
-    <div class="wallet-main">
-
-        <div class="wallet-label">
-            ZMB BALANCE
-        </div>
-
-        <div class="wallet-value" id="walletBalance">
-            12 450.0000 ZMB
-        </div>
-
-        <div class="wallet-secondary">
-            ≈ 0.1245 GRAM
-        </div>
-
-    </div>
-
-
-    <div class="two-buttons">
-
-        <button
-            class="btn green"
-            onclick="openModal('swapModal')">
-            SWAP
-        </button>
-
-        <button
-            class="btn"
-            onclick="openModal('withdrawModal')">
-            WITHDRAW
-        </button>
-
-    </div>
-
-
-    <div class="card">
-
-        <div class="card-title">
-            🔄 ZMB ↔ GRAM
-        </div>
-
-        <div class="card-desc">
-            Exchange system will use the final project
-            economy and backend after launch.
-        </div>
-
-    </div>
-
-
-    <div class="subtitle" style="margin-top:18px">
-        TRANSACTION HISTORY
-    </div>
-
-    <div class="card">
-        <div class="row">
-            <div>
-                <div class="card-title">Mining</div>
-                <div class="card-desc">Today</div>
-            </div>
-            <span style="color:var(--green);font-size:10px;font-weight:950">
-                + ZMB
-            </span>
-        </div>
-    </div>
-
-</section>
-
-
-<!-- =========================================================
-     PROFILE
-========================================================= -->
-
-<section id="profile" class="screen">
-
-    <button class="back" onclick="goHome()">← BACK</button>
-
-    <div class="profile">
-
-        <div class="profile-avatar" id="profileAvatar">
-            <div class="profile-avatar-placeholder">🧟</div>
-        </div>
-
-        <div class="profile-name" id="profileUsername">
-            @zombie
-        </div>
-
-        <div class="profile-id">
-            ID: <span id="profileId">000000</span>
-        </div>
-
-    </div>
-
-
-    <div class="card menu">
-
-        <div
-            class="menu-item"
-            onclick="openModal('withdrawModal')">
-
-            <div class="menu-icon">💸</div>
-
-            <div class="menu-text">
-                <div class="menu-title">WITHDRAW</div>
-                <div class="menu-sub">Withdraw your funds</div>
+            <div class="card-title">
+                YOUR POSITION
             </div>
 
-            <div class="arrow">›</div>
-
-        </div>
-
-
-        <div
-            class="menu-item"
-            onclick="openModal('swapModal')">
-
-            <div class="menu-icon">🔄</div>
-
-            <div class="menu-text">
-                <div class="menu-title">SWAP</div>
-                <div class="menu-sub">TON ↔ ZMB</div>
-            </div>
-
-            <div class="arrow">›</div>
-
-        </div>
-
-
-        <div
-            class="menu-item"
-            onclick="openModal('statsModal')">
-
-            <div class="menu-icon">📊</div>
-
-            <div class="menu-text">
-                <div class="menu-title">STATISTICS</div>
-                <div class="menu-sub">Your activity</div>
-            </div>
-
-            <div class="arrow">›</div>
-
-        </div>
-
-
-        <div
-            class="menu-item"
-            onclick="openModal('faqModal')">
-
-            <div class="menu-icon">❓</div>
-
-            <div class="menu-text">
-                <div class="menu-title">FAQ</div>
-                <div class="menu-sub">Frequently asked questions</div>
-            </div>
-
-            <div class="arrow">›</div>
-
-        </div>
-
-
-        <div
-            class="menu-item"
-            onclick="showToast('Support will be connected later')">
-
-            <div class="menu-icon">🛟</div>
-
-            <div class="menu-text">
-                <div class="menu-title">SUPPORT</div>
-                <div class="menu-sub">Get help</div>
-            </div>
-
-            <div class="arrow">›</div>
-
-        </div>
-
-
-        <div
-            class="menu-item"
-            onclick="showToast('Our channels will be connected later')">
-
-            <div class="menu-icon">📢</div>
-
-            <div class="menu-text">
-                <div class="menu-title">OUR CHANNELS</div>
-                <div class="menu-sub">News and updates</div>
-            </div>
-
-            <div class="arrow">›</div>
-
-        </div>
-
-
-        <div
-            class="menu-item"
-            onclick="openModal('settingsModal')">
-
-            <div class="menu-icon">⚙</div>
-
-            <div class="menu-text">
-                <div class="menu-title">SETTINGS</div>
-                <div class="menu-sub">App settings</div>
-            </div>
-
-            <div class="arrow">›</div>
-
-        </div>
-
-    </div>
-
-</section>
-
-</div>
-
-
-<!-- =========================================================
-     BOTTOM NAV
-========================================================= -->
-
-<nav class="bottom-nav">
-
-    <button class="nav" data-screen="top" onclick="openScreen('top')">
-        <span class="nav-icon">🏆</span>
-        TOP
-    </button>
-
-    <button class="nav" data-screen="friends" onclick="openScreen('friends')">
-        <span class="nav-icon">👥</span>
-        FRIENDS
-    </button>
-
-    <button class="nav active" data-screen="home" onclick="openScreen('home')">
-        <span class="nav-icon">☣</span>
-        HOME
-    </button>
-
-    <button class="nav" data-screen="wallet" onclick="openScreen('wallet')">
-        <span class="nav-icon">💳</span>
-        WALLET
-    </button>
-
-    <button class="nav" data-screen="profile" onclick="openScreen('profile')">
-        <span class="nav-icon">👤</span>
-        PROFILE
-    </button>
-
-</nav>
-
-
-<!-- =========================================================
-     LEVEL MODAL
-========================================================= -->
-
-<div class="modal-bg" id="levelModal">
-
-<div class="modal">
-
-    <div class="modal-head">
-        <div class="modal-title">🏆 YOUR LEVEL</div>
-        <button class="close" onclick="closeModal()">✕</button>
-    </div>
-
-    <div class="card" style="text-align:center">
-
-        <div style="font-size:40px">☣</div>
-
-        <div style="font-size:27px;font-weight:950;margin-top:6px">
-            LEVEL 12
-        </div>
-
-        <div style="color:var(--green);font-size:11px;margin-top:4px">
-            SURVIVOR
-        </div>
-
-        <div class="progress" style="margin-top:17px">
-            <div style="width:62%"></div>
-        </div>
-
-        <div class="card-desc">
-            1 240 / 2 000 XP
-        </div>
-
-    </div>
-
-    <div class="card">
-
-        <div class="card-title">
-            🎁 NEXT LEVEL REWARD
-        </div>
-
-        <div class="card-desc">
-            Reward will be configured with the final economy.
-        </div>
-
-    </div>
-
-</div>
-
-</div>
-
-
-<!-- =========================================================
-     MINER SHOP MODAL
-========================================================= -->
-
-<div class="modal-bg" id="shopModal">
-
-<div class="modal">
-
-    <div class="modal-head">
-        <div class="modal-title">🛒 MINER SHOP</div>
-        <button class="close" onclick="closeModal()">✕</button>
-    </div>
-
-
-    <div class="card">
-
-        <div class="row">
-
-            <div class="left">
-
-                <div class="miner-art">🧟</div>
-
-                <div>
-                    <div class="card-title">Rotter</div>
-                    <div class="card-desc">
-                        Basic · Power 10
-                    </div>
-                </div>
-
-            </div>
-
-            <span class="rarity basic">BASIC</span>
-
-        </div>
-
-        <div class="income">
-
-            <div class="income-label">
-                ESTIMATED INCOME
-            </div>
-
-            <div class="income-value">
-                TO BE DECIDED
+            <div class="card-sub">
+                #127 · outside TOP 50
             </div>
 
         </div>
 
-        <button
-            class="btn green full"
-            style="margin-top:9px"
-            onclick="showToast('Miner prices will be configured later')">
-            BUY
-        </button>
-
-    </div>
+    </section>
 
 
-    <div class="card">
+    <!-- =================================================
+         WALLET
+    ================================================== -->
 
-        <div class="row">
+    <section id="walletScreen" class="screen">
 
-            <div class="left">
-
-                <div class="miner-art">☣</div>
-
-                <div>
-                    <div class="card-title">Brain Eater</div>
-                    <div class="card-desc">
-                        Epic · Power 35
-                    </div>
-                </div>
-
-            </div>
-
-            <span class="rarity epic">EPIC</span>
-
+        <div class="screen-title">
+            WALLET
         </div>
 
-        <div class="income">
+        <div class="screen-sub">
+            ZMB · GRAM · TON
+        </div>
 
-            <div class="income-label">
-                ESTIMATED INCOME
+
+        <div class="wallet-main">
+
+            <div class="wallet-label">
+                ZMB BALANCE
             </div>
 
-            <div class="income-value">
-                TO BE DECIDED
+            <div
+                id="walletBalance"
+                class="wallet-balance"
+            >
+                0
+            </div>
+
+            <div class="wallet-usd">
+                ≈ VALUE WILL APPEAR AFTER ECONOMY LAUNCH
             </div>
 
         </div>
 
-        <button
-            class="btn green full"
-            style="margin-top:9px"
-            onclick="showToast('Miner prices will be configured later')">
-            BUY
-        </button>
 
-    </div>
-
-
-    <div class="card">
-
-        <div class="row">
-
-            <div class="left">
-
-                <div class="miner-art">☠</div>
-
-                <div>
-                    <div class="card-title">Mutant</div>
-                    <div class="card-desc">
-                        Legendary · Power 70
-                    </div>
-                </div>
-
-            </div>
-
-            <span class="rarity legendary">LEGENDARY</span>
-
-        </div>
-
-        <div class="income">
-
-            <div class="income-label">
-                ESTIMATED INCOME
-            </div>
-
-            <div class="income-value">
-                TO BE DECIDED
-            </div>
-
-        </div>
-
-        <button
-            class="btn green full"
-            style="margin-top:9px"
-            onclick="showToast('Miner prices will be configured later')">
-            BUY
-        </button>
-
-    </div>
-
-</div>
-
-</div>
-
-
-<!-- =========================================================
-     BOOSTERS MODAL
-========================================================= -->
-
-<div class="modal-bg" id="boostModal">
-
-<div class="modal">
-
-    <div class="modal-head">
-        <div class="modal-title">⚡ BOOSTERS</div>
-        <button class="close" onclick="closeModal()">✕</button>
-    </div>
-
-    <div class="card">
-        <div class="row">
-            <div>
-                <div class="card-title">⚡ OVERCLOCK</div>
-                <div class="card-desc">
-                    Temporarily increases mining speed
-                </div>
-            </div>
-            <span class="pill">ZMB</span>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="row">
-            <div>
-                <div class="card-title">💰 PROFIT BOOST</div>
-                <div class="card-desc">
-                    Temporarily increases mining reward
-                </div>
-            </div>
-            <span class="pill">ZMB</span>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="row">
-            <div>
-                <div class="card-title">🔋 POWER BOOST</div>
-                <div class="card-desc">
-                    Temporarily increases Mining Power
-                </div>
-            </div>
-            <span class="pill">ZMB</span>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="row">
-            <div>
-                <div class="card-title">🧲 MAGNET</div>
-                <div class="card-desc">
-                    Increases extra reward chance
-                </div>
-            </div>
-            <span class="pill">ZMB</span>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="row">
-            <div>
-                <div class="card-title">☢ MUTATION</div>
-                <div class="card-desc">
-                    Temporarily improves all miners
-                </div>
-            </div>
-            <span class="pill">ZMB</span>
-        </div>
-    </div>
-
-</div>
-
-</div>
-
-
-<!-- =========================================================
-     COMBO MODAL
-========================================================= -->
-
-<div class="modal-bg" id="comboModal">
-
-<div class="modal">
-
-    <div class="modal-head">
-        <div class="modal-title">🧩 COMBO</div>
-        <button class="close" onclick="closeModal()">✕</button>
-    </div>
-
-    <div class="card" style="text-align:center">
-
-        <div style="font-size:45px">🧩</div>
-
-        <div class="card-title" style="margin-top:8px">
-            TODAY'S COMBO
-        </div>
-
-        <div class="card-desc">
-            Find the daily combo in the official PAID ZOMBIE channel.
-        </div>
-
-        <button
-            class="btn green full"
-            style="margin-top:14px"
-            onclick="showToast('Channel connection will be added later')">
-            OPEN CHANNEL
-        </button>
-
-    </div>
-
-</div>
-
-</div>
-
-
-<!-- =========================================================
-     ZOMBIE FLIP MODAL
-========================================================= -->
-
-<div class="modal-bg" id="flipModal">
-
-<div class="modal">
-
-    <div class="modal-head">
-        <div class="modal-title">🧟 ZOMBIE FLIP</div>
-        <button class="close" onclick="closeModal()">✕</button>
-    </div>
-
-    <div class="game-area" id="flipGame">
-
-        <div class="game-score">
-            SCORE: <span id="flipScore">0</span>
-        </div>
-
-        <div class="game-player" id="flipPlayer">
-            🧟
-        </div>
-
-        <div class="game-ground"></div>
-
-        <div class="game-message" id="flipMessage">
-
-            <h2>ZOMBIE FLIP</h2>
-
-            <p>
-                Tap the screen to jump.
-            </p>
+        <div class="wallet-actions">
 
             <button
-                class="btn green"
-                onclick="startFlip()">
-                START
+                class="wallet-action"
+                onclick="showWalletModal('WITHDRAW')"
+            >
+                WITHDRAW
+            </button>
+
+            <button
+                class="wallet-action"
+                onclick="showWalletModal('SWAP')"
+            >
+                SWAP
             </button>
 
         </div>
 
-    </div>
 
-</div>
+        <div class="card" style="margin-top:10px">
 
-</div>
+            <div class="card-title">
+                WALLET STATUS
+            </div>
 
+            <div class="card-sub green">
+                ● WALLET READY · TRANSACTIONS SYNCHRONIZED
+            </div>
 
-<!-- =========================================================
-     DINO RUN MODAL
-========================================================= -->
-
-<div class="modal-bg" id="dinoModal">
-
-<div class="modal">
-
-    <div class="modal-head">
-        <div class="modal-title">🦖 DINO RUN</div>
-        <button class="close" onclick="closeModal()">✕</button>
-    </div>
-
-    <div class="game-area" id="dinoGame">
-
-        <div class="game-score">
-            SCORE: <span id="dinoScore">0</span>
         </div>
 
-        <div class="game-player" id="dinoPlayer">
-            🧟
+
+        <div class="card">
+
+            <div class="card-title">
+                TRANSACTIONS
+            </div>
+
+            <div class="tx">
+
+                <div>
+                    <div class="tx-name">
+                        No transactions yet
+                    </div>
+
+                    <div class="tx-date">
+                        Waiting for network activity
+                    </div>
+                </div>
+
+                <div class="tx-value">
+                    —
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="game-ground"></div>
+    </section>
 
-        <div class="game-message" id="dinoMessage">
 
-            <h2>DINO RUN</h2>
+    <!-- =================================================
+         PROFILE
+    ================================================== -->
 
-            <p>
-                Tap to jump over obstacles.
-            </p>
+    <section id="profileScreen" class="screen">
+
+        <div class="profile-card">
+
+            <div id="profileAvatar"></div>
+
+            <div
+                id="profileName"
+                class="profile-name"
+            >
+                Survivor
+            </div>
+
+            <div
+                id="profileId"
+                class="profile-id"
+            >
+                Player ID: #LOCAL
+            </div>
+
+        </div>
+
+
+        <div class="profile-menu">
 
             <button
-                class="btn green"
-                onclick="startDino()">
-                START
+                class="profile-item"
+                onclick="showWalletModal('WITHDRAW')"
+            >
+                <span class="profile-item-name">
+                    WITHDRAW
+                </span>
+                <span class="profile-arrow">›</span>
+            </button>
+
+            <button
+                class="profile-item"
+                onclick="showWalletModal('SWAP')"
+            >
+                <span class="profile-item-name">
+                    SWAP
+                </span>
+                <span class="profile-arrow">›</span>
+            </button>
+
+            <button
+                class="profile-item"
+                onclick="showToast('Statistics module is ready for backend data')"
+            >
+                <span class="profile-item-name">
+                    STATISTICS
+                </span>
+                <span class="profile-arrow">›</span>
+            </button>
+
+            <button
+                class="profile-item"
+                onclick="showToast('Bonuses will appear here')"
+            >
+                <span class="profile-item-name">
+                    BONUSES
+                </span>
+                <span class="profile-arrow">›</span>
+            </button>
+
+            <button
+                class="profile-item"
+                onclick="showToast('Support module')"
+            >
+                <span class="profile-item-name">
+                    SUPPORT
+                </span>
+                <span class="profile-arrow">›</span>
+            </button>
+
+            <button
+                class="profile-item"
+                onclick="showToast('FAQ module')"
+            >
+                <span class="profile-item-name">
+                    FAQ
+                </span>
+                <span class="profile-arrow">›</span>
+            </button>
+
+            <button
+                class="profile-item"
+                onclick="showToast('Official channels will be connected here')"
+            >
+                <span class="profile-item-name">
+                    OUR CHANNELS
+                </span>
+                <span class="profile-arrow">›</span>
+            </button>
+
+            <button
+                class="profile-item"
+                onclick="openSettings()"
+            >
+                <span class="profile-item-name">
+                    SETTINGS
+                </span>
+                <span class="profile-arrow">›</span>
             </button>
 
         </div>
 
-    </div>
 
-</div>
+        <div class="profile-footer">
 
-</div>
+            <div class="profile-footer-brand">
+                PAID ZOMBIE
+            </div>
 
-
-<!-- =========================================================
-     DAILY WHEEL
-========================================================= -->
-
-<div class="modal-bg" id="wheelModal">
-
-<div class="modal">
-
-    <div class="modal-head">
-        <div class="modal-title">🎡 DAILY WHEEL</div>
-        <button class="close" onclick="closeModal()">✕</button>
-    </div>
-
-    <div class="wheel-wrap">
-
-        <div class="pointer">▼</div>
-
-        <div class="wheel" id="wheel">
-
-            <div class="wheel-label">
-                ZMB
+            <div class="profile-footer-text">
+                Powered by ZMB Network<br>
+                Member since: Sep 2026<br>
+                Player ID: #<span id="footerId">LOCAL</span><br>
+                APP v1.0.0 · BUILD PAID-ZMB-001 · ONLINE
             </div>
 
         </div>
 
+    </section>
+
+
+    <!-- =================================================
+         SETTINGS
+    ================================================== -->
+
+    <section id="settingsScreen" class="screen">
+
+        <button class="back-btn" onclick="openScreen('profile')">
+            ← PROFILE
+        </button>
+
+        <div class="screen-title">
+            SETTINGS
+        </div>
+
+        <div class="screen-sub">
+            PAID ZOMBIE SYSTEM
+        </div>
+
+
+        <div class="card">
+
+            <div class="setting-row">
+
+                <div class="setting-name">
+                    APP VERSION
+                </div>
+
+                <div class="setting-value">
+                    1.0.0
+                </div>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div class="setting-name">
+                    BUILD
+                </div>
+
+                <div class="setting-value">
+                    PAID-ZMB-001
+                </div>
+
+            </div>
+
+
+            <div class="setting-row">
+
+                <div class="setting-name">
+                    NETWORK
+                </div>
+
+                <div class="setting-value green">
+                    ONLINE
+                </div>
+
+            </div>
+
+
+            <div
+                class="setting-row"
+                id="versionBadge"
+                style="cursor:pointer"
+            >
+
+                <div class="setting-name">
+                    SYSTEM STATUS
+                </div>
+
+                <div class="setting-value green">
+                    OPERATIONAL
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         NAV
+    ================================================== -->
+
+    <nav class="bottom-nav">
+
+        <button
+            id="navTop"
+            class="nav-btn"
+            onclick="openScreen('top')"
+        >
+            <div class="nav-icon">♛</div>
+            <div class="nav-text">TOP</div>
+        </button>
+
+        <button
+            id="navFriends"
+            class="nav-btn"
+            onclick="openScreen('friends')"
+        >
+            <div class="nav-icon">♧</div>
+            <div class="nav-text">FRIENDS</div>
+        </button>
+
+        <button
+            id="navHome"
+            class="nav-btn active"
+            onclick="goHome()"
+        >
+            <div class="nav-icon">☣</div>
+            <div class="nav-text">HOME</div>
+        </button>
+
+        <button
+            id="navWallet"
+            class="nav-btn"
+            onclick="openScreen('wallet')"
+        >
+            <div class="nav-icon">◫</div>
+            <div class="nav-text">WALLET</div>
+        </button>
+
+        <button
+            id="navProfile"
+            class="nav-btn"
+            onclick="openScreen('profile')"
+        >
+            <div class="nav-icon">◉</div>
+            <div class="nav-text">PROFILE</div>
+        </button>
+
+    </nav>
+
+</div>
+
+
+<!-- =====================================================
+     TOAST
+===================================================== -->
+
+<div id="toast" class="toast"></div>
+
+
+<!-- =====================================================
+     MODAL
+===================================================== -->
+
+<div
+    id="modal"
+    class="modal"
+    onclick="closeModal(event)"
+>
+
+    <div class="modal-box">
+
         <div
-            class="wheel-result"
-            id="wheelResult">
+            id="modalTitle"
+            class="modal-title"
+        >
+            PAID ZOMBIE
         </div>
 
         <div
-            class="cooldown"
-            id="wheelCooldown">
-            Watch an advertisement to unlock the spin.
+            id="modalContent"
+            class="modal-sub"
+        >
         </div>
 
         <button
-            class="btn green"
-            style="margin-top:13px;width:100%"
-            id="wheelButton"
-            onclick="unlockWheel()">
-            WATCH AD
+            class="close-modal"
+            onclick="hideModal()"
+        >
+            CLOSE
         </button>
 
     </div>
 
 </div>
-
-</div>
-
-
-<!-- =========================================================
-     GIVEAWAY MODAL
-========================================================= -->
-
-<div class="modal-bg" id="giveawayModal">
-
-<div class="modal">
-
-    <div class="modal-head">
-        <div class="modal-title">🎟 GIVEAWAY</div>
-        <button class="close" onclick="closeModal()">✕</button>
-    </div>
-
-    <div class="card" style="text-align:center">
-
-        <div style="font-size:45px">🎁</div>
-
-        <div class="card-title">
-            ZOMBIE JACKPOT
-        </div>
-
-        <div class="prize">
-            50 000 ZMB
-        </div>
-
-        <div class="card-desc">
-            Use one ticket to enter the giveaway.
-        </div>
-
-        <button
-            class="btn green full"
-            style="margin-top:13px"
-            onclick="useTicket()">
-            USE 1 TICKET
-        </button>
-
-    </div>
-
-</div>
-
-</div>
-
-
-<!-- =========================================================
-     PROMOTE MODAL
-========================================================= -->
-
-<div class="modal-bg" id="promoteModal">
-
-<div class="modal">
-
-    <div class="modal-head">
-        <div class="modal-title">📢 PROMOTE</div>
-        <button class="close" onclick="closeModal()">✕</button>
-    </div>
-
-    <div class="card">
-
-        <div class="card-title">
-            CREATE CAMPAIGN
-        </div>
-
-        <div class="card-desc" style="line-height:1.7">
-            Channel → subscribers target → reward →
-            campaign budget → TON / ⭐ Stars.
-        </div>
-
-    </div>
-
-    <button
-        class="btn green full"
-        onclick="showToast('Promotion system will be connected later')">
-        CONTINUE
-    </button>
-
-</div>
-
-</div>
-
-
-<!-- =========================================================
-     SWAP MODAL
-========================================================= -->
-
-<div class="modal-bg" id="swapModal">
-
-<div class="modal">
-
-    <div class="modal-head">
-        <div class="modal-title">🔄 SWAP</div>
-        <button class="close" onclick="closeModal()">✕</button>
-    </div>
-
-    <div class="card">
-
-        <div class="card-title">
-            ZMB ↔ GRAM
-        </div>
-
-        <div class="card-desc" style="margin-top:8px">
-            The exchange rate will be configured
-            after we finalize the project economy.
-        </div>
-
-    </div>
-
-</div>
-
-</div>
-
-
-<!-- =========================================================
-     WITHDRAW MODAL
-========================================================= -->
-
-<div class="modal-bg" id="withdrawModal">
-
-<div class="modal">
-
-    <div class="modal-head">
-        <div class="modal-title">💸 WITHDRAW</div>
-        <button class="close" onclick="closeModal()">✕</button>
-    </div>
-
-    <div class="card" style="text-align:center">
-
-        <div style="font-size:42px">💳</div>
-
-        <div class="card-title">
-            WITHDRAWAL
-        </div>
-
-        <div class="card-desc">
-            Wallet and withdrawal infrastructure
-            will be connected with the backend.
-        </div>
-
-    </div>
-
-</div>
-
-</div>
-
-
-<!-- =========================================================
-     STATS MODAL
-========================================================= -->
-
-<div class="modal-bg" id="statsModal">
-
-<div class="modal">
-
-    <div class="modal-head">
-        <div class="modal-title">📊 STATISTICS</div>
-        <button class="close" onclick="closeModal()">✕</button>
-    </div>
-
-    <div class="mining-stats">
-
-        <div class="stat">
-            <div class="stat-value">12</div>
-            <div class="stat-label">LEVEL</div>
-        </div>
-
-        <div class="stat">
-            <div class="stat-value">27</div>
-            <div class="stat-label">REFERRALS</div>
-        </div>
-
-        <div class="stat">
-            <div class="stat-value">—</div>
-            <div class="stat-label">GAME XP</div>
-        </div>
-
-    </div>
-
-</div>
-
-</div>
-
-
-<!-- =========================================================
-     FAQ MODAL
-========================================================= -->
-
-<div class="modal-bg" id="faqModal">
-
-<div class="modal">
-
-    <div class="modal-head">
-        <div class="modal-title">❓ FAQ</div>
-        <button class="close" onclick="closeModal()">✕</button>
-    </div>
-
-    <div class="card">
-        <div class="card-title">What is ZMB?</div>
-        <div class="card-desc">
-            ZMB is the internal reward unit of PAID ZOMBIE.
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-title">How do I get tickets?</div>
-        <div class="card-desc">
-            Every 5 confirmed advertisements give 1 ticket.
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-title">How does Mining work?</div>
-        <div class="card-desc">
-            Start mining after completing the required advertisement.
-        </div>
-    </div>
-
-</div>
-
-</div>
-
-
-<!-- =========================================================
-     SETTINGS
-========================================================= -->
-
-<div class="modal-bg" id="settingsModal">
-
-<div class="modal">
-
-    <div class="modal-head">
-        <div class="modal-title">⚙ SETTINGS</div>
-        <button class="close" onclick="closeModal()">✕</button>
-    </div>
-
-    <div class="card">
-
-        <div class="menu-item">
-            <div class="menu-icon">🌐</div>
-
-            <div class="menu-text">
-                <div class="menu-title">LANGUAGE</div>
-                <div class="menu-sub">English / Русский</div>
-            </div>
-
-            <div class="arrow">›</div>
-        </div>
-
-        <div class="menu-item">
-            <div class="menu-icon">🔔</div>
-
-            <div class="menu-text">
-                <div class="menu-title">NOTIFICATIONS</div>
-                <div class="menu-sub">Enabled</div>
-            </div>
-
-            <div class="arrow">›</div>
-        </div>
-
-    </div>
-
-</div>
-
-</div>
-
-
-<div class="toast" id="toast"></div>
 
 
 <script>
+/* =====================================================
+   PAID ZOMBIE APP
+===================================================== */
 
-/* ============================================================
-   PAID ZOMBIE FRONTEND CORE
-   ============================================================ */
-
-const tg = window.Telegram?.WebApp;
+const tg =
+    window.Telegram &&
+    Telegram.WebApp
+        ? Telegram.WebApp
+        : null;
 
 if(tg){
     tg.ready();
@@ -3139,2348 +2654,1346 @@ if(tg){
 }
 
 
-/* ============================================================
-   USER DATA
-   ============================================================ */
+/* =====================================================
+   USER
+===================================================== */
 
-const tgUser =
-    tg?.initDataUnsafe?.user || null;
-
-let USER = {
-    id: tgUser?.id || 347829,
-    username:
-        tgUser?.username
-            ? '@' + tgUser.username
-            : (tgUser?.first_name || '@zombie'),
-    photo:
-        tgUser?.photo_url || null
-};
+const telegramUser =
+    tg &&
+    tg.initDataUnsafe &&
+    tg.initDataUnsafe.user
+        ? tg.initDataUnsafe.user
+        : null;
 
 
-/* ============================================================
+function userName(){
+
+    if(!telegramUser){
+        return "Survivor";
+    }
+
+    if(telegramUser.username){
+        return "@" + telegramUser.username;
+    }
+
+    return (
+        telegramUser.first_name ||
+        "Survivor"
+    );
+}
+
+
+function userInitial(){
+
+    if(!telegramUser){
+        return "Z";
+    }
+
+    return (
+        telegramUser.first_name ||
+        telegramUser.username ||
+        "Z"
+    ).charAt(0).toUpperCase();
+}
+
+
+/* =====================================================
+   AVATARS
+===================================================== */
+
+function avatarHTML(className){
+
+    if(
+        telegramUser &&
+        telegramUser.photo_url
+    ){
+
+        return `
+            <img
+                class="${className}"
+                src="${telegramUser.photo_url}"
+                alt="avatar"
+            >
+        `;
+    }
+
+    return `
+        <div class="avatar-fallback">
+            ${userInitial()}
+        </div>
+    `;
+}
+
+
+/* =====================================================
    BALANCE
-   ============================================================ */
+===================================================== */
 
-let balance = 12450.000000;
+let balance = 0;
 
-function formatZMB(value){
-    return Number(value).toFixed(6);
-}
+let tickets = 0;
 
-function updateBalance(){
-
-    document.getElementById('headerBalance')
-        .textContent =
-        Number(balance).toLocaleString(
-            'en-US',
-            {
-                minimumFractionDigits:4,
-                maximumFractionDigits:6
-            }
-        );
-
-    document.getElementById('walletBalance')
-        .textContent =
-        formatZMB(balance) + ' ZMB';
-}
+let referralCount = 0;
 
 
-/* ============================================================
-   TELEGRAM AVATARS
-   ============================================================ */
-
-function avatarHTML(){
-
-    if(USER.photo){
-
-        return `
-            <img
-                src="${escapeHTML(USER.photo)}"
-                alt="avatar">
-        `;
-
-    }
-
-    return `
-        <div class="avatar-placeholder">🧟</div>
-    `;
-}
-
-function rankAvatarHTML(){
-
-    if(USER.photo){
-
-        return `
-            <img
-                src="${escapeHTML(USER.photo)}"
-                alt="avatar">
-        `;
-
-    }
-
-    return `
-        <div class="rank-avatar-placeholder">🧟</div>
-    `;
-}
-
-function profileAvatarHTML(){
-
-    if(USER.photo){
-
-        return `
-            <img
-                src="${escapeHTML(USER.photo)}"
-                alt="avatar">
-        `;
-
-    }
-
-    return `
-        <div class="profile-avatar-placeholder">🧟</div>
-    `;
-}
-
-function escapeHTML(value){
-
-    return String(value)
-        .replaceAll('&','&amp;')
-        .replaceAll('<','&lt;')
-        .replaceAll('>','&gt;')
-        .replaceAll('"','&quot;')
-        .replaceAll("'","&#039;");
-
-}
+/* =====================================================
+   UI UPDATE
+===================================================== */
 
 function updateUserUI(){
 
-    document.getElementById('headerUsername')
-        .textContent = USER.username;
+    document.getElementById(
+        "headerAvatar"
+    ).innerHTML =
+        avatarHTML("avatar");
 
-    document.getElementById('profileUsername')
-        .textContent = USER.username;
+    document.getElementById(
+        "profileAvatar"
+    ).innerHTML =
+        avatarHTML("profile-avatar");
 
-    document.getElementById('profileId')
-        .textContent = USER.id;
 
-    document.getElementById('myRankName')
-        .textContent = USER.username;
+    document.getElementById(
+        "headerUsername"
+    ).textContent =
+        userName();
 
-    document.getElementById('headerAvatar')
-        .innerHTML = avatarHTML();
 
-    document.getElementById('profileAvatar')
-        .innerHTML = profileAvatarHTML();
+    document.getElementById(
+        "profileName"
+    ).textContent =
+        userName();
 
-    document.getElementById('myRankAvatar')
-        .innerHTML = rankAvatarHTML();
 
-    document.getElementById('referralLink')
-        .textContent =
-        'https://t.me/PAIDZOMBIE_bot?start=' + USER.id;
+    const id =
+        telegramUser &&
+        telegramUser.id
+            ? telegramUser.id
+            : "LOCAL";
+
+
+    document.getElementById(
+        "profileId"
+    ).textContent =
+        "Player ID: #" + id;
+
+
+    document.getElementById(
+        "footerId"
+    ).textContent =
+        id;
+
+
+    updateBalance();
 }
 
 
-/* ============================================================
+function updateBalance(){
+
+    document.getElementById(
+        "headerBalance"
+    ).textContent =
+        formatNumber(balance);
+
+
+    document.getElementById(
+        "walletBalance"
+    ).textContent =
+        formatNumber(balance);
+}
+
+
+function updateTickets(){
+
+    document.getElementById(
+        "ticketCount"
+    ).textContent =
+        tickets;
+}
+
+
+function formatNumber(number){
+
+    return Number(number).toLocaleString(
+        "en-US",
+        {
+            maximumFractionDigits:7
+        }
+    );
+}
+
+
+/* =====================================================
    NAVIGATION
-   ============================================================ */
+===================================================== */
 
-function openScreen(screen){
+const screenNames = [
+    "home",
+    "mining",
+    "games",
+    "game",
+    "earn",
+    "giveaways",
+    "friends",
+    "top",
+    "wallet",
+    "profile",
+    "settings"
+];
 
-    document.querySelectorAll('.screen')
-        .forEach(el => el.classList.remove('active'));
 
-    const target =
-        document.getElementById(screen);
+function openScreen(name){
 
-    if(target){
-        target.classList.add('active');
-    }
+    screenNames.forEach(function(screen){
 
-    document.querySelectorAll('.nav')
-        .forEach(nav => {
-
-            nav.classList.toggle(
-                'active',
-                nav.dataset.screen === screen
+        const el =
+            document.getElementById(
+                screen + "Screen"
             );
 
-        });
-
-    window.scrollTo({
-        top:0,
-        behavior:'smooth'
-    });
-
-}
-
-function goHome(){
-    openScreen('home');
-}
-
-
-/* ============================================================
-   MODALS
-   ============================================================ */
-
-function openModal(id){
-
-    document.querySelectorAll('.modal-bg')
-        .forEach(el => el.classList.remove('show'));
-
-    const modal =
-        document.getElementById(id);
-
-    if(modal){
-        modal.classList.add('show');
-    }
-
-}
-
-function closeModal(){
-
-    document.querySelectorAll('.modal-bg')
-        .forEach(el => el.classList.remove('show'));
-
-}
-
-document.querySelectorAll('.modal-bg')
-.forEach(bg => {
-
-    bg.addEventListener('click',e => {
-
-        if(e.target === bg){
-            closeModal();
+        if(el){
+            el.classList.remove("active");
         }
 
     });
 
-});
+
+    const target =
+        document.getElementById(
+            name + "Screen"
+        );
+
+    if(target){
+        target.classList.add("active");
+    }
 
 
-/* ============================================================
-   TOAST
-   ============================================================ */
+    document.querySelectorAll(
+        ".nav-btn"
+    ).forEach(function(btn){
+        btn.classList.remove("active");
+    });
 
-let toastTimeout;
 
-function showToast(text){
+    const navMap = {
+        top:"navTop",
+        friends:"navFriends",
+        wallet:"navWallet",
+        profile:"navProfile",
+        home:"navHome"
+    };
 
-    const toast =
-        document.getElementById('toast');
 
-    toast.textContent = text;
-    toast.classList.add('show');
+    if(navMap[name]){
 
-    clearTimeout(toastTimeout);
+        document
+            .getElementById(
+                navMap[name]
+            )
+            ?.classList.add("active");
 
-    toastTimeout =
-        setTimeout(() => {
+    }
 
-            toast.classList.remove('show');
 
-        },2300);
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
 
+
+    if(name === "profile"){
+        showToast("PROFILE · SYSTEM ONLINE");
+    }
+
+    if(name === "wallet"){
+        showToast("WALLET READY");
+    }
+
+    if(name === "top"){
+        showToast("LEADERBOARD SYNCHRONIZED");
+    }
 }
 
 
-/* ============================================================
+function goHome(){
+    openScreen("home");
+}
+
+
+/* =====================================================
+   TOAST
+===================================================== */
+
+let toastTimer;
+
+function showToast(message){
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+    toast.textContent =
+        message;
+
+    toast.classList.add("show");
+
+    clearTimeout(toastTimer);
+
+    toastTimer =
+        setTimeout(function(){
+
+            toast.classList.remove(
+                "show"
+            );
+
+        },2500);
+}
+
+
+/* =====================================================
    MINING
-   ============================================================ */
+===================================================== */
 
 let miningActive = false;
-let miningStartTime = null;
-let miningInterval = null;
 
-const miningRatePerSecond =
+let miningStartTime = null;
+
+let miningTimer = null;
+
+const miningRate =
     0.0001 / 3600;
 
-function startMining(){
+
+function toggleMining(){
 
     const button =
-        document.getElementById('startMiningButton');
+        document.getElementById(
+            "miningButton"
+        );
 
-    const message =
-        document.getElementById('miningMessage');
 
     if(miningActive){
 
-        miningActive = false;
-
-        clearInterval(miningInterval);
-
-        button.textContent =
-            'START MINING';
-
-        button.classList.remove('stop');
-
-        document.getElementById('heroStatus')
-            .textContent =
-            'MINING PAUSED';
+        claimMining();
 
         return;
     }
 
 
     /*
-        DEMO:
-
-        Здесь позже вместо demoAd()
-        подключается реальный AdsGram reward event.
-
-        ВАЖНО:
-        backend должен подтверждать просмотр рекламы.
+       Demo ad simulation.
+       Later replace this callback
+       with confirmed rewarded-ad event.
     */
 
-    message.classList.remove('show');
-
     button.disabled = true;
-    button.textContent =
-        'WATCHING AD...';
 
-    setTimeout(() => {
+    button.textContent =
+        "LOADING AD...";
+
+
+    showToast(
+        "Rewarded ad demo started"
+    );
+
+
+    setTimeout(function(){
 
         button.disabled = false;
 
-        const adConfirmed = true;
-
-        if(!adConfirmed){
-
-            message.classList.add('show');
-
-            button.textContent =
-                'START MINING';
-
-            return;
-        }
-
         miningActive = true;
-        miningStartTime = Date.now();
+
+        miningStartTime =
+            Date.now();
+
 
         button.textContent =
-            'STOP MINING';
+            "CLAIM";
 
-        button.classList.add('stop');
+        button.style.background =
+            "rgba(53,255,134,.08)";
 
-        document.getElementById('heroStatus')
-            .textContent =
-            'MINING ACTIVE';
+        button.style.color =
+            "var(--green)";
 
-        startMiningCounter();
+        button.style.border =
+            "1px solid var(--line2)";
 
-    },1500);
 
+        startMiningTimer();
+
+        showToast(
+            "MINING STARTED"
+        );
+
+    },1200);
 }
 
 
-function startMiningCounter(){
+function startMiningTimer(){
 
-    clearInterval(miningInterval);
+    clearInterval(
+        miningTimer
+    );
 
-    miningInterval =
-        setInterval(() => {
+
+    miningTimer =
+        setInterval(function(){
 
             if(!miningActive){
                 return;
             }
 
+
             const elapsed =
-                (Date.now() - miningStartTime) / 1000;
+                (
+                    Date.now() -
+                    miningStartTime
+                ) / 1000;
 
-            const earned =
-                elapsed * miningRatePerSecond;
 
-            document.getElementById('minedAmount')
-                .textContent =
-                earned.toFixed(8);
+            const mined =
+                elapsed *
+                miningRate;
 
-            document.getElementById('miningTimer')
-                .textContent =
-                'Mining time: ' +
-                formatDuration(elapsed);
 
-        },100);
+            document.getElementById(
+                "minedAmount"
+            ).textContent =
+                formatNumber(
+                    mined
+                ) +
+                " ZMB";
 
+        },500);
 }
 
 
-function formatDuration(seconds){
+function claimMining(){
 
-    seconds =
-        Math.floor(seconds);
+    if(!miningActive){
 
-    const h =
-        Math.floor(seconds / 3600);
+        showToast(
+            "NOTHING TO CLAIM"
+        );
 
-    const m =
-        Math.floor((seconds % 3600) / 60);
+        return;
+    }
 
-    const s =
-        seconds % 60;
 
-    return (
-        String(h).padStart(2,'0') +
-        ':' +
-        String(m).padStart(2,'0') +
-        ':' +
-        String(s).padStart(2,'0')
+    const elapsed =
+        (
+            Date.now() -
+            miningStartTime
+        ) / 1000;
+
+
+    const earned =
+        elapsed *
+        miningRate;
+
+
+    balance += earned;
+
+
+    miningActive = false;
+
+    miningStartTime = null;
+
+
+    clearInterval(
+        miningTimer
     );
 
-}
+
+    document.getElementById(
+        "minedAmount"
+    ).textContent =
+        "0.0000000 ZMB";
 
 
-/* ============================================================
-   ADS
-   ============================================================ */
+    const button =
+        document.getElementById(
+            "miningButton"
+        );
 
-let ads1 = 0;
-let ads2 = 0;
-let tickets = 12;
 
-function watchAd(network){
+    button.textContent =
+        "START MINING";
 
-    let count;
+    button.disabled = false;
 
-    if(network === 'AdsGram'){
+    button.style.background =
+        "";
 
-        if(ads1 >= 20){
-            showToast('Daily AdsGram limit reached');
-            return;
-        }
+    button.style.color =
+        "";
 
-        count = ++ads1;
+    button.style.border =
+        "";
 
-        document.getElementById('ads1')
-            .textContent = count;
 
-    }
-    else{
+    updateBalance();
 
-        if(ads2 >= 20){
-            showToast('Daily ad limit reached');
-            return;
-        }
-
-        count = ++ads2;
-
-        document.getElementById('ads2')
-            .textContent = count;
-
-    }
 
     showToast(
-        network + ' advertisement completed'
+        "+" +
+        formatNumber(earned) +
+        " ZMB CLAIMED"
+    );
+}
+
+
+/* =====================================================
+   GAMES
+===================================================== */
+
+let currentGame = null;
+
+let gameRunning = false;
+
+let gameScore = 0;
+
+let gameLoop = null;
+
+let playerY = 205;
+
+let velocity = 0;
+
+let obstacleX = 500;
+
+
+function openGame(game){
+
+    currentGame =
+        game;
+
+    openScreen("game");
+
+
+    const title =
+        document.getElementById(
+            "gameTitle"
+        );
+
+    const sub =
+        document.getElementById(
+            "gameSub"
+        );
+
+
+    if(game === "flip"){
+
+        title.textContent =
+            "ZOMBIE FLIP";
+
+        sub.textContent =
+            "TAP TO JUMP · SURVIVE";
+
+    }else{
+
+        title.textContent =
+            "DINO RUN";
+
+        sub.textContent =
+            "TAP TO JUMP · RUN";
+
+    }
+
+
+    resetGame();
+}
+
+
+function resetGame(){
+
+    gameRunning = false;
+
+    gameScore = 0;
+
+    playerY = 205;
+
+    velocity = 0;
+
+    obstacleX = 500;
+
+
+    updateGameObjects();
+
+    document.getElementById(
+        "gameScore"
+    ).textContent =
+        "SCORE 0";
+}
+
+
+function startGame(){
+
+    if(gameRunning){
+        return;
+    }
+
+
+    gameRunning = true;
+
+    gameScore = 0;
+
+    playerY = 205;
+
+    velocity = -8;
+
+    obstacleX = 500;
+
+
+    clearInterval(
+        gameLoop
     );
 
-    /*
-       Every 5 CONFIRMED views = 1 ticket.
-    */
 
-    const totalAds =
-        ads1 + ads2;
+    gameLoop =
+        setInterval(
+            gameTick,
+            35
+        );
 
-    if(totalAds % 5 === 0){
+
+    showToast(
+        currentGame === "flip"
+            ? "ZOMBIE FLIP STARTED"
+            : "DINO RUN STARTED"
+    );
+}
+
+
+function jumpGame(){
+
+    if(!gameRunning){
+        startGame();
+        return;
+    }
+
+
+    if(playerY >= 190){
+
+        velocity = -10;
+    }
+}
+
+
+function gameTick(){
+
+    velocity += .55;
+
+    playerY += velocity;
+
+
+    if(playerY > 205){
+
+        playerY = 205;
+
+        velocity = 0;
+    }
+
+
+    obstacleX -= 5;
+
+
+    if(obstacleX < -40){
+
+        obstacleX = 500;
+
+        gameScore++;
+
+        document.getElementById(
+            "gameScore"
+        ).textContent =
+            "SCORE " +
+            gameScore;
+    }
+
+
+    updateGameObjects();
+
+
+    const playerLeft =
+        45;
+
+    const playerRight =
+        77;
+
+    const obstacleLeft =
+        obstacleX;
+
+    const obstacleRight =
+        obstacleX + 32;
+
+
+    const verticalHit =
+        playerY < 220;
+
+
+    if(
+        obstacleRight > playerLeft &&
+        obstacleLeft < playerRight &&
+        verticalHit
+    ){
+
+        endGame();
+    }
+}
+
+
+function updateGameObjects(){
+
+    const player =
+        document.getElementById(
+            "player"
+        );
+
+    const obstacle =
+        document.getElementById(
+            "obstacle"
+        );
+
+
+    player.style.left =
+        "45px";
+
+    player.style.bottom =
+        (36 + (205 - playerY)) +
+        "px";
+
+
+    obstacle.style.left =
+        obstacleX +
+        "px";
+
+    obstacle.style.bottom =
+        "36px";
+
+
+    if(currentGame === "dino"){
+
+        player.textContent =
+            "D";
+
+        obstacle.textContent =
+            "X";
+
+    }else{
+
+        player.textContent =
+            "Z";
+
+        obstacle.textContent =
+            "X";
+    }
+}
+
+
+function endGame(){
+
+    gameRunning = false;
+
+    clearInterval(
+        gameLoop
+    );
+
+
+    showToast(
+        "GAME OVER · SCORE " +
+        gameScore
+    );
+}
+
+
+/* Tap anywhere in game */
+
+document.getElementById(
+    "gameArea"
+).addEventListener(
+    "pointerdown",
+    function(){
+        jumpGame();
+    }
+);
+
+
+/* =====================================================
+   EARN
+===================================================== */
+
+function watchAd(){
+
+    showToast(
+        "Rewarded ad demo..."
+    );
+
+
+    setTimeout(function(){
 
         tickets++;
 
         updateTickets();
 
         showToast(
-            '🎟 New giveaway ticket!'
+            "AD COMPLETE · TICKET +1"
         );
 
-    }
-
+    },1200);
 }
 
 
-function updateTickets(){
-
-    document.getElementById('ticketCount')
-        .textContent = tickets;
-
-}
-
-
-/* ============================================================
-   DAILY WHEEL
-   ============================================================ */
-
-let wheelReady = false;
-let wheelCooldown = 0;
-let wheelTimer = null;
-let wheelRotation = 0;
-
-const wheelRewards = [
-    'SMALL BONUS',
-    'BONUS',
-    'BIG BONUS',
-    'TICKET',
-    'MEGA BONUS',
-    'BONUS',
-    'TICKET',
-    'SMALL BONUS'
-];
-
-
-function unlockWheel(){
-
-    if(wheelCooldown > Date.now()){
-
-        showToast(
-            'Wheel is on cooldown'
-        );
-
-        return;
-    }
-
-    if(wheelReady){
-
-        spinWheel();
-
-        return;
-    }
-
-    const button =
-        document.getElementById('wheelButton');
-
-    button.textContent =
-        'WATCHING AD...';
-
-    button.disabled = true;
-
-    setTimeout(() => {
-
-        button.disabled = false;
-
-        wheelReady = true;
-
-        button.textContent =
-            'SPIN WHEEL';
-
-        document.getElementById('wheelCooldown')
-            .textContent =
-            'Advertisement completed. Spin now!';
-
-    },1500);
-
-}
-
-
-function spinWheel(){
-
-    if(!wheelReady){
-
-        unlockWheel();
-        return;
-
-    }
-
-    wheelReady = false;
-
-    const index =
-        Math.floor(
-            Math.random() * wheelRewards.length
-        );
-
-    const reward =
-        wheelRewards[index];
-
-    const segment =
-        360 / wheelRewards.length;
-
-    wheelRotation +=
-        360 * 5 +
-        (360 - index * segment - segment / 2);
-
-    const wheel =
-        document.getElementById('wheel');
-
-    wheel.style.transform =
-        'rotate(' + wheelRotation + 'deg)';
-
-    document.getElementById('wheelButton')
-        .disabled = true;
-
-    document.getElementById('wheelResult')
-        .textContent = '';
-
-    setTimeout(() => {
-
-        document.getElementById('wheelResult')
-            .textContent =
-            '🎁 YOU WON: ' + reward;
-
-        wheelCooldown =
-            Date.now() + 24 * 60 * 60 * 1000;
-
-        startWheelCooldown();
-
-    },4200);
-
-}
-
-
-function startWheelCooldown(){
-
-    clearInterval(wheelTimer);
-
-    wheelTimer =
-        setInterval(() => {
-
-            const remaining =
-                wheelCooldown - Date.now();
-
-            if(remaining <= 0){
-
-                clearInterval(wheelTimer);
-
-                document.getElementById('wheelCooldown')
-                    .textContent =
-                    'Watch an advertisement to unlock the spin.';
-
-                document.getElementById('wheelButton')
-                    .disabled = false;
-
-                document.getElementById('wheelButton')
-                    .textContent =
-                    'WATCH AD';
-
-                return;
-
-            }
-
-            document.getElementById('wheelCooldown')
-                .textContent =
-                'Next spin in ' +
-                formatCountdown(remaining);
-
-        },1000);
-
-}
-
-
-function formatCountdown(ms){
-
-    const total =
-        Math.floor(ms / 1000);
-
-    const h =
-        Math.floor(total / 3600);
-
-    const m =
-        Math.floor((total % 3600) / 60);
-
-    const s =
-        total % 60;
-
-    return (
-        String(h).padStart(2,'0') +
-        ':' +
-        String(m).padStart(2,'0') +
-        ':' +
-        String(s).padStart(2,'0')
-    );
-
-}
-
-
-/* ============================================================
-   GIVEAWAY
-   ============================================================ */
-
-function useTicket(){
+/* =====================================================
+   GIVEAWAYS
+===================================================== */
+
+function joinGiveaway(){
 
     if(tickets <= 0){
 
         showToast(
-            'You have no tickets'
+            "NO TICKETS · WATCH 5 ADS"
         );
 
         return;
     }
+
 
     tickets--;
 
     updateTickets();
 
-    closeModal();
 
     showToast(
-        '🎟 Ticket used successfully'
+        "TICKET USED · GOOD LUCK"
     );
-
 }
 
 
-/* ============================================================
-   EARN TABS
-   ============================================================ */
+/* =====================================================
+   FRIENDS
+===================================================== */
 
-function switchEarn(tab,button){
+function referralLink(){
 
-    document.querySelectorAll('#earn .tab')
-        .forEach(el => {
-            el.classList.remove('active');
-        });
+    const id =
+        telegramUser &&
+        telegramUser.id
+            ? telegramUser.id
+            : "demo";
 
-    button.classList.add('active');
 
-    document.getElementById('earnTab')
-        .style.display =
-        tab === 'earnTab'
-            ? 'block'
-            : 'none';
-
-    document.getElementById('promoteTab')
-        .style.display =
-        tab === 'promoteTab'
-            ? 'block'
-            : 'none';
-
+    return (
+        "https://t.me/PAIDZOMBIE_bot?start=" +
+        id
+    );
 }
 
-
-/* ============================================================
-   REFERRALS
-   ============================================================ */
-
-const referralNames = [
-    'zombie_one',
-    'dead_player',
-    'grave_worker',
-    'brain_eater',
-    'mutant_x'
-];
 
 function renderReferrals(){
 
-    const container =
-        document.getElementById('referrals');
+    document.getElementById(
+        "refLink"
+    ).textContent =
+        referralLink();
 
-    container.innerHTML = '';
 
-    referralNames.forEach((name,index) => {
-
-        const card =
-            document.createElement('div');
-
-        card.className = 'card';
-
-        /*
-            Пока demo-avatar.
-
-            В реальном backend сюда будут приходить:
-            username + photo_url каждого реферала.
-        */
-
-        card.innerHTML = `
-
-            <div class="row">
-
-                <div class="left">
-
-                    <div class="rank-avatar">
-                        <div class="rank-avatar-placeholder">
-                            🧟
-                        </div>
-                    </div>
-
-                    <div>
-
-                        <div class="card-title">
-                            @${name}
-                        </div>
-
-                        <div class="card-desc">
-                            Active referral
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <span class="pill">
-                    ACTIVE
-                </span>
-
-            </div>
-
-        `;
-
-        container.appendChild(card);
-
-    });
-
+    document.getElementById(
+        "refCount"
+    ).textContent =
+        referralCount;
 }
 
 
 function copyReferral(){
 
     const link =
-        'https://t.me/PAIDZOMBIE_bot?start=' +
-        USER.id;
+        referralLink();
 
-    if(navigator.clipboard){
+
+    if(
+        navigator.clipboard &&
+        navigator.clipboard.writeText
+    ){
 
         navigator.clipboard
             .writeText(link)
-            .then(() => {
-                showToast('Referral link copied');
+            .then(function(){
+
+                showToast(
+                    "REFERRAL LINK COPIED"
+                );
+
             });
 
-    }
+    }else{
 
+        showToast(
+            "COPY NOT AVAILABLE"
+        );
+    }
 }
 
 
 function shareReferral(){
 
     const link =
-        'https://t.me/PAIDZOMBIE_bot?start=' +
-        USER.id;
+        referralLink();
+
 
     const text =
-        'Join PAID ZOMBIE 🧟';
+        "Join PAID ZOMBIE ☣";
 
-    const shareURL =
-        'https://t.me/share/url?url=' +
+
+    const url =
+        "https://t.me/share/url?url=" +
         encodeURIComponent(link) +
-        '&text=' +
+        "&text=" +
         encodeURIComponent(text);
 
-    if(tg?.openTelegramLink){
 
-        tg.openTelegramLink(shareURL);
+    if(tg){
 
-    }
-    else{
-
-        window.open(
-            shareURL,
-            '_blank'
+        tg.openTelegramLink(
+            url
         );
 
+    }else{
+
+        window.open(
+            url,
+            "_blank"
+        );
+    }
+}
+
+
+/* =====================================================
+   TOP 50
+===================================================== */
+
+const fakeNames = [
+    "ZombieWhale",
+    "BrainHunter",
+    "DeadInside",
+    "CryptoRotter",
+    "ZMBKing",
+    "MutantX",
+    "GraveWalker",
+    "ZombieLord",
+    "NightCrawler",
+    "PlagueUser",
+    "ToxicBrain",
+    "DeadMiner",
+    "RottenCore",
+    "Survivor404",
+    "DarkZombie",
+    "BrainDealer",
+    "GreenMutant",
+    "ZMBHunter",
+    "LastSurvivor",
+    "CryptoZombie",
+    "DeadProtocol",
+    "MutationX",
+    "GraveLord",
+    "Zombified",
+    "Brain.exe"
+];
+
+
+function renderTop(type,clickedButton){
+
+    if(clickedButton){
+
+        document.querySelectorAll(
+            ".tab"
+        ).forEach(function(btn){
+
+            btn.classList.remove(
+                "active"
+            );
+
+        });
+
+        clickedButton.classList.add(
+            "active"
+        );
     }
 
-}
+
+    const board =
+        document.getElementById(
+            "leaderboard"
+        );
 
 
-/* ============================================================
-   TOP 50
-   ============================================================ */
-
-const players = [];
-
-for(let i=1;i<=50;i++){
-
-    players.push({
-
-        rank:i,
-
-        name:
-            i === 1
-                ? 'ZombieKing'
-                : i === 2
-                ? 'GraveBoss'
-                : i === 3
-                ? 'Mutant'
-                : 'Zombie_' + i,
-
-        zmb:
-            Math.max(
-                150000 - i * 2800,
-                1000
-            ),
-
-        ref:
-            Math.max(
-                500 - i * 9,
-                3
-            ),
-
-        games:
-            Math.max(
-                100000 - i * 1800,
-                500
-            )
-
-    });
-
-}
+    board.innerHTML = "";
 
 
-function renderTop(type){
+    for(
+        let i = 1;
+        i <= 50;
+        i++
+    ){
 
-    const list =
-        document.getElementById('topList');
+        const name =
+            i === 7
+                ? userName()
+                : fakeNames[
+                    (i - 1) %
+                    fakeNames.length
+                ];
 
-    list.innerHTML = '';
-
-    players.forEach(player => {
 
         let value;
 
-        if(type === 'ref'){
+
+        if(type === "zmb"){
 
             value =
-                player.ref + ' REF';
+                Math.max(
+                    100,
+                    150000 -
+                    i * 2300
+                );
 
-        }
-        else if(type === 'games'){
+        }else if(type === "ref"){
 
             value =
-                player.games + ' XP';
+                Math.max(
+                    2,
+                    120 -
+                    i * 2
+                ) +
+                " friends";
 
-        }
-        else{
+        }else{
 
             value =
-                player.zmb.toLocaleString() +
-                ' ZMB';
-
-        }
-
-        const card =
-            document.createElement('div');
-
-        card.className = 'card';
-
-        card.innerHTML = `
-
-            <div class="rank">
-
-                <div class="rank-number">
-                    ${player.rank}
-                </div>
-
-                <div class="rank-avatar">
-                    <div class="rank-avatar-placeholder">
-                        ${player.rank <= 3 ? '👑' : '🧟'}
-                    </div>
-                </div>
-
-                <div class="rank-name">
-                    @${player.name}
-                </div>
-
-                <div class="rank-value">
-                    ${value}
-                </div>
-
-            </div>
-
-        `;
-
-        list.appendChild(card);
-
-    });
-
-}
-
-
-function switchTop(type,button){
-
-    document.querySelectorAll('#top .tab')
-        .forEach(tab => {
-            tab.classList.remove('active');
-        });
-
-    button.classList.add('active');
-
-    renderTop(type);
-
-}
-
-
-/* ============================================================
-   ZOMBIE FLIP
-   ============================================================ */
-
-let flipRunning = false;
-let flipY = 0;
-let flipVelocity = 0;
-let flipScore = 0;
-let flipObstacleX = 400;
-let flipAnimation;
-
-
-function openZombieFlip(){
-
-    openModal('flipModal');
-
-    resetFlip();
-
-}
-
-
-function resetFlip(){
-
-    flipRunning = false;
-    flipScore = 0;
-    flipY = 0;
-    flipVelocity = 0;
-    flipObstacleX = 400;
-
-    document.getElementById('flipScore')
-        .textContent = '0';
-
-    document.getElementById('flipPlayer')
-        .style.bottom = '36px';
-
-    document.getElementById('flipMessage')
-        .style.display = 'flex';
-
-}
-
-
-function startFlip(){
-
-    flipRunning = true;
-
-    flipScore = 0;
-    flipY = 0;
-    flipVelocity = 0;
-    flipObstacleX = 400;
-
-    document.getElementById('flipMessage')
-        .style.display = 'none';
-
-    cancelAnimationFrame(flipAnimation);
-
-    flipLoop();
-
-}
-
-
-function jumpFlip(){
-
-    if(!flipRunning){
-        return;
-    }
-
-    if(flipY <= 1){
-        flipVelocity = 10;
-    }
-
-}
-
-
-function flipLoop(){
-
-    if(!flipRunning){
-        return;
-    }
-
-    flipVelocity -= .45;
-    flipY += flipVelocity;
-
-    if(flipY < 0){
-
-        flipY = 0;
-        flipVelocity = 0;
-
-    }
-
-    flipObstacleX -= 5;
-
-    if(flipObstacleX < -40){
-
-        flipObstacleX =
-            document.getElementById('flipGame')
-            .clientWidth + 30;
-
-        flipScore++;
-
-        document.getElementById('flipScore')
-            .textContent = flipScore;
-
-    }
-
-    const player =
-        document.getElementById('flipPlayer');
-
-    player.style.bottom =
-        (36 + flipY) + 'px';
-
-
-    let obstacle =
-        document.querySelector('#flipGame .obstacle');
-
-    if(!obstacle){
-
-        obstacle =
-            document.createElement('div');
-
-        obstacle.className =
-            'obstacle';
-
-        document.getElementById('flipGame')
-            .appendChild(obstacle);
-
-    }
-
-    obstacle.style.right =
-        flipObstacleX + 'px';
-
-
-    const playerLeft = 55;
-    const playerRight = 95;
-
-    const obstacleLeft =
-        document.getElementById('flipGame')
-        .clientWidth - flipObstacleX - 25;
-
-    const obstacleRight =
-        obstacleLeft + 25;
-
-    if(
-        playerRight > obstacleLeft &&
-        playerLeft < obstacleRight &&
-        flipY < 35
-    ){
-
-        flipRunning = false;
-
-        document.getElementById('flipMessage')
-            .style.display = 'flex';
-
-        document.querySelector('#flipMessage h2')
-            .textContent = 'GAME OVER';
-
-        document.querySelector('#flipMessage p')
-            .textContent =
-            'Score: ' + flipScore;
-
-        return;
-
-    }
-
-    flipAnimation =
-        requestAnimationFrame(flipLoop);
-
-}
-
-
-document.getElementById('flipGame')
-    .addEventListener('pointerdown',jumpFlip);
-
-
-/* ============================================================
-   DINO RUN
-============================================================ */
-
-let dinoRunning = false;
-let dinoY = 0;
-let dinoVelocity = 0;
-let dinoScore = 0;
-let dinoObstacleX = 400;
-let dinoAnimation;
-
-
-function openDinoRun(){
-
-    openModal('dinoModal');
-
-    resetDino();
-
-}
-
-
-function resetDino(){
-
-    dinoRunning = false;
-    dinoScore = 0;
-    dinoY = 0;
-    dinoVelocity = 0;
-    dinoObstacleX = 400;
-
-    document.getElementById('dinoScore')
-        .textContent = '0';
-
-    document.getElementById('dinoPlayer')
-        .style.bottom = '36px';
-
-    document.getElementById('dinoMessage')
-        .style.display = 'flex';
-
-}
-
-
-function startDino(){
-
-    dinoRunning = true;
-
-    dinoScore = 0;
-    dinoY = 0;
-    dinoVelocity = 0;
-    dinoObstacleX = 400;
-
-    document.getElementById('dinoMessage')
-        .style.display = 'none';
-
-    cancelAnimationFrame(dinoAnimation);
-
-    dinoLoop();
-
-}
-
-
-function jumpDino(){
-
-    if(!dinoRunning){
-        return;
-    }
-
-    if(dinoY <= 1){
-        dinoVelocity = 11;
-    }
-
-}
-
-
-function dinoLoop(){
-
-    if(!dinoRunning){
-        return;
-    }
-
-    dinoVelocity -= .5;
-    dinoY += dinoVelocity;
-
-    if(dinoY < 0){
-
-        dinoY = 0;
-        dinoVelocity = 0;
-
-    }
-
-    dinoObstacleX -= 6;
-
-    if(dinoObstacleX < -40){
-
-        dinoObstacleX =
-            document.getElementById('dinoGame')
-            .clientWidth + 30;
-
-        dinoScore += 10;
-
-        document.getElementById('dinoScore')
-            .textContent = dinoScore;
-
-    }
-
-
-    let obstacle =
-        document.querySelector('#dinoGame .obstacle');
-
-    if(!obstacle){
-
-        obstacle =
-            document.createElement('div');
-
-        obstacle.className =
-            'obstacle';
-
-        document.getElementById('dinoGame')
-            .appendChild(obstacle);
-
-    }
-
-    obstacle.style.right =
-        dinoObstacleX + 'px';
-
-    document.getElementById('dinoPlayer')
-        .style.bottom =
-        (36 + dinoY) + 'px';
-
-
-    const gameWidth =
-        document.getElementById('dinoGame')
-        .clientWidth;
-
-    const obstacleLeft =
-        gameWidth - dinoObstacleX - 25;
-
-    const obstacleRight =
-        obstacleLeft + 25;
-
-
-    if(
-        95 > obstacleLeft &&
-        55 < obstacleRight &&
-        dinoY < 35
-    ){
-
-        dinoRunning = false;
-
-        document.getElementById('dinoMessage')
-            .style.display = 'flex';
-
-        document.querySelector('#dinoMessage h2')
-            .textContent = 'GAME OVER';
-
-        document.querySelector('#dinoMessage p')
-            .textContent =
-            'Score: ' + dinoScore;
-
-        return;
-
-    }
-
-
-    dinoAnimation =
-        requestAnimationFrame(dinoLoop);
-
-}
-
-
-document.getElementById('dinoGame')
-    .addEventListener('pointerdown',jumpDino);
-
-
-/* ============================================================
-   INITIALIZATION
-============================================================ */
-
-updateUserUI();
-updateBalance();
-updateTickets();
-renderTop('zmb');
-renderReferrals();
-
-
-updateUserUI();
-updateBalance();
-updateTickets();
-renderTop('zmb');
-renderReferrals();
-
-
-/* =========================================================
-   PAID ZOMBIE — EXTRA DETAILS
-   ========================================================= */
-
-/* =========================
-   HOME: ZMB CORE
-   ========================= */
-
-(function () {
-    'use strict';
-
-    const style = document.createElement('style');
-
-    style.textContent = `
-        /* Remove old zombie */
-        .hero .zombie-svg {
-            display: none !important;
-        }
-
-        /* Disable floating coin animations */
-        .hero .coin {
-            animation: none !important;
-            transform: none !important;
-        }
-
-        /* ZMB CORE */
-        .pz-core-wrap {
-            width: 100%;
-            height: 145px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            margin: 4px 0 0;
-        }
-
-        .pz-core {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            position: relative;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-
-            background:
-                radial-gradient(
-                    circle at center,
-                    rgba(53,255,134,.30) 0%,
-                    rgba(53,255,134,.10) 28%,
-                    rgba(53,255,134,.03) 52%,
-                    transparent 70%
-                );
-
-            border: 1px solid rgba(53,255,134,.55);
-
-            box-shadow:
-                0 0 20px rgba(53,255,134,.20),
-                0 0 50px rgba(53,255,134,.10),
-                inset 0 0 25px rgba(53,255,134,.08);
-        }
-
-        .pz-core::before {
-            content: "";
-            position: absolute;
-            inset: -14px;
-
-            border-radius: 50%;
-
-            border: 1px solid rgba(53,255,134,.18);
-            border-top-color: rgba(53,255,134,.80);
-            border-right-color: rgba(53,255,134,.40);
-
-            animation: pzCoreRotate 7s linear infinite;
-        }
-
-        .pz-core::after {
-            content: "";
-            position: absolute;
-            inset: -27px;
-
-            border-radius: 50%;
-
-            border: 1px dashed rgba(53,255,134,.14);
-            border-bottom-color: rgba(53,255,134,.60);
-
-            animation: pzCoreRotateReverse 12s linear infinite;
-        }
-
-        .pz-core-center {
-            width: 38px;
-            height: 38px;
-
-            border-radius: 50%;
-
-            background: #07120b;
-            border: 1px solid rgba(53,255,134,.85);
-
-            box-shadow:
-                0 0 12px rgba(53,255,134,.55),
-                0 0 28px rgba(53,255,134,.20);
-
-            position: relative;
-        }
-
-        .pz-core-center::after {
-            content: "";
-
-            position: absolute;
-
-            width: 8px;
-            height: 8px;
-
-            left: 50%;
-            top: 50%;
-
-            transform: translate(-50%, -50%);
-
-            border-radius: 50%;
-
-            background: #35ff86;
-
-            box-shadow: 0 0 14px #35ff86;
-
-            animation: pzCorePulse 1.6s ease-in-out infinite;
-        }
-
-        .pz-core-label {
-            position: absolute;
-
-            bottom: -38px;
-
-            font-size: 9px;
-            font-weight: 800;
-
-            letter-spacing: 2px;
-
-            color: #708277;
-
-            white-space: nowrap;
-        }
-
-        @keyframes pzCoreRotate {
-            from {
-                transform: rotate(0deg);
-            }
-
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes pzCoreRotateReverse {
-            from {
-                transform: rotate(360deg);
-            }
-
-            to {
-                transform: rotate(0deg);
-            }
-        }
-
-        @keyframes pzCorePulse {
-            0%, 100% {
-                transform: translate(-50%, -50%) scale(.7);
-                opacity: .6;
-            }
-
-            50% {
-                transform: translate(-50%, -50%) scale(1.2);
-                opacity: 1;
-            }
+                Math.max(
+                    80,
+                    9800 -
+                    i * 175
+                ) +
+                " pts";
         }
 
 
-        /* =========================
-           SYSTEM LINE
-           ========================= */
-
-        .pz-system-line {
-            text-align: center;
-
-            margin: 2px auto 12px;
-
-            font-size: 9px;
-            font-weight: 800;
-
-            letter-spacing: 1.4px;
-
-            color: #35ff86;
-
-            opacity: .75;
-
-            cursor: pointer;
-
-            user-select: none;
-        }
-
-        .pz-system-line span {
-            display: inline-block;
-
-            padding: 5px 9px;
-
-            border:
-                1px solid
-                rgba(53,255,134,.13);
-
-            border-radius: 8px;
-
-            background:
-                rgba(53,255,134,.025);
-        }
-
-
-        /* =========================
-           TOAST
-           ========================= */
-
-        .pz-toast {
-            position: fixed;
-
-            left: 50%;
-
-            bottom:
-                calc(
-                    76px +
-                    env(safe-area-inset-bottom)
-                );
-
-            transform:
-                translate(-50%, 20px);
-
-            width: max-content;
-
-            max-width:
-                calc(100vw - 32px);
-
-            padding: 10px 14px;
-
-            border-radius: 10px;
-
-            background:
-                rgba(5,10,7,.96);
-
-            border:
-                1px solid
-                rgba(53,255,134,.28);
-
-            box-shadow:
-                0 8px 30px rgba(0,0,0,.45);
-
-            color: #effff5;
-
-            font-size: 11px;
-            font-weight: 700;
-
-            text-align: center;
-
-            opacity: 0;
-
-            pointer-events: none;
-
-            z-index: 99999;
-
-            transition: .25s ease;
-        }
-
-        .pz-toast.show {
-            opacity: 1;
-
-            transform:
-                translate(-50%, 0);
-        }
-
-
-        /* =========================
-           PROFILE FOOTER
-           ========================= */
-
-        .pz-profile-footer {
-            margin: 20px 0 12px;
-
-            padding: 15px 12px;
-
-            text-align: center;
-
-            border-top:
-                1px solid
-                rgba(53,255,134,.10);
-        }
-
-        .pz-profile-brand {
-            color: #35ff86;
-
-            font-size: 12px;
-            font-weight: 900;
-
-            letter-spacing: 1.4px;
-        }
-
-        .pz-profile-powered {
-            margin-top: 4px;
-
-            color: #708277;
-
-            font-size: 9px;
-        }
-
-        .pz-profile-meta {
-            margin-top: 10px;
-
-            color: #52635a;
-
-            font-size: 8px;
-
-            line-height: 1.8;
-
-            letter-spacing: .5px;
-        }
-
-
-        /* =========================
-           DEV MODE
-           ========================= */
-
-        .pz-dev-overlay {
-            position: fixed;
-
-            inset: 0;
-
-            background:
-                rgba(0,0,0,.82);
-
-            z-index: 100000;
-
-            display: flex;
-
-            align-items: center;
-            justify-content: center;
-
-            padding: 20px;
-        }
-
-        .pz-dev-modal {
-            width:
-                min(420px, 100%);
-
-            background: #080d09;
-
-            border:
-                1px solid
-                rgba(53,255,134,.35);
-
-            border-radius: 15px;
-
-            padding: 20px;
-
-            box-shadow:
-                0 0 50px
-                rgba(53,255,134,.12);
-        }
-
-        .pz-dev-title {
-            color: #35ff86;
-
-            font-size: 14px;
-            font-weight: 900;
-
-            letter-spacing: 1px;
-
-            margin-bottom: 15px;
-        }
-
-        .pz-dev-row {
-            display: flex;
-
-            justify-content:
-                space-between;
-
-            gap: 15px;
-
-            padding: 8px 0;
-
-            border-bottom:
-                1px solid
-                rgba(255,255,255,.05);
-
-            font-size: 10px;
-        }
-
-        .pz-dev-row span:first-child {
-            color: #708277;
-        }
-
-        .pz-dev-row span:last-child {
-            color: #effff5;
-
-            text-align: right;
-        }
-
-        .pz-dev-close {
-            width: 100%;
-
-            margin-top: 16px;
-
-            padding: 11px;
-
-            border:
-                1px solid
-                rgba(53,255,134,.25);
-
-            border-radius: 9px;
-
-            background:
-                rgba(53,255,134,.06);
-
-            color: #35ff86;
-
-            font-weight: 800;
-
-            cursor: pointer;
-        }
-
-
-        /* =========================
-           MINING CLAIM
-           ========================= */
-
-        .pz-claim-ready {
-            border-color:
-                rgba(53,255,134,.65) !important;
-
-            box-shadow:
-                0 0 18px
-                rgba(53,255,134,.12);
-        }
-
-        .pz-status {
-            font-size: 9px;
-
-            color: #708277;
-
-            letter-spacing: 1px;
-
-            margin-top: 6px;
-        }
-
-        .pz-status.online {
-            color: #35ff86;
-        }
-    `;
-
-    document.head.appendChild(style);
-
-
-    /* =========================
-       TOAST
-       ========================= */
-
-    function showPZToast(message, duration = 2500) {
-        let toast = document.querySelector('.pz-toast');
-
-        if (!toast) {
-            toast = document.createElement('div');
-
-            toast.className = 'pz-toast';
-
-            document.body.appendChild(toast);
-        }
-
-        toast.textContent = message;
-
-        toast.classList.add('show');
-
-        clearTimeout(toast._timer);
-
-        toast._timer = setTimeout(function () {
-            toast.classList.remove('show');
-        }, duration);
-    }
-
-
-    /* =========================
-       USER
-       ========================= */
-
-    function getTelegramUser() {
-        try {
-            if (
-                window.Telegram &&
-                Telegram.WebApp &&
-                Telegram.WebApp.initDataUnsafe &&
-                Telegram.WebApp.initDataUnsafe.user
-            ) {
-                return Telegram.WebApp.initDataUnsafe.user;
-            }
-        } catch (e) {}
-
-        return null;
-    }
-
-    const PZ_USER = getTelegramUser();
-
-
-    /* =========================
-       HOME CORE
-       ========================= */
-
-    function createPZCore() {
-
-        const hero =
-            document.querySelector('.hero');
-
-        if (!hero) return;
-
-        if (
-            hero.querySelector(
-                '.pz-core-wrap'
-            )
-        ) {
-            return;
-        }
-
-        const wrap =
-            document.createElement('div');
-
-        wrap.className =
-            'pz-core-wrap';
-
-        wrap.innerHTML = `
-            <div class="pz-core">
-                <div class="pz-core-center"></div>
-
-                <div class="pz-core-label">
-                    ZMB NETWORK CORE
-                </div>
-            </div>
-        `;
-
-        const heroLabel =
-            hero.querySelector('.hero-label');
-
-        if (heroLabel) {
-            hero.insertBefore(
-                wrap,
-                heroLabel
-            );
-        } else {
-            hero.appendChild(wrap);
-        }
-    }
-
-
-    /* =========================
-       SYSTEM LINE
-       ========================= */
-
-    function createSystemLine() {
-
-        const hero =
-            document.querySelector('.hero');
-
-        if (!hero) return;
-
-        if (
-            hero.querySelector(
-                '.pz-system-line'
-            )
-        ) {
-            return;
-        }
-
-        const line =
-            document.createElement('div');
-
-        line.className =
-            'pz-system-line';
-
-        line.innerHTML = `
-            <span>
-                ● SYSTEM ONLINE · ZMB NETWORK
-            </span>
-        `;
-
-        line.addEventListener(
-            'click',
-            function () {
-                showPZToast(
-                    'ZMB Network is online'
-                );
-            }
-        );
-
-        hero.appendChild(line);
-    }
-
-
-    /* =========================
-       PROFILE FOOTER
-       ========================= */
-
-    function createProfileFooter() {
-
-        const screen =
-            document.querySelector(
-                '#profileScreen'
-            ) ||
-            document.querySelector(
-                '.profile-screen'
+        const row =
+            document.createElement(
+                "div"
             );
 
-        if (!screen) return;
-
-        if (
-            screen.querySelector(
-                '.pz-profile-footer'
-            )
-        ) {
-            return;
-        }
-
-        const id =
-            PZ_USER && PZ_USER.id
-                ? PZ_USER.id
-                : 'LOCAL-DEMO';
-
-        const footer =
-            document.createElement('div');
-
-        footer.className =
-            'pz-profile-footer';
-
-        footer.innerHTML = `
-            <div class="pz-profile-brand">
-                PAID ZOMBIE
-            </div>
-
-            <div class="pz-profile-powered">
-                Powered by ZMB Network
-            </div>
-
-            <div class="pz-profile-meta">
-                Member since: Sep 2026<br>
-                Player ID: #${id}<br>
-                APP v1.0.0 · BUILD PAID-ZMB-001 · ONLINE
-            </div>
-        `;
-
-        screen.appendChild(footer);
-    }
+        row.className =
+            "rank";
 
 
-    /* =========================
-       SCREEN STATUS
-       ========================= */
-
-    function addScreenStatus(
-        selector,
-        text
-    ) {
-
-        const screen =
-            document.querySelector(selector);
-
-        if (!screen) return;
-
-        if (
-            screen.querySelector(
-                '.pz-status'
-            )
-        ) {
-            return;
-        }
-
-        const status =
-            document.createElement('div');
-
-        status.className =
-            'pz-status online';
-
-        status.textContent =
-            text;
-
-        screen.insertBefore(
-            status,
-            screen.firstChild
-        );
-    }
+        let avatar = "";
 
 
-    function createStatuses() {
+        if(
+            i === 7 &&
+            telegramUser &&
+            telegramUser.photo_url
+        ){
 
-        addScreenStatus(
-            '#walletScreen',
-            '● WALLET READY · TRANSACTIONS SYNCHRONIZED'
-        );
-
-        addScreenStatus(
-            '#topScreen',
-            '● LAST UPDATE: JUST NOW · LEADERBOARD SYNCHRONIZED'
-        );
-
-        addScreenStatus(
-            '#miningScreen',
-            'NETWORK ● ONLINE · ENGINE ● READY'
-        );
-    }
-
-
-    /* =========================
-       DEV MODE
-       ========================= */
-
-    function setupDevMode() {
-
-        document
-            .querySelectorAll(
-                '.version-badge'
-            )
-            .forEach(function (badge) {
-
-                if (
-                    badge.dataset.pzDevReady
-                ) {
-                    return;
-                }
-
-                badge.dataset.pzDevReady =
-                    '1';
-
-                let taps = 0;
-
-                let resetTimer = null;
-
-                badge.addEventListener(
-                    'click',
-                    function () {
-
-                        taps++;
-
-                        clearTimeout(
-                            resetTimer
-                        );
-
-                        resetTimer =
-                            setTimeout(
-                                function () {
-                                    taps = 0;
-                                },
-                                1600
-                            );
-
-                        if (taps >= 5) {
-
-                            taps = 0;
-
-                            openDevMode();
-                        }
-                    }
-                );
-            });
-    }
-
-
-    function openDevMode() {
-
-        if (
-            document.querySelector(
-                '.pz-dev-overlay'
-            )
-        ) {
-            return;
-        }
-
-        const id =
-            PZ_USER && PZ_USER.id
-                ? PZ_USER.id
-                : 'LOCAL-DEMO';
-
-        const username =
-            PZ_USER && PZ_USER.username
-                ? '@' + PZ_USER.username
-                : 'guest';
-
-        const overlay =
-            document.createElement('div');
-
-        overlay.className =
-            'pz-dev-overlay';
-
-        overlay.innerHTML = `
-            <div class="pz-dev-modal">
-
-                <div class="pz-dev-title">
-                    ☣ ZOMBIE DEV MODE
-                </div>
-
-                <div class="pz-dev-row">
-                    <span>APP</span>
-                    <span>PAID ZOMBIE</span>
-                </div>
-
-                <div class="pz-dev-row">
-                    <span>VERSION</span>
-                    <span>1.0.0</span>
-                </div>
-
-                <div class="pz-dev-row">
-                    <span>BUILD</span>
-                    <span>PAID-ZMB-001</span>
-                </div>
-
-                <div class="pz-dev-row">
-                    <span>NETWORK</span>
-                    <span>ONLINE</span>
-                </div>
-
-                <div class="pz-dev-row">
-                    <span>USER</span>
-                    <span>${username}</span>
-                </div>
-
-                <div class="pz-dev-row">
-                    <span>PLAYER ID</span>
-                    <span>#${id}</span>
-                </div>
-
-                <button
-                    class="pz-dev-close"
-                    type="button"
+            avatar = `
+                <img
+                    class="rank-avatar"
+                    src="${telegramUser.photo_url}"
                 >
-                    CLOSE DEV MODE
-                </button>
+            `;
 
+        }else{
+
+            avatar = `
+                <div
+                    class="rank-avatar"
+                    style="
+                        display:flex;
+                        align-items:center;
+                        justify-content:center;
+                        color:var(--green);
+                        font-size:8px;
+                        font-weight:900;
+                    "
+                >
+                    ${name.charAt(0)}
+                </div>
+            `;
+        }
+
+
+        row.innerHTML = `
+            <div class="rank-num">
+                ${i}
+            </div>
+
+            ${avatar}
+
+            <div class="rank-name">
+                ${name}
+            </div>
+
+            <div class="rank-value">
+                ${value}
             </div>
         `;
 
-        document.body.appendChild(
-            overlay
+
+        board.appendChild(
+            row
+        );
+    }
+}
+
+
+/* =====================================================
+   LEVEL
+===================================================== */
+
+function showLevel(){
+
+    showModal(
+        "LEVEL SYSTEM",
+        `
+        <b>1–9</b> · ROOKIE<br><br>
+        <b>10–24</b> · SURVIVOR<br><br>
+        <b>25–49</b> · MUTANT<br><br>
+        <b>50–99</b> · ZOMBIE LORD<br><br>
+        <b>100+</b> · ZOMBIE KING
+        `
+    );
+}
+
+
+/* =====================================================
+   WALLET
+===================================================== */
+
+function showWalletModal(type){
+
+    if(type === "WITHDRAW"){
+
+        showModal(
+            "WITHDRAW",
+            `
+            Withdrawals will be connected
+            after the ZMB economy and backend
+            are launched.<br><br>
+            Your balance is currently demo-only.
+            `
         );
 
-        const close =
-            overlay.querySelector(
-                '.pz-dev-close'
-            );
-
-        close.addEventListener(
-            'click',
-            function () {
-                overlay.remove();
-            }
-        );
-
-        overlay.addEventListener(
-            'click',
-            function (event) {
-
-                if (
-                    event.target === overlay
-                ) {
-                    overlay.remove();
-                }
-            }
-        );
+        return;
     }
 
 
-    /* =========================
-       RANDOM SYSTEM TOASTS
-       ========================= */
-
-    const PZ_SYSTEM_MESSAGES = [
-
-        'Zombie network synchronized',
-
-        'ZMB detected',
-
-        'Brain.exe running...',
-
-        'Checking zombie status...',
-
-        'No brains found 🧠',
-
-        'Mining protocol initialized',
-
-        'Welcome back, survivor',
-
-        'System mutation detected',
-
-        'Everything is under control.'
-    ];
+    showModal(
+        "SWAP",
+        `
+        ZMB ↔ GRAM<br>
+        TON ↔ ZMB<br><br>
+        Swap rates and blockchain transactions
+        will be connected to the backend later.
+        `
+    );
+}
 
 
-    function randomPZToast() {
+/* =====================================================
+   SETTINGS
+===================================================== */
+
+function openSettings(){
+
+    openScreen(
+        "settings"
+    );
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+function showModal(
+    title,
+    content
+){
+
+    document.getElementById(
+        "modalTitle"
+    ).textContent =
+        title;
+
+
+    document.getElementById(
+        "modalContent"
+    ).innerHTML =
+        content;
+
+
+    document.getElementById(
+        "modal"
+    ).classList.add(
+        "show"
+    );
+}
+
+
+function hideModal(){
+
+    document.getElementById(
+        "modal"
+    ).classList.remove(
+        "show"
+    );
+}
+
+
+function closeModal(event){
+
+    if(
+        event.target.id ===
+        "modal"
+    ){
+
+        hideModal();
+    }
+}
+
+
+/* =====================================================
+   SECRET DEV MODE
+   5 TAPS ON SYSTEM STATUS
+===================================================== */
+
+let devTaps = 0;
+
+let devTimer = null;
+
+
+document.getElementById(
+    "versionBadge"
+).addEventListener(
+    "click",
+    function(){
+
+        devTaps++;
+
+        clearTimeout(
+            devTimer
+        );
+
+
+        devTimer =
+            setTimeout(
+                function(){
+                    devTaps = 0;
+                },
+                1600
+            );
+
+
+        if(devTaps >= 5){
+
+            devTaps = 0;
+
+            showModal(
+                "☣ ZOMBIE DEV MODE",
+                `
+                <b>PAID ZOMBIE</b><br><br>
+                VERSION · 1.0.0<br>
+                BUILD · PAID-ZMB-001<br>
+                NETWORK · ONLINE<br>
+                ENGINE · READY<br><br>
+                USER · ${userName()}<br>
+                PLAYER ID · #${
+                    telegramUser &&
+                    telegramUser.id
+                        ? telegramUser.id
+                        : "LOCAL"
+                }
+                `
+            );
+        }
+    }
+);
+
+
+/* =====================================================
+   RANDOM SYSTEM TOASTS
+===================================================== */
+
+const systemMessages = [
+    "Zombie network synchronized",
+    "ZMB detected",
+    "Brain.exe running...",
+    "Checking zombie status...",
+    "No brains found 🧠",
+    "Mining protocol initialized",
+    "Welcome back, survivor",
+    "System mutation detected",
+    "Everything is under control."
+];
+
+
+setTimeout(
+    function(){
 
         const message =
-            PZ_SYSTEM_MESSAGES[
+            systemMessages[
                 Math.floor(
                     Math.random() *
-                    PZ_SYSTEM_MESSAGES.length
+                    systemMessages.length
                 )
             ];
 
-        showPZToast(
-            message,
-            2200
-        );
-    }
-
-
-    /* =========================
-       HOME BUTTONS
-       ========================= */
-
-    function setupHomeButtons() {
-
-        document
-            .querySelectorAll(
-                '.home-button, .home-btn, .module-button'
-            )
-            .forEach(function (button) {
-
-                if (
-                    button.dataset.pzReady
-                ) {
-                    return;
-                }
-
-                button.dataset.pzReady =
-                    '1';
-
-                button.addEventListener(
-                    'pointerdown',
-                    function () {
-
-                        const title =
-                            button.dataset.title ||
-                            (
-                                button.querySelector(
-                                    '.title'
-                                )?.textContent
-                            ) ||
-                            button.textContent
-                                .trim()
-                                .split('\n')[0];
-
-                        if (title) {
-
-                            showPZToast(
-                                title +
-                                ' module opened',
-                                1500
-                            );
-                        }
-                    }
-                );
-            });
-    }
-
-
-    /* =========================
-       STARTUP
-       ========================= */
-
-    function initPZExtra() {
-
-        createPZCore();
-
-        createSystemLine();
-
-        createProfileFooter();
-
-        createStatuses();
-
-        setupDevMode();
-
-        setupHomeButtons();
-
-        setTimeout(
-            function () {
-
-                showPZToast(
-                    'Zombie network synchronized',
-                    2200
-                );
-
-            },
-            2500
+        showToast(
+            message
         );
 
-        setTimeout(
-            function () {
-
-                showPZToast(
-                    'PAID ZOMBIE online',
-                    2200
-                );
-
-            },
-            6000
-        );
-    }
+    },
+    2500
+);
 
 
-    /*
-       Запускаем после загрузки
-    */
+setTimeout(
+    function(){
 
-    if (
-        document.readyState ===
-        'loading'
-    ) {
-
-        document.addEventListener(
-            'DOMContentLoaded',
-            initPZExtra
+        showToast(
+            "PAID ZOMBIE ONLINE"
         );
 
-    } else {
+    },
+    6000
+);
 
-        initPZExtra();
-    }
 
-})();
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+updateUserUI();
+
+updateTickets();
+
+renderReferrals();
+
+renderTop("zmb");
+
+
+/*
+   Telegram user data is used here only
+   for frontend display.
+
+   For production:
+   backend must validate Telegram initData
+   and all balances/rewards must be server-side.
+*/
 
 </script>
 
