@@ -4449,13 +4449,1038 @@ renderTop('zmb');
 renderReferrals();
 
 
-/*
-   If Telegram gives us the actual user,
-   all UI places are immediately updated.
+updateUserUI();
+updateBalance();
+updateTickets();
+renderTop('zmb');
+renderReferrals();
 
-   Later the backend should validate initData,
-   instead of trusting initDataUnsafe alone.
-*/
+
+/* =========================================================
+   PAID ZOMBIE — EXTRA DETAILS
+   ========================================================= */
+
+/* =========================
+   HOME: ZMB CORE
+   ========================= */
+
+(function () {
+    'use strict';
+
+    const style = document.createElement('style');
+
+    style.textContent = `
+        /* Remove old zombie */
+        .hero .zombie-svg {
+            display: none !important;
+        }
+
+        /* Disable floating coin animations */
+        .hero .coin {
+            animation: none !important;
+            transform: none !important;
+        }
+
+        /* ZMB CORE */
+        .pz-core-wrap {
+            width: 100%;
+            height: 145px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            margin: 4px 0 0;
+        }
+
+        .pz-core {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            position: relative;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    rgba(53,255,134,.30) 0%,
+                    rgba(53,255,134,.10) 28%,
+                    rgba(53,255,134,.03) 52%,
+                    transparent 70%
+                );
+
+            border: 1px solid rgba(53,255,134,.55);
+
+            box-shadow:
+                0 0 20px rgba(53,255,134,.20),
+                0 0 50px rgba(53,255,134,.10),
+                inset 0 0 25px rgba(53,255,134,.08);
+        }
+
+        .pz-core::before {
+            content: "";
+            position: absolute;
+            inset: -14px;
+
+            border-radius: 50%;
+
+            border: 1px solid rgba(53,255,134,.18);
+            border-top-color: rgba(53,255,134,.80);
+            border-right-color: rgba(53,255,134,.40);
+
+            animation: pzCoreRotate 7s linear infinite;
+        }
+
+        .pz-core::after {
+            content: "";
+            position: absolute;
+            inset: -27px;
+
+            border-radius: 50%;
+
+            border: 1px dashed rgba(53,255,134,.14);
+            border-bottom-color: rgba(53,255,134,.60);
+
+            animation: pzCoreRotateReverse 12s linear infinite;
+        }
+
+        .pz-core-center {
+            width: 38px;
+            height: 38px;
+
+            border-radius: 50%;
+
+            background: #07120b;
+            border: 1px solid rgba(53,255,134,.85);
+
+            box-shadow:
+                0 0 12px rgba(53,255,134,.55),
+                0 0 28px rgba(53,255,134,.20);
+
+            position: relative;
+        }
+
+        .pz-core-center::after {
+            content: "";
+
+            position: absolute;
+
+            width: 8px;
+            height: 8px;
+
+            left: 50%;
+            top: 50%;
+
+            transform: translate(-50%, -50%);
+
+            border-radius: 50%;
+
+            background: #35ff86;
+
+            box-shadow: 0 0 14px #35ff86;
+
+            animation: pzCorePulse 1.6s ease-in-out infinite;
+        }
+
+        .pz-core-label {
+            position: absolute;
+
+            bottom: -38px;
+
+            font-size: 9px;
+            font-weight: 800;
+
+            letter-spacing: 2px;
+
+            color: #708277;
+
+            white-space: nowrap;
+        }
+
+        @keyframes pzCoreRotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes pzCoreRotateReverse {
+            from {
+                transform: rotate(360deg);
+            }
+
+            to {
+                transform: rotate(0deg);
+            }
+        }
+
+        @keyframes pzCorePulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(.7);
+                opacity: .6;
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.2);
+                opacity: 1;
+            }
+        }
+
+
+        /* =========================
+           SYSTEM LINE
+           ========================= */
+
+        .pz-system-line {
+            text-align: center;
+
+            margin: 2px auto 12px;
+
+            font-size: 9px;
+            font-weight: 800;
+
+            letter-spacing: 1.4px;
+
+            color: #35ff86;
+
+            opacity: .75;
+
+            cursor: pointer;
+
+            user-select: none;
+        }
+
+        .pz-system-line span {
+            display: inline-block;
+
+            padding: 5px 9px;
+
+            border:
+                1px solid
+                rgba(53,255,134,.13);
+
+            border-radius: 8px;
+
+            background:
+                rgba(53,255,134,.025);
+        }
+
+
+        /* =========================
+           TOAST
+           ========================= */
+
+        .pz-toast {
+            position: fixed;
+
+            left: 50%;
+
+            bottom:
+                calc(
+                    76px +
+                    env(safe-area-inset-bottom)
+                );
+
+            transform:
+                translate(-50%, 20px);
+
+            width: max-content;
+
+            max-width:
+                calc(100vw - 32px);
+
+            padding: 10px 14px;
+
+            border-radius: 10px;
+
+            background:
+                rgba(5,10,7,.96);
+
+            border:
+                1px solid
+                rgba(53,255,134,.28);
+
+            box-shadow:
+                0 8px 30px rgba(0,0,0,.45);
+
+            color: #effff5;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            text-align: center;
+
+            opacity: 0;
+
+            pointer-events: none;
+
+            z-index: 99999;
+
+            transition: .25s ease;
+        }
+
+        .pz-toast.show {
+            opacity: 1;
+
+            transform:
+                translate(-50%, 0);
+        }
+
+
+        /* =========================
+           PROFILE FOOTER
+           ========================= */
+
+        .pz-profile-footer {
+            margin: 20px 0 12px;
+
+            padding: 15px 12px;
+
+            text-align: center;
+
+            border-top:
+                1px solid
+                rgba(53,255,134,.10);
+        }
+
+        .pz-profile-brand {
+            color: #35ff86;
+
+            font-size: 12px;
+            font-weight: 900;
+
+            letter-spacing: 1.4px;
+        }
+
+        .pz-profile-powered {
+            margin-top: 4px;
+
+            color: #708277;
+
+            font-size: 9px;
+        }
+
+        .pz-profile-meta {
+            margin-top: 10px;
+
+            color: #52635a;
+
+            font-size: 8px;
+
+            line-height: 1.8;
+
+            letter-spacing: .5px;
+        }
+
+
+        /* =========================
+           DEV MODE
+           ========================= */
+
+        .pz-dev-overlay {
+            position: fixed;
+
+            inset: 0;
+
+            background:
+                rgba(0,0,0,.82);
+
+            z-index: 100000;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+        }
+
+        .pz-dev-modal {
+            width:
+                min(420px, 100%);
+
+            background: #080d09;
+
+            border:
+                1px solid
+                rgba(53,255,134,.35);
+
+            border-radius: 15px;
+
+            padding: 20px;
+
+            box-shadow:
+                0 0 50px
+                rgba(53,255,134,.12);
+        }
+
+        .pz-dev-title {
+            color: #35ff86;
+
+            font-size: 14px;
+            font-weight: 900;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 15px;
+        }
+
+        .pz-dev-row {
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            gap: 15px;
+
+            padding: 8px 0;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,.05);
+
+            font-size: 10px;
+        }
+
+        .pz-dev-row span:first-child {
+            color: #708277;
+        }
+
+        .pz-dev-row span:last-child {
+            color: #effff5;
+
+            text-align: right;
+        }
+
+        .pz-dev-close {
+            width: 100%;
+
+            margin-top: 16px;
+
+            padding: 11px;
+
+            border:
+                1px solid
+                rgba(53,255,134,.25);
+
+            border-radius: 9px;
+
+            background:
+                rgba(53,255,134,.06);
+
+            color: #35ff86;
+
+            font-weight: 800;
+
+            cursor: pointer;
+        }
+
+
+        /* =========================
+           MINING CLAIM
+           ========================= */
+
+        .pz-claim-ready {
+            border-color:
+                rgba(53,255,134,.65) !important;
+
+            box-shadow:
+                0 0 18px
+                rgba(53,255,134,.12);
+        }
+
+        .pz-status {
+            font-size: 9px;
+
+            color: #708277;
+
+            letter-spacing: 1px;
+
+            margin-top: 6px;
+        }
+
+        .pz-status.online {
+            color: #35ff86;
+        }
+    `;
+
+    document.head.appendChild(style);
+
+
+    /* =========================
+       TOAST
+       ========================= */
+
+    function showPZToast(message, duration = 2500) {
+        let toast = document.querySelector('.pz-toast');
+
+        if (!toast) {
+            toast = document.createElement('div');
+
+            toast.className = 'pz-toast';
+
+            document.body.appendChild(toast);
+        }
+
+        toast.textContent = message;
+
+        toast.classList.add('show');
+
+        clearTimeout(toast._timer);
+
+        toast._timer = setTimeout(function () {
+            toast.classList.remove('show');
+        }, duration);
+    }
+
+
+    /* =========================
+       USER
+       ========================= */
+
+    function getTelegramUser() {
+        try {
+            if (
+                window.Telegram &&
+                Telegram.WebApp &&
+                Telegram.WebApp.initDataUnsafe &&
+                Telegram.WebApp.initDataUnsafe.user
+            ) {
+                return Telegram.WebApp.initDataUnsafe.user;
+            }
+        } catch (e) {}
+
+        return null;
+    }
+
+    const PZ_USER = getTelegramUser();
+
+
+    /* =========================
+       HOME CORE
+       ========================= */
+
+    function createPZCore() {
+
+        const hero =
+            document.querySelector('.hero');
+
+        if (!hero) return;
+
+        if (
+            hero.querySelector(
+                '.pz-core-wrap'
+            )
+        ) {
+            return;
+        }
+
+        const wrap =
+            document.createElement('div');
+
+        wrap.className =
+            'pz-core-wrap';
+
+        wrap.innerHTML = `
+            <div class="pz-core">
+                <div class="pz-core-center"></div>
+
+                <div class="pz-core-label">
+                    ZMB NETWORK CORE
+                </div>
+            </div>
+        `;
+
+        const heroLabel =
+            hero.querySelector('.hero-label');
+
+        if (heroLabel) {
+            hero.insertBefore(
+                wrap,
+                heroLabel
+            );
+        } else {
+            hero.appendChild(wrap);
+        }
+    }
+
+
+    /* =========================
+       SYSTEM LINE
+       ========================= */
+
+    function createSystemLine() {
+
+        const hero =
+            document.querySelector('.hero');
+
+        if (!hero) return;
+
+        if (
+            hero.querySelector(
+                '.pz-system-line'
+            )
+        ) {
+            return;
+        }
+
+        const line =
+            document.createElement('div');
+
+        line.className =
+            'pz-system-line';
+
+        line.innerHTML = `
+            <span>
+                ● SYSTEM ONLINE · ZMB NETWORK
+            </span>
+        `;
+
+        line.addEventListener(
+            'click',
+            function () {
+                showPZToast(
+                    'ZMB Network is online'
+                );
+            }
+        );
+
+        hero.appendChild(line);
+    }
+
+
+    /* =========================
+       PROFILE FOOTER
+       ========================= */
+
+    function createProfileFooter() {
+
+        const screen =
+            document.querySelector(
+                '#profileScreen'
+            ) ||
+            document.querySelector(
+                '.profile-screen'
+            );
+
+        if (!screen) return;
+
+        if (
+            screen.querySelector(
+                '.pz-profile-footer'
+            )
+        ) {
+            return;
+        }
+
+        const id =
+            PZ_USER && PZ_USER.id
+                ? PZ_USER.id
+                : 'LOCAL-DEMO';
+
+        const footer =
+            document.createElement('div');
+
+        footer.className =
+            'pz-profile-footer';
+
+        footer.innerHTML = `
+            <div class="pz-profile-brand">
+                PAID ZOMBIE
+            </div>
+
+            <div class="pz-profile-powered">
+                Powered by ZMB Network
+            </div>
+
+            <div class="pz-profile-meta">
+                Member since: Sep 2026<br>
+                Player ID: #${id}<br>
+                APP v1.0.0 · BUILD PAID-ZMB-001 · ONLINE
+            </div>
+        `;
+
+        screen.appendChild(footer);
+    }
+
+
+    /* =========================
+       SCREEN STATUS
+       ========================= */
+
+    function addScreenStatus(
+        selector,
+        text
+    ) {
+
+        const screen =
+            document.querySelector(selector);
+
+        if (!screen) return;
+
+        if (
+            screen.querySelector(
+                '.pz-status'
+            )
+        ) {
+            return;
+        }
+
+        const status =
+            document.createElement('div');
+
+        status.className =
+            'pz-status online';
+
+        status.textContent =
+            text;
+
+        screen.insertBefore(
+            status,
+            screen.firstChild
+        );
+    }
+
+
+    function createStatuses() {
+
+        addScreenStatus(
+            '#walletScreen',
+            '● WALLET READY · TRANSACTIONS SYNCHRONIZED'
+        );
+
+        addScreenStatus(
+            '#topScreen',
+            '● LAST UPDATE: JUST NOW · LEADERBOARD SYNCHRONIZED'
+        );
+
+        addScreenStatus(
+            '#miningScreen',
+            'NETWORK ● ONLINE · ENGINE ● READY'
+        );
+    }
+
+
+    /* =========================
+       DEV MODE
+       ========================= */
+
+    function setupDevMode() {
+
+        document
+            .querySelectorAll(
+                '.version-badge'
+            )
+            .forEach(function (badge) {
+
+                if (
+                    badge.dataset.pzDevReady
+                ) {
+                    return;
+                }
+
+                badge.dataset.pzDevReady =
+                    '1';
+
+                let taps = 0;
+
+                let resetTimer = null;
+
+                badge.addEventListener(
+                    'click',
+                    function () {
+
+                        taps++;
+
+                        clearTimeout(
+                            resetTimer
+                        );
+
+                        resetTimer =
+                            setTimeout(
+                                function () {
+                                    taps = 0;
+                                },
+                                1600
+                            );
+
+                        if (taps >= 5) {
+
+                            taps = 0;
+
+                            openDevMode();
+                        }
+                    }
+                );
+            });
+    }
+
+
+    function openDevMode() {
+
+        if (
+            document.querySelector(
+                '.pz-dev-overlay'
+            )
+        ) {
+            return;
+        }
+
+        const id =
+            PZ_USER && PZ_USER.id
+                ? PZ_USER.id
+                : 'LOCAL-DEMO';
+
+        const username =
+            PZ_USER && PZ_USER.username
+                ? '@' + PZ_USER.username
+                : 'guest';
+
+        const overlay =
+            document.createElement('div');
+
+        overlay.className =
+            'pz-dev-overlay';
+
+        overlay.innerHTML = `
+            <div class="pz-dev-modal">
+
+                <div class="pz-dev-title">
+                    ☣ ZOMBIE DEV MODE
+                </div>
+
+                <div class="pz-dev-row">
+                    <span>APP</span>
+                    <span>PAID ZOMBIE</span>
+                </div>
+
+                <div class="pz-dev-row">
+                    <span>VERSION</span>
+                    <span>1.0.0</span>
+                </div>
+
+                <div class="pz-dev-row">
+                    <span>BUILD</span>
+                    <span>PAID-ZMB-001</span>
+                </div>
+
+                <div class="pz-dev-row">
+                    <span>NETWORK</span>
+                    <span>ONLINE</span>
+                </div>
+
+                <div class="pz-dev-row">
+                    <span>USER</span>
+                    <span>${username}</span>
+                </div>
+
+                <div class="pz-dev-row">
+                    <span>PLAYER ID</span>
+                    <span>#${id}</span>
+                </div>
+
+                <button
+                    class="pz-dev-close"
+                    type="button"
+                >
+                    CLOSE DEV MODE
+                </button>
+
+            </div>
+        `;
+
+        document.body.appendChild(
+            overlay
+        );
+
+        const close =
+            overlay.querySelector(
+                '.pz-dev-close'
+            );
+
+        close.addEventListener(
+            'click',
+            function () {
+                overlay.remove();
+            }
+        );
+
+        overlay.addEventListener(
+            'click',
+            function (event) {
+
+                if (
+                    event.target === overlay
+                ) {
+                    overlay.remove();
+                }
+            }
+        );
+    }
+
+
+    /* =========================
+       RANDOM SYSTEM TOASTS
+       ========================= */
+
+    const PZ_SYSTEM_MESSAGES = [
+
+        'Zombie network synchronized',
+
+        'ZMB detected',
+
+        'Brain.exe running...',
+
+        'Checking zombie status...',
+
+        'No brains found 🧠',
+
+        'Mining protocol initialized',
+
+        'Welcome back, survivor',
+
+        'System mutation detected',
+
+        'Everything is under control.'
+    ];
+
+
+    function randomPZToast() {
+
+        const message =
+            PZ_SYSTEM_MESSAGES[
+                Math.floor(
+                    Math.random() *
+                    PZ_SYSTEM_MESSAGES.length
+                )
+            ];
+
+        showPZToast(
+            message,
+            2200
+        );
+    }
+
+
+    /* =========================
+       HOME BUTTONS
+       ========================= */
+
+    function setupHomeButtons() {
+
+        document
+            .querySelectorAll(
+                '.home-button, .home-btn, .module-button'
+            )
+            .forEach(function (button) {
+
+                if (
+                    button.dataset.pzReady
+                ) {
+                    return;
+                }
+
+                button.dataset.pzReady =
+                    '1';
+
+                button.addEventListener(
+                    'pointerdown',
+                    function () {
+
+                        const title =
+                            button.dataset.title ||
+                            (
+                                button.querySelector(
+                                    '.title'
+                                )?.textContent
+                            ) ||
+                            button.textContent
+                                .trim()
+                                .split('\n')[0];
+
+                        if (title) {
+
+                            showPZToast(
+                                title +
+                                ' module opened',
+                                1500
+                            );
+                        }
+                    }
+                );
+            });
+    }
+
+
+    /* =========================
+       STARTUP
+       ========================= */
+
+    function initPZExtra() {
+
+        createPZCore();
+
+        createSystemLine();
+
+        createProfileFooter();
+
+        createStatuses();
+
+        setupDevMode();
+
+        setupHomeButtons();
+
+        setTimeout(
+            function () {
+
+                showPZToast(
+                    'Zombie network synchronized',
+                    2200
+                );
+
+            },
+            2500
+        );
+
+        setTimeout(
+            function () {
+
+                showPZToast(
+                    'PAID ZOMBIE online',
+                    2200
+                );
+
+            },
+            6000
+        );
+    }
+
+
+    /*
+       Запускаем после загрузки
+    */
+
+    if (
+        document.readyState ===
+        'loading'
+    ) {
+
+        document.addEventListener(
+            'DOMContentLoaded',
+            initPZExtra
+        );
+
+    } else {
+
+        initPZExtra();
+    }
+
+})();
 
 </script>
 
