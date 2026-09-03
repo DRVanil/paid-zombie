@@ -2,49 +2,653 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
     <title>PAID ZOMBIE</title>
 
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
     <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #111;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
+        * {
+            box-sizing: border-box;
         }
 
-        h1 {
-            font-size: 32px;
+        body {
+            margin: 0;
+            background: #050505;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+
+        .app {
+            max-width: 500px;
+            margin: auto;
+            padding: 18px;
+        }
+
+        /* HEADER */
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .status {
+            color: #00ff66;
+            font-size: 12px;
+        }
+
+        /* BALANCE */
+
+        .balance-card {
+            border: 1px solid #00ff66;
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 15px;
+            background: #080808;
+        }
+
+        .balance-title {
+            color: #888;
+            font-size: 13px;
+        }
+
+        .balance {
+            font-size: 34px;
+            font-weight: 800;
+            margin-top: 5px;
+        }
+
+        .currency {
+            color: #00ff66;
+            font-size: 17px;
+        }
+
+        /* MINING */
+
+        .mining-card {
+            border: 1px solid #00ff66;
+            border-radius: 16px;
+            padding: 25px 20px;
+            text-align: center;
+            background: #080808;
+        }
+
+        .zombie {
+            font-size: 70px;
+            margin: 10px;
+        }
+
+        .mining-title {
+            font-size: 24px;
+            font-weight: 800;
+        }
+
+        .mining-speed {
+            color: #00ff66;
+            margin-top: 7px;
+        }
+
+        .progress-container {
+            height: 8px;
+            background: #1b1b1b;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress {
+            width: 35%;
+            height: 100%;
+            background: #00ff66;
         }
 
         button {
-            padding: 15px 30px;
-            border: none;
-            border-radius: 12px;
-            font-size: 18px;
+            width: 100%;
+            border: 1px solid #00ff66;
+            background: #00ff66;
+            color: #000;
+            padding: 14px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 800;
             cursor: pointer;
         }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        /* SECTIONS */
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section-title {
+            font-size: 25px;
+            font-weight: 800;
+            margin-bottom: 15px;
+        }
+
+        .card {
+            border: 1px solid #00ff66;
+            border-radius: 14px;
+            padding: 17px;
+            background: #080808;
+            margin-bottom: 12px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .green {
+            color: #00ff66;
+        }
+
+        .gray {
+            color: #888;
+            font-size: 13px;
+        }
+
+        /* TOP */
+
+        .rank {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .rank-number {
+            width: 35px;
+        }
+
+        /* FRIENDS */
+
+        .ref-link {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 12px 0;
+            word-break: break-all;
+            color: #00ff66;
+            font-size: 13px;
+        }
+
+        /* EARN */
+
+        .task {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .task button {
+            width: auto;
+            padding: 9px 15px;
+            font-size: 13px;
+        }
+
+        /* GAMES */
+
+        .game {
+            text-align: center;
+        }
+
+        .game-icon {
+            font-size: 45px;
+            margin-bottom: 10px;
+        }
+
+        /* PROFILE */
+
+        .avatar {
+            font-size: 60px;
+            text-align: center;
+            margin: 10px;
+        }
+
+        /* BOTTOM NAV */
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            max-width: 500px;
+            margin: auto;
+            height: 70px;
+            background: #050505;
+            border-top: 1px solid #00ff66;
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #666;
+            font-size: 9px;
+            cursor: pointer;
+        }
+
+        .nav-item span {
+            font-size: 20px;
+            margin-bottom: 3px;
+        }
+
+        .nav-item.active {
+            color: #00ff66;
+        }
+
     </style>
 </head>
 
 <body>
-    <div>
-        <h1>🧟‍♂️ PAID ZOMBIE</h1>
-        <p>Mini App is working!</p>
-        <button onclick="test()">💸 TEST</button>
+
+<div class="app">
+
+    <!-- HEADER -->
+
+    <div class="header">
+        <div class="logo">🧟‍♂️ PAID ZOMBIE</div>
+        <div class="status">● ONLINE</div>
     </div>
 
-    <script>
-        function test() {
-            alert("PAID ZOMBIE WORKS! 🤑");
-        }
-    </script>
+
+    <!-- ================= MINING ================= -->
+
+    <div id="mining" class="section active">
+
+        <div class="balance-card">
+            <div class="balance-title">YOUR BALANCE</div>
+            <div class="balance">
+                1,250.50 <span class="currency">ZMB</span>
+            </div>
+        </div>
+
+        <div class="mining-card">
+
+            <div class="zombie">🧟‍♂️</div>
+
+            <div class="mining-title">
+                MINING
+            </div>
+
+            <div class="mining-speed">
+                +0.25 ZMB / MIN
+            </div>
+
+            <div class="progress-container">
+                <div class="progress"></div>
+            </div>
+
+            <div class="gray">
+                Mining time: 35 / 60 minutes
+            </div>
+
+            <br>
+
+            <button onclick="startMining()">
+                ⛏️ START MINING
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= TOP ================= -->
+
+    <div id="top" class="section">
+
+        <div class="section-title">
+            🏆 TOP PLAYERS
+        </div>
+
+        <div class="card">
+            <div class="row">
+                <div class="rank">🥇 1. ZombieKing</div>
+                <div class="green">125,430 ZMB</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="row">
+                <div class="rank">🥈 2. CryptoZombie</div>
+                <div class="green">98,210 ZMB</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="row">
+                <div class="rank">🥉 3. MoneyHunter</div>
+                <div class="green">76,850 ZMB</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="row">
+                <div class="rank">4. You</div>
+                <div class="green">1,250 ZMB</div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- ================= FRIENDS ================= -->
+
+    <div id="friends" class="section">
+
+        <div class="section-title">
+            👥 FRIENDS
+        </div>
+
+        <div class="card">
+
+            <h3>Invite friends</h3>
+
+            <p class="gray">
+                Invite friends and earn rewards.
+            </p>
+
+            <div class="ref-link">
+                https://t.me/PaidZombieBot?start=123456
+            </div>
+
+            <button onclick="copyLink()">
+                📋 COPY LINK
+            </button>
+
+        </div>
+
+        <div class="card">
+
+            <div class="row">
+                <span>Friends invited</span>
+                <strong class="green">12</strong>
+            </div>
+
+            <br>
+
+            <div class="row">
+                <span>Total earned</span>
+                <strong class="green">3,000 ZMB</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= EARN ================= -->
+
+    <div id="earn" class="section">
+
+        <div class="section-title">
+            💰 EARN
+        </div>
+
+        <div class="card task">
+
+            <div>
+                <strong>📢 Join our channel</strong>
+                <div class="green">+100 ZMB</div>
+            </div>
+
+            <button onclick="claimTask(this)">
+                GET
+            </button>
+
+        </div>
+
+        <div class="card task">
+
+            <div>
+                <strong>👥 Invite a friend</strong>
+                <div class="green">+250 ZMB</div>
+            </div>
+
+            <button onclick="claimTask(this)">
+                GET
+            </button>
+
+        </div>
+
+        <div class="card task">
+
+            <div>
+                <strong>🎁 Daily bonus</strong>
+                <div class="green">+50 ZMB</div>
+            </div>
+
+            <button onclick="claimTask(this)">
+                CLAIM
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= GAMES ================= -->
+
+    <div id="games" class="section">
+
+        <div class="section-title">
+            🎮 GAMES
+        </div>
+
+        <div class="card game">
+
+            <div class="game-icon">🎯</div>
+
+            <h3>Lucky Spin</h3>
+
+            <p class="gray">
+                Try your luck and win ZMB.
+            </p>
+
+            <button onclick="gameAlert()">
+                PLAY
+            </button>
+
+        </div>
+
+        <div class="card game">
+
+            <div class="game-icon">🃏</div>
+
+            <h3>Zombie Cards</h3>
+
+            <p class="gray">
+                More games coming soon.
+            </p>
+
+            <button onclick="gameAlert()">
+                PLAY
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= PROFILE ================= -->
+
+    <div id="profile" class="section">
+
+        <div class="section-title">
+            👤 PROFILE
+        </div>
+
+        <div class="card">
+
+            <div class="avatar">
+                🧟‍♂️
+            </div>
+
+            <div class="row">
+                <span>Username</span>
+                <strong>@demo_user</strong>
+            </div>
+
+            <br>
+
+            <div class="row">
+                <span>User ID</span>
+                <strong>123456789</strong>
+            </div>
+
+            <br>
+
+            <div class="row">
+                <span>Balance</span>
+                <strong class="green">1,250.50 ZMB</strong>
+            </div>
+
+        </div>
+
+        <div class="card">
+
+            <button onclick="withdraw()">
+                💸 WITHDRAW
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= BOTTOM NAV ================= -->
+
+<div class="bottom-nav">
+
+    <div class="nav-item" onclick="openTab('top', this)">
+        <span>🏆</span>
+        TOP
+    </div>
+
+    <div class="nav-item" onclick="openTab('friends', this)">
+        <span>👥</span>
+        FRIENDS
+    </div>
+
+    <div class="nav-item active" onclick="openTab('mining', this)">
+        <span>⛏️</span>
+        MINING
+    </div>
+
+    <div class="nav-item" onclick="openTab('earn', this)">
+        <span>💰</span>
+        EARN
+    </div>
+
+    <div class="nav-item" onclick="openTab('games', this)">
+        <span>🎮</span>
+        GAMES
+    </div>
+
+    <div class="nav-item" onclick="openTab('profile', this)">
+        <span>👤</span>
+        PROFILE
+    </div>
+
+</div>
+
+
+<script>
+
+    function openTab(tabName, element) {
+
+        document.querySelectorAll('.section').forEach(section => {
+            section.classList.remove('active');
+        });
+
+        document.getElementById(tabName).classList.add('active');
+
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.classList.remove('active');
+        });
+
+        element.classList.add('active');
+    }
+
+
+    function startMining() {
+
+        alert("⛏️ Mining started!");
+
+    }
+
+
+    function copyLink() {
+
+        navigator.clipboard.writeText(
+            "https://t.me/PaidZombieBot?start=123456"
+        );
+
+        alert("Referral link copied!");
+
+    }
+
+
+    function claimTask(button) {
+
+        button.innerText = "✓ DONE";
+        button.disabled = true;
+
+        alert("+ Reward added!");
+
+    }
+
+
+    function gameAlert() {
+
+        alert("🎮 Game demo!");
+
+    }
+
+
+    function withdraw() {
+
+        alert("💸 Withdrawal system will be added later.");
+
+    }
+
+
+    // Telegram Mini App
+
+    if (window.Telegram && Telegram.WebApp) {
+
+        Telegram.WebApp.ready();
+        Telegram.WebApp.expand();
+
+    }
+
+</script>
+
 </body>
 </html>
