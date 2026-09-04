@@ -4,47 +4,52 @@
 <meta charset="UTF-8">
 
 <meta
-  name="viewport"
-  content="width=device-width,
-  initial-scale=1,
-  maximum-scale=1,
-  user-scalable=no,
-  viewport-fit=cover"
+    name="viewport"
+    content="width=device-width,
+    initial-scale=1,
+    maximum-scale=1,
+    user-scalable=no,
+    viewport-fit=cover"
 >
 
-<meta name="theme-color" content="#0b0c0f">
+<meta name="theme-color" content="#0a0b0d">
 
-<title>Paid Zombie</title>
+<title>PAID ZOMBIE</title>
 
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <style>
 
 /* =========================================================
-   PAID ZOMBIE — PREMIUM DARK UI
+   PAID ZOMBIE
+   PREMIUM DARK / GRAPHITE / LIME
    ========================================================= */
 
 :root {
     --bg: #0a0b0d;
-    --bg-soft: #0f1013;
+    --bg2: #0f1013;
+
     --card: #141519;
-    --card-hover: #191a1f;
+    --card2: #18191d;
+    --card3: #1c1d21;
+
     --border: rgba(255,255,255,.065);
 
     --text: #f4f4f5;
     --muted: #85878f;
-    --muted-2: #5f6169;
+    --muted2: #5d6068;
 
-    --accent: #d8ff62;
-    --accent-soft: rgba(216,255,98,.10);
+    --lime: #d8ff62;
+    --lime-soft: rgba(216,255,98,.09);
 
     --green: #72e3a0;
     --orange: #ff9f43;
+    --red: #ff666f;
 
-    --radius: 20px;
-
-    --nav-height: 70px;
+    --nav-height: 74px;
     --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+    --radius: 19px;
 }
 
 * {
@@ -109,12 +114,13 @@ button:active {
 
 .page {
     width: min(100%, 720px);
+
     margin: 0 auto;
 
     padding:
-        max(16px, env(safe-area-inset-top))
-        16px
-        24px;
+        max(15px, env(safe-area-inset-top))
+        15px
+        25px;
 }
 
 /* =========================================================
@@ -126,13 +132,16 @@ button:active {
     align-items: center;
     justify-content: space-between;
 
-    margin-bottom: 24px;
+    gap: 12px;
+
+    margin-bottom: 22px;
 }
 
 .user {
     display: flex;
     align-items: center;
-    gap: 11px;
+
+    gap: 10px;
 
     min-width: 0;
 }
@@ -148,12 +157,12 @@ button:active {
 
     border-radius: 14px;
 
-    background: #1b1d22;
+    background: #1b1c20;
 
     border: 1px solid var(--border);
 
-    font-size: 14px;
-    font-weight: 800;
+    font-size: 13px;
+    font-weight: 850;
 
     overflow: hidden;
 }
@@ -161,23 +170,26 @@ button:active {
 .avatar img {
     width: 100%;
     height: 100%;
+
     object-fit: cover;
 }
 
-.user-text {
+.user-info {
     min-width: 0;
 }
 
 .user-name {
+    max-width: 180px;
+
     font-size: 14px;
-    font-weight: 750;
+    font-weight: 800;
 
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.user-status {
+.user-sub {
     margin-top: 3px;
 
     color: var(--muted);
@@ -186,23 +198,25 @@ button:active {
 }
 
 .logo {
+    color: #d5d5d8;
+
     font-size: 13px;
     font-weight: 900;
 
-    letter-spacing: .14em;
+    letter-spacing: .13em;
 
-    color: #d9d9dc;
+    white-space: nowrap;
 }
 
 .logo span {
-    color: var(--accent);
+    color: var(--lime);
 }
 
 /* =========================================================
    BALANCE
    ========================================================= */
 
-.balance {
+.balance-card {
     position: relative;
 
     padding: 23px;
@@ -221,24 +235,24 @@ button:active {
     overflow: hidden;
 }
 
-.balance::after {
+.balance-card::after {
     content: "";
 
     position: absolute;
 
-    width: 180px;
-    height: 180px;
+    width: 210px;
+    height: 210px;
 
-    right: -100px;
-    top: -100px;
+    right: -120px;
+    top: -120px;
 
     border-radius: 50%;
 
-    background: var(--accent);
+    background: var(--lime);
 
     opacity: .035;
 
-    filter: blur(30px);
+    filter: blur(35px);
 
     pointer-events: none;
 }
@@ -250,29 +264,29 @@ button:active {
     font-weight: 650;
 }
 
-.balance-number {
+.balance-value {
     margin-top: 7px;
 
-    font-size: clamp(38px, 10vw, 54px);
+    font-size: clamp(39px, 10vw, 55px);
 
     line-height: 1;
 
-    font-weight: 850;
+    font-weight: 900;
 
     letter-spacing: -.055em;
 }
 
 .balance-unit {
-    margin-left: 4px;
+    margin-left: 5px;
 
-    color: var(--accent);
+    color: var(--lime);
 
     font-size: 15px;
 
     letter-spacing: 0;
 }
 
-.balance-secondary {
+.balance-ton {
     margin-top: 8px;
 
     color: var(--muted);
@@ -282,9 +296,10 @@ button:active {
 
 .balance-actions {
     display: flex;
+
     gap: 8px;
 
-    margin-top: 20px;
+    margin-top: 19px;
 }
 
 .button {
@@ -298,14 +313,15 @@ button:active {
 
     border: 1px solid var(--border);
 
-    color: #dedee2;
+    color: #dddde1;
 
     font-size: 11px;
-    font-weight: 750;
+    font-weight: 800;
 }
 
-.button.accent {
-    background: var(--accent);
+.button.lime {
+    background: var(--lime);
+
     color: #0b0c0d;
 
     border-color: transparent;
@@ -315,12 +331,10 @@ button:active {
    DAILY CHECK
    ========================================================= */
 
-.daily {
-    position: relative;
+.daily-card {
+    margin-top: 11px;
 
-    margin-top: 12px;
-
-    padding: 17px;
+    padding: 16px;
 
     border-radius: 20px;
 
@@ -328,19 +342,17 @@ button:active {
         linear-gradient(
             145deg,
             rgba(216,255,98,.055),
-            rgba(255,255,255,.025)
+            rgba(255,255,255,.02)
         );
 
     border: 1px solid rgba(216,255,98,.11);
-
-    overflow: hidden;
 }
 
-.daily-top {
+.daily-row {
     display: flex;
     align-items: center;
 
-    gap: 13px;
+    gap: 12px;
 }
 
 .fire {
@@ -354,14 +366,16 @@ button:active {
 
     border-radius: 14px;
 
-    background: rgba(255,159,67,.08);
+    background: rgba(255,159,67,.075);
 
-    font-size: 25px;
+    font-size: 24px;
 
-    animation: firePulse 1.5s ease-in-out infinite;
+    animation:
+        firePulse 1.5s ease-in-out infinite;
 }
 
 @keyframes firePulse {
+
     0%,100% {
         transform: scale(1);
         filter: brightness(1);
@@ -371,19 +385,21 @@ button:active {
         transform: scale(1.08);
         filter: brightness(1.18);
     }
+
 }
 
 .daily-info {
     flex: 1;
+
     min-width: 0;
 }
 
 .daily-title {
     font-size: 14px;
-    font-weight: 800;
+    font-weight: 850;
 }
 
-.daily-subtitle {
+.daily-sub {
     margin-top: 3px;
 
     color: var(--muted);
@@ -391,31 +407,35 @@ button:active {
     font-size: 10px;
 }
 
-.daily-days {
+.daily-streak {
     text-align: right;
 }
 
-.daily-number {
+.streak-number {
     font-size: 22px;
+
+    line-height: 1;
+
     font-weight: 900;
 
     letter-spacing: -.04em;
 }
 
-.daily-days-label {
+.streak-label {
+    margin-top: 3px;
+
     color: var(--muted);
 
-    font-size: 9px;
+    font-size: 8px;
 }
 
 .daily-bottom {
     display: flex;
     align-items: center;
-    justify-content: space-between;
 
-    gap: 12px;
+    gap: 10px;
 
-    margin-top: 15px;
+    margin-top: 14px;
 }
 
 .daily-progress {
@@ -423,22 +443,23 @@ button:active {
 
     height: 5px;
 
-    overflow: hidden;
-
     border-radius: 99px;
+
+    overflow: hidden;
 
     background: rgba(255,255,255,.06);
 }
 
-.daily-progress div {
+.daily-progress-fill {
     width: 0;
+
     height: 100%;
 
     border-radius: inherit;
 
-    background: var(--accent);
+    background: var(--lime);
 
-    transition: width .5s ease;
+    transition: width .45s ease;
 }
 
 .daily-button {
@@ -450,31 +471,33 @@ button:active {
 
     background: rgba(216,255,98,.10);
 
-    color: var(--accent);
-
     border: 1px solid rgba(216,255,98,.13);
 
+    color: var(--lime);
+
     font-size: 10px;
-    font-weight: 800;
+    font-weight: 850;
 }
 
 .daily-button.done {
-    background: rgba(255,255,255,.045);
     color: var(--muted);
+
+    background: rgba(255,255,255,.04);
 
     border-color: var(--border);
 }
 
 /* =========================================================
-   SECTIONS
+   SECTION
    ========================================================= */
 
 .section {
-    margin-top: 27px;
+    margin-top: 26px;
 }
 
 .section-head {
     display: flex;
+
     align-items: center;
     justify-content: space-between;
 
@@ -483,7 +506,8 @@ button:active {
 
 .section-title {
     font-size: 17px;
-    font-weight: 820;
+
+    font-weight: 850;
 
     letter-spacing: -.025em;
 }
@@ -500,10 +524,10 @@ button:active {
 }
 
 /* =========================================================
-   QUICK CARDS
+   FOUR MAIN CARDS
    ========================================================= */
 
-.quick-grid {
+.main-grid {
     display: grid;
 
     grid-template-columns:
@@ -512,178 +536,153 @@ button:active {
     gap: 9px;
 }
 
-.quick {
-    min-height: 112px;
+.main-card {
+    position: relative;
+
+    min-height: 126px;
 
     padding: 16px;
 
     text-align: left;
 
-    border-radius: 18px;
+    border-radius: 19px;
 
     background: var(--card);
 
     border: 1px solid var(--border);
+
+    overflow: hidden;
 
     transition:
         background .2s ease,
         transform .2s ease;
 }
 
-.quick:hover {
-    background: var(--card-hover);
+.main-card:hover {
+    background: var(--card2);
 }
 
-.quick-icon {
-    width: 37px;
-    height: 37px;
+.main-card::after {
+    content: "";
+
+    position: absolute;
+
+    width: 90px;
+    height: 90px;
+
+    right: -45px;
+    bottom: -45px;
+
+    border-radius: 50%;
+
+    background: var(--lime);
+
+    opacity: .025;
+
+    filter: blur(20px);
+}
+
+.card-icon {
+    width: 39px;
+    height: 39px;
 
     display: grid;
     place-items: center;
 
-    border-radius: 11px;
+    border-radius: 12px;
 
-    background: #1b1c21;
+    background: #1b1c20;
 
-    color: #cfd0d5;
+    border: 1px solid rgba(255,255,255,.04);
 
-    font-size: 17px;
+    font-size: 18px;
 
-    margin-bottom: 13px;
+    margin-bottom: 14px;
 }
 
-.quick-name {
+.card-title {
     font-size: 13px;
-    font-weight: 800;
+
+    font-weight: 850;
 }
 
-.quick-description {
+.card-description {
+    max-width: 92%;
+
     margin-top: 4px;
 
     color: var(--muted);
 
-    font-size: 10px;
-    line-height: 1.35;
+    font-size: 9px;
+
+    line-height: 1.4;
 }
 
 /* =========================================================
-   ACTIVITY
+   MINING
    ========================================================= */
 
-.activity {
-    display: flex;
-    flex-direction: column;
+.mining-card {
+    margin-top: 10px;
 
-    gap: 7px;
-}
+    padding: 19px;
 
-.activity-item {
-    display: flex;
-    align-items: center;
+    border-radius: 20px;
 
-    gap: 10px;
-
-    padding: 11px;
-
-    border-radius: 15px;
-
-    background: #111216;
+    background: var(--card);
 
     border: 1px solid var(--border);
+
+    text-align: center;
 }
 
-.activity-icon {
-    width: 35px;
-    height: 35px;
+.mining-status {
+    color: var(--muted);
 
-    display: grid;
-    place-items: center;
+    font-size: 10px;
+}
 
-    flex: 0 0 35px;
+.mining-number {
+    margin-top: 9px;
 
-    border-radius: 10px;
+    font-size: 31px;
 
-    background: #1a1b20;
+    font-weight: 900;
+
+    letter-spacing: -.045em;
+}
+
+.mining-number span {
+    color: var(--lime);
 
     font-size: 13px;
+
+    letter-spacing: 0;
 }
 
-.activity-text {
-    flex: 1;
-
-    min-width: 0;
-}
-
-.activity-title {
-    font-size: 11px;
-    font-weight: 750;
-}
-
-.activity-time {
-    margin-top: 2px;
+.mining-rate {
+    margin-top: 4px;
 
     color: var(--muted);
 
     font-size: 9px;
 }
 
-.activity-value {
-    color: var(--green);
+.mining-button {
+    width: 100%;
+
+    min-height: 45px;
+
+    margin-top: 15px;
+
+    border-radius: 13px;
+
+    background: var(--lime);
+
+    color: #0b0c0d;
 
     font-size: 11px;
-    font-weight: 800;
-}
-
-/* =========================================================
-   LEVEL
-   ========================================================= */
-
-.level-card {
-    padding: 17px;
-
-    border-radius: 18px;
-
-    background: var(--card);
-
-    border: 1px solid var(--border);
-}
-
-.level-head {
-    display: flex;
-    justify-content: space-between;
-
-    font-size: 11px;
-}
-
-.level-name {
-    font-weight: 800;
-}
-
-.level-xp {
-    color: var(--muted);
-}
-
-.level-progress {
-    height: 5px;
-
-    margin-top: 12px;
-
-    overflow: hidden;
-
-    border-radius: 99px;
-
-    background: rgba(255,255,255,.06);
-}
-
-.level-progress div {
-    height: 100%;
-    width: 62%;
-
-    border-radius: inherit;
-
-    background: var(--accent);
-
-    transition: width .4s ease;
+    font-weight: 900;
 }
 
 /* =========================================================
@@ -697,10 +696,12 @@ button:active {
 .screen.active {
     display: block;
 
-    animation: screenIn .22s ease;
+    animation:
+        screenIn .2s ease;
 }
 
 @keyframes screenIn {
+
     from {
         opacity: 0;
         transform: translateY(5px);
@@ -710,30 +711,14 @@ button:active {
         opacity: 1;
         transform: translateY(0);
     }
+
 }
 
 .screen-header {
-    margin-bottom: 23px;
+    margin-bottom: 21px;
 }
 
-.screen-title {
-    font-size: 28px;
-
-    font-weight: 900;
-
-    letter-spacing: -.05em;
-}
-
-.screen-subtitle {
-    margin-top: 5px;
-
-    color: var(--muted);
-
-    font-size: 11px;
-    line-height: 1.45;
-}
-
-.back {
+.back-button {
     width: 39px;
     height: 39px;
 
@@ -748,11 +733,31 @@ button:active {
 
     border: 1px solid var(--border);
 
-    font-size: 17px;
+    font-size: 18px;
+}
+
+.screen-title {
+    font-size: 28px;
+
+    line-height: 1;
+
+    font-weight: 900;
+
+    letter-spacing: -.055em;
+}
+
+.screen-subtitle {
+    margin-top: 6px;
+
+    color: var(--muted);
+
+    font-size: 10px;
+
+    line-height: 1.45;
 }
 
 /* =========================================================
-   GENERIC PANELS
+   PANELS
    ========================================================= */
 
 .panel {
@@ -769,70 +774,86 @@ button:active {
 
 .panel-title {
     font-size: 13px;
-    font-weight: 800;
+    font-weight: 850;
 }
 
-.panel-description {
+.panel-subtitle {
     margin-top: 5px;
 
     color: var(--muted);
 
     font-size: 10px;
+
     line-height: 1.45;
 }
 
-.big-stat {
-    margin-top: 15px;
+/* =========================================================
+   MINING SCREEN
+   ========================================================= */
 
-    font-size: 37px;
-    font-weight: 900;
+.mining-big {
+    padding: 26px 17px;
 
-    letter-spacing: -.05em;
-}
+    text-align: center;
 
-.main-button {
-    width: 100%;
+    border-radius: 21px;
 
-    min-height: 49px;
-
-    margin-top: 12px;
-
-    border-radius: 14px;
-
-    background: var(--accent);
-
-    color: #090a0b;
-
-    font-size: 12px;
-    font-weight: 900;
-}
-
-.main-button.secondary {
-    background: #1d1e23;
-
-    color: #fff;
+    background:
+        linear-gradient(
+            145deg,
+            #17181c,
+            #111216
+        );
 
     border: 1px solid var(--border);
 }
 
-/* =========================================================
-   LISTS
-   ========================================================= */
+.mining-big-status {
+    color: var(--green);
 
-.list {
-    display: flex;
-    flex-direction: column;
-
-    gap: 8px;
+    font-size: 10px;
+    font-weight: 750;
 }
 
-.list-item {
-    display: flex;
-    align-items: center;
+.mining-big-number {
+    margin-top: 9px;
 
-    gap: 12px;
+    font-size: clamp(36px, 10vw, 49px);
 
-    padding: 13px;
+    font-weight: 900;
+
+    letter-spacing: -.055em;
+}
+
+.mining-big-number span {
+    color: var(--lime);
+
+    font-size: 14px;
+
+    letter-spacing: 0;
+}
+
+.mining-big-rate {
+    margin-top: 6px;
+
+    color: var(--muted);
+
+    font-size: 10px;
+}
+
+.stats-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0,1fr));
+
+    gap: 8px;
+
+    margin-top: 9px;
+}
+
+.stat {
+    padding: 14px;
 
     border-radius: 16px;
 
@@ -841,66 +862,555 @@ button:active {
     border: 1px solid var(--border);
 }
 
-.list-icon {
-    width: 42px;
-    height: 42px;
+.stat-label {
+    color: var(--muted);
+
+    font-size: 9px;
+}
+
+.stat-value {
+    margin-top: 5px;
+
+    font-size: 14px;
+
+    font-weight: 850;
+}
+
+/* =========================================================
+   GAMES
+   ========================================================= */
+
+.game-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 9px;
+}
+
+.game {
+    position: relative;
+
+    min-height: 116px;
+
+    padding: 17px;
+
+    border-radius: 19px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    overflow: hidden;
+}
+
+.game::after {
+    content: "";
+
+    position: absolute;
+
+    right: -45px;
+    top: -45px;
+
+    width: 120px;
+    height: 120px;
+
+    border-radius: 50%;
+
+    background: var(--lime);
+
+    opacity: .025;
+
+    filter: blur(25px);
+}
+
+.game-icon {
+    width: 41px;
+    height: 41px;
 
     display: grid;
     place-items: center;
 
-    flex: 0 0 42px;
-
     border-radius: 12px;
 
-    background: #1b1c21;
+    background: #1b1c20;
 
-    font-size: 17px;
+    font-size: 18px;
 }
 
-.list-info {
-    min-width: 0;
-    flex: 1;
+.game-title {
+    margin-top: 12px;
+
+    font-size: 14px;
+
+    font-weight: 900;
 }
 
-.list-title {
-    font-size: 12px;
-    font-weight: 800;
-}
-
-.list-description {
+.game-description {
     margin-top: 3px;
 
     color: var(--muted);
 
     font-size: 9px;
-
-    line-height: 1.35;
 }
 
-.list-action {
-    min-height: 33px;
+.game-button {
+    position: absolute;
 
-    padding: 0 11px;
+    right: 15px;
+    bottom: 15px;
+
+    min-height: 34px;
+
+    padding: 0 12px;
 
     border-radius: 10px;
 
-    background: #1e2025;
+    background: #202126;
 
-    color: #dddfe4;
+    border: 1px solid var(--border);
 
     font-size: 9px;
+
+    font-weight: 850;
+}
+
+.game-button.lime {
+    background: var(--lime);
+
+    color: #0b0c0d;
+
+    border-color: transparent;
+}
+
+/* =========================================================
+   FLIP
+   ========================================================= */
+
+.flip-area {
+    padding: 24px 17px;
+
+    text-align: center;
+
+    border-radius: 21px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+}
+
+.coin {
+    width: 88px;
+    height: 88px;
+
+    margin: 0 auto;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            #202126,
+            #15161a
+        );
+
+    border:
+        1px solid
+        rgba(216,255,98,.2);
+
+    font-size: 34px;
+
+    box-shadow:
+        0 0 0 8px rgba(216,255,98,.025);
+
+    transition: transform .6s ease;
+}
+
+.coin.flipping {
+    animation:
+        coinFlip .7s ease;
+}
+
+@keyframes coinFlip {
+
+    0% {
+        transform: rotateY(0);
+    }
+
+    50% {
+        transform: rotateY(180deg);
+    }
+
+    100% {
+        transform: rotateY(360deg);
+    }
+
+}
+
+.flip-result {
+    min-height: 19px;
+
+    margin-top: 13px;
+
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+/* =========================================================
+   WHEEL
+   ========================================================= */
+
+.wheel {
+    width: 190px;
+    height: 190px;
+
+    margin: 10px auto 20px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    background:
+        conic-gradient(
+            #202126 0deg 45deg,
+            #292b30 45deg 90deg,
+            #202126 90deg 135deg,
+            #292b30 135deg 180deg,
+            #202126 180deg 225deg,
+            #292b30 225deg 270deg,
+            #202126 270deg 315deg,
+            #292b30 315deg 360deg
+        );
+
+    border:
+        5px solid
+        #1a1b1f;
+
+    box-shadow:
+        0 0 0 1px
+        rgba(255,255,255,.08);
+
+    transition:
+        transform 2s cubic-bezier(.17,.67,.15,1);
+}
+
+.wheel-center {
+    width: 58px;
+    height: 58px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    background: var(--lime);
+
+    color: #0b0c0d;
+
+    font-size: 12px;
+
+    font-weight: 900;
+}
+
+.wheel-pointer {
+    text-align: center;
+
+    margin-bottom: -2px;
+
+    color: var(--lime);
+
+    font-size: 20px;
+}
+
+/* =========================================================
+   EARN
+   ========================================================= */
+
+.ad-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.ad-card {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    padding: 14px;
+
+    border-radius: 17px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+}
+
+.ad-icon {
+    width: 41px;
+    height: 41px;
+
+    flex: 0 0 41px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 12px;
+
+    background: #1b1c20;
+
+    font-size: 16px;
+}
+
+.ad-info {
+    min-width: 0;
+
+    flex: 1;
+}
+
+.ad-title {
+    font-size: 12px;
+
     font-weight: 800;
+}
+
+.ad-description {
+    margin-top: 3px;
+
+    color: var(--muted);
+
+    font-size: 9px;
+}
+
+.ad-reward {
+    color: var(--green);
+
+    font-size: 10px;
+
+    font-weight: 850;
+}
+
+.ad-button {
+    min-height: 33px;
+
+    margin-top: 5px;
+
+    padding: 0 10px;
+
+    border-radius: 10px;
+
+    background: #202126;
+
+    color: #ddd;
+
+    font-size: 9px;
+
+    font-weight: 800;
+}
+
+/* =========================================================
+   REFERRALS
+   ========================================================= */
+
+.ref-stat {
+    text-align: center;
+
+    padding: 22px;
+
+    border-radius: 19px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+}
+
+.ref-number {
+    font-size: 40px;
+
+    font-weight: 900;
+
+    letter-spacing: -.06em;
+}
+
+.ref-label {
+    margin-top: 3px;
+
+    color: var(--muted);
+
+    font-size: 10px;
+}
+
+.ref-link {
+    margin-top: 9px;
+
+    padding: 12px;
+
+    border-radius: 12px;
+
+    background: #1a1b1f;
+
+    border: 1px solid var(--border);
+
+    color: var(--muted);
+
+    font-size: 9px;
+
+    word-break: break-all;
+}
+
+/* =========================================================
+   TOP
+   ========================================================= */
+
+.rank-list {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+.rank {
+    display: grid;
+
+    grid-template-columns:
+        32px 1fr auto;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 11px;
+
+    border-radius: 15px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+}
+
+.rank-number {
+    text-align: center;
+
+    color: var(--muted);
+
+    font-size: 10px;
+
+    font-weight: 850;
+}
+
+.rank-user {
+    min-width: 0;
+
+    font-size: 11px;
+
+    font-weight: 750;
+
+    overflow: hidden;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+}
+
+.rank-value {
+    color: var(--lime);
+
+    font-size: 10px;
+
+    font-weight: 850;
+}
+
+/* =========================================================
+   WALLET
+   ========================================================= */
+
+.wallet-balance {
+    padding: 22px;
+
+    border-radius: 20px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+}
+
+.wallet-label {
+    color: var(--muted);
+
+    font-size: 10px;
+}
+
+.wallet-number {
+    margin-top: 7px;
+
+    font-size: 39px;
+
+    font-weight: 900;
+
+    letter-spacing: -.055em;
+}
+
+.wallet-number span {
+    color: var(--lime);
+
+    font-size: 13px;
+
+    letter-spacing: 0;
+}
+
+.field-label {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: var(--muted);
+
+    font-size: 9px;
+}
+
+.field {
+    width: 100%;
+
+    min-height: 45px;
+
+    padding: 0 12px;
+
+    outline: none;
+
+    border-radius: 12px;
+
+    background: #1a1b1f;
+
+    border: 1px solid var(--border);
+
+    color: #fff;
+
+    font-size: 11px;
+}
+
+.field:focus {
+    border-color:
+        rgba(216,255,98,.25);
 }
 
 /* =========================================================
    PROFILE
    ========================================================= */
 
-.profile-head {
+.profile-header {
     display: flex;
     align-items: center;
 
-    gap: 14px;
+    gap: 13px;
 
     padding: 18px;
 
@@ -912,24 +1422,35 @@ button:active {
 }
 
 .profile-avatar {
-    width: 58px;
-    height: 58px;
+    width: 56px;
+    height: 56px;
 
     display: grid;
     place-items: center;
 
-    flex: 0 0 58px;
+    flex: 0 0 56px;
 
-    border-radius: 17px;
+    border-radius: 16px;
 
-    background: #1d1f24;
+    background: #1d1e23;
 
-    font-size: 18px;
+    font-size: 17px;
+
     font-weight: 900;
+
+    overflow: hidden;
+}
+
+.profile-avatar img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
 }
 
 .profile-name {
     font-size: 16px;
+
     font-weight: 850;
 }
 
@@ -938,19 +1459,20 @@ button:active {
 
     color: var(--muted);
 
-    font-size: 10px;
+    font-size: 9px;
 }
 
 .profile-menu {
-    margin-top: 10px;
-
     display: flex;
+
     flex-direction: column;
 
     gap: 7px;
+
+    margin-top: 9px;
 }
 
-.profile-button {
+.profile-item {
     width: 100%;
 
     min-height: 54px;
@@ -962,16 +1484,16 @@ button:active {
 
     padding: 0 14px;
 
-    text-align: left;
-
     border-radius: 15px;
 
     background: var(--card);
 
     border: 1px solid var(--border);
+
+    text-align: left;
 }
 
-.profile-button-icon {
+.profile-item-icon {
     width: 34px;
     height: 34px;
 
@@ -980,18 +1502,19 @@ button:active {
 
     border-radius: 10px;
 
-    background: #1b1c21;
+    background: #1b1c20;
 }
 
-.profile-button-text {
+.profile-item-text {
     flex: 1;
 
     font-size: 11px;
+
     font-weight: 750;
 }
 
 .profile-arrow {
-    color: var(--muted-2);
+    color: var(--muted2);
 }
 
 /* =========================================================
@@ -1014,36 +1537,37 @@ button:active {
         );
 
     padding:
-        6px
-        10px
+        6px 8px
         calc(6px + var(--safe-bottom));
 
     background:
-        rgba(10,11,13,.94);
+        rgba(10,11,13,.95);
 
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(22px);
 
     border-top:
-        1px solid rgba(255,255,255,.045);
+        1px solid
+        rgba(255,255,255,.045);
 }
 
 .nav-inner {
-    width: min(100%, 520px);
+    width: min(100%, 540px);
 
     height: 100%;
 
-    margin: auto;
+    margin: 0 auto;
 
     display: grid;
 
     grid-template-columns:
-        repeat(4,1fr);
+        repeat(5,1fr);
 
-    gap: 4px;
+    gap: 3px;
 }
 
 .nav-button {
     display: flex;
+
     flex-direction: column;
 
     align-items: center;
@@ -1055,25 +1579,27 @@ button:active {
 
     background: transparent;
 
-    color: #65676f;
+    color: #62646b;
 
-    transition: .2s ease;
+    transition: .18s ease;
 }
 
 .nav-button.active {
-    color: var(--text);
+    background:
+        rgba(255,255,255,.045);
 
-    background: rgba(255,255,255,.045);
+    color: #f1f1f2;
 }
 
 .nav-icon {
-    font-size: 17px;
+    font-size: 16px;
 
     line-height: 1;
 }
 
 .nav-label {
-    font-size: 8px;
+    font-size: 7px;
+
     font-weight: 750;
 }
 
@@ -1084,18 +1610,19 @@ button:active {
 .toast {
     position: fixed;
 
-    z-index: 200;
+    z-index: 300;
 
     left: 50%;
+
     bottom:
         calc(
             var(--nav-height)
             + var(--safe-bottom)
-            + 18px
+            + 16px
         );
 
     transform:
-        translate(-50%, 15px);
+        translate(-50%, 12px);
 
     padding: 11px 15px;
 
@@ -1108,6 +1635,7 @@ button:active {
     color: #fff;
 
     font-size: 10px;
+
     font-weight: 750;
 
     opacity: 0;
@@ -1133,25 +1661,24 @@ button:active {
 @media (max-width: 360px) {
 
     .page {
-        padding-left: 13px;
-        padding-right: 13px;
+        padding-left: 12px;
+        padding-right: 12px;
     }
 
-    .balance {
+    .balance-card {
         padding: 20px;
     }
 
-    .quick {
+    .main-card {
+        min-height: 119px;
+
         padding: 14px;
     }
 
-    .daily {
-        padding: 14px;
+    .nav-label {
+        font-size: 6.5px;
     }
 
-    .daily-number {
-        font-size: 19px;
-    }
 }
 
 </style>
@@ -1161,862 +1688,1488 @@ button:active {
 
 <div id="app">
 
-    <main class="page">
+<main class="page">
 
-        <!-- =================================================
-             HOME
-             ================================================= -->
 
-        <section id="home" class="screen active">
+<!-- =======================================================
+     HOME
+     ======================================================= -->
 
-            <header class="header">
+<section
+    id="home"
+    class="screen active"
+>
 
-                <div class="user">
+<header class="header">
 
-                    <div class="avatar" id="avatar">
-                        PZ
-                    </div>
+    <div class="user">
 
-                    <div class="user-text">
+        <div
+            class="avatar"
+            id="avatar"
+        >
+            PZ
+        </div>
 
-                        <div
-                            class="user-name"
-                            id="userName"
-                        >
-                            Пользователь
-                        </div>
+        <div class="user-info">
 
-                        <div class="user-status">
-                            Добро пожаловать
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="logo">
-                    PAID <span>ZOMBIE</span>
-                </div>
-
-            </header>
-
-
-            <!-- BALANCE -->
-
-            <div class="balance">
-
-                <div class="balance-label">
-                    Текущий баланс
-                </div>
-
-                <div class="balance-number">
-                    1 250
-                    <span class="balance-unit">
-                        PZ
-                    </span>
-                </div>
-
-                <div class="balance-secondary">
-                    ≈ 0.00 TON
-                </div>
-
-                <div class="balance-actions">
-
-                    <button
-                        class="button accent"
-                        onclick="showScreen('earn')"
-                    >
-                        Заработать
-                    </button>
-
-                    <button
-                        class="button"
-                        onclick="showScreen('profile')"
-                    >
-                        Профиль
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <!-- DAILY CHECK -->
-
-            <div class="daily">
-
-                <div class="daily-top">
-
-                    <div class="fire">
-                        🔥
-                    </div>
-
-                    <div class="daily-info">
-
-                        <div class="daily-title">
-                            Daily Check
-                        </div>
-
-                        <div
-                            class="daily-subtitle"
-                            id="dailySubtitle"
-                        >
-                            Заходи каждый день и сохраняй серию
-                        </div>
-
-                    </div>
-
-                    <div class="daily-days">
-
-                        <div
-                            class="daily-number"
-                            id="streakNumber"
-                        >
-                            1
-                        </div>
-
-                        <div class="daily-days-label">
-                            ДНЕЙ
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="daily-bottom">
-
-                    <div class="daily-progress">
-                        <div id="dailyProgress"></div>
-                    </div>
-
-                    <button
-                        id="dailyButton"
-                        class="daily-button"
-                        onclick="claimDaily()"
-                    >
-                        Забрать
-                    </button>
-
-                </div>
-
-            </div>
-
-
-            <!-- QUICK -->
-
-            <section class="section">
-
-                <div class="section-head">
-
-                    <div class="section-title">
-                        Быстрый доступ
-                    </div>
-
-                </div>
-
-                <div class="quick-grid">
-
-                    <button
-                        class="quick"
-                        onclick="showScreen('earn')"
-                    >
-
-                        <div class="quick-icon">
-                            +
-                        </div>
-
-                        <div class="quick-name">
-                            Заработок
-                        </div>
-
-                        <div class="quick-description">
-                            Выполняй доступные задания
-                        </div>
-
-                    </button>
-
-
-                    <button
-                        class="quick"
-                        onclick="showScreen('games')"
-                    >
-
-                        <div class="quick-icon">
-                            ◇
-                        </div>
-
-                        <div class="quick-name">
-                            Развлечения
-                        </div>
-
-                        <div class="quick-description">
-                            Открой доступные активности
-                        </div>
-
-                    </button>
-
-
-                    <button
-                        class="quick"
-                        onclick="showScreen('referrals')"
-                    >
-
-                        <div class="quick-icon">
-                            ↗
-                        </div>
-
-                        <div class="quick-name">
-                            Рефералы
-                        </div>
-
-                        <div class="quick-description">
-                            Приглашай друзей
-                        </div>
-
-                    </button>
-
-
-                    <button
-                        class="quick"
-                        onclick="showScreen('profile')"
-                    >
-
-                        <div class="quick-icon">
-                            ○
-                        </div>
-
-                        <div class="quick-name">
-                            Профиль
-                        </div>
-
-                        <div class="quick-description">
-                            Статистика и настройки
-                        </div>
-
-                    </button>
-
-                </div>
-
-            </section>
-
-
-            <!-- LEVEL -->
-
-            <section class="section">
-
-                <div class="section-head">
-
-                    <div class="section-title">
-                        Прогресс
-                    </div>
-
-                </div>
-
-                <div class="level-card">
-
-                    <div class="level-head">
-
-                        <span class="level-name">
-                            Уровень 7
-                        </span>
-
-                        <span class="level-xp">
-                            620 / 1000 XP
-                        </span>
-
-                    </div>
-
-                    <div class="level-progress">
-                        <div></div>
-                    </div>
-
-                </div>
-
-            </section>
-
-
-            <!-- ACTIVITY -->
-
-            <section class="section">
-
-                <div class="section-head">
-
-                    <div class="section-title">
-                        Последняя активность
-                    </div>
-
-                </div>
-
-                <div class="activity">
-
-                    <div class="activity-item">
-
-                        <div class="activity-icon">
-                            ✓
-                        </div>
-
-                        <div class="activity-text">
-
-                            <div class="activity-title">
-                                Daily Check
-                            </div>
-
-                            <div class="activity-time">
-                                Сегодня
-                            </div>
-
-                        </div>
-
-                        <div class="activity-value">
-                            +25
-                        </div>
-
-                    </div>
-
-
-                    <div class="activity-item">
-
-                        <div class="activity-icon">
-                            +
-                        </div>
-
-                        <div class="activity-text">
-
-                            <div class="activity-title">
-                                Задание выполнено
-                            </div>
-
-                            <div class="activity-time">
-                                Вчера
-                            </div>
-
-                        </div>
-
-                        <div class="activity-value">
-                            +50
-                        </div>
-
-                    </div>
-
-
-                    <div class="activity-item">
-
-                        <div class="activity-icon">
-                            ↗
-                        </div>
-
-                        <div class="activity-text">
-
-                            <div class="activity-title">
-                                Реферальная награда
-                            </div>
-
-                            <div class="activity-time">
-                                2 дня назад
-                            </div>
-
-                        </div>
-
-                        <div class="activity-value">
-                            +100
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </section>
-
-        </section>
-
-
-        <!-- =================================================
-             EARN
-             ================================================= -->
-
-        <section id="earn" class="screen">
-
-            <div class="screen-header">
-
-                <button
-                    class="back"
-                    onclick="showScreen('home')"
-                >
-                    ‹
-                </button>
-
-                <div class="screen-title">
-                    Заработок
-                </div>
-
-                <div class="screen-subtitle">
-                    Доступные задания и активности.
-                </div>
-
-            </div>
-
-
-            <div class="list">
-
-                <div class="list-item">
-
-                    <div class="list-icon">
-                        ✓
-                    </div>
-
-                    <div class="list-info">
-
-                        <div class="list-title">
-                            Ежедневный вход
-                        </div>
-
-                        <div class="list-description">
-                            Посещай приложение каждый день
-                        </div>
-
-                    </div>
-
-                    <button
-                        class="list-action"
-                        onclick="claimDaily()"
-                    >
-                        +25
-                    </button>
-
-                </div>
-
-
-                <div class="list-item">
-
-                    <div class="list-icon">
-                        +
-                    </div>
-
-                    <div class="list-info">
-
-                        <div class="list-title">
-                            Новое задание
-                        </div>
-
-                        <div class="list-description">
-                            Выполни доступную активность
-                        </div>
-
-                    </div>
-
-                    <button
-                        class="list-action"
-                        onclick="showToast('Задание пока недоступно')"
-                    >
-                        Открыть
-                    </button>
-
-                </div>
-
-
-                <div class="list-item">
-
-                    <div class="list-icon">
-                        ↗
-                    </div>
-
-                    <div class="list-info">
-
-                        <div class="list-title">
-                            Пригласить друга
-                        </div>
-
-                        <div class="list-description">
-                            Получай бонус за приглашения
-                        </div>
-
-                    </div>
-
-                    <button
-                        class="list-action"
-                        onclick="showScreen('referrals')"
-                    >
-                        Открыть
-                    </button>
-
-                </div>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             GAMES
-             ================================================= -->
-
-        <section id="games" class="screen">
-
-            <div class="screen-header">
-
-                <button
-                    class="back"
-                    onclick="showScreen('home')"
-                >
-                    ‹
-                </button>
-
-                <div class="screen-title">
-                    Активности
-                </div>
-
-                <div class="screen-subtitle">
-                    Раздел с дополнительными возможностями.
-                </div>
-
-            </div>
-
-
-            <div class="panel">
-
-                <div class="panel-title">
-                    Daily Activity
-                </div>
-
-                <div class="panel-description">
-                    Проверяй доступные активности каждый день.
-                </div>
-
-                <div class="big-stat">
-                    🔥 <span id="gameStreak">1</span>
-                </div>
-
-                <button
-                    class="main-button"
-                    onclick="claimDaily()"
-                >
-                    Проверить Daily Check
-                </button>
-
-            </div>
-
-
-            <div class="panel">
-
-                <div class="panel-title">
-                    Скоро
-                </div>
-
-                <div class="panel-description">
-                    Новые разделы и активности появятся здесь.
-                </div>
-
-                <button
-                    class="main-button secondary"
-                    onclick="showToast('Раздел находится в разработке')"
-                >
-                    Подробнее
-                </button>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             REFERRALS
-             ================================================= -->
-
-        <section id="referrals" class="screen">
-
-            <div class="screen-header">
-
-                <button
-                    class="back"
-                    onclick="showScreen('home')"
-                >
-                    ‹
-                </button>
-
-                <div class="screen-title">
-                    Рефералы
-                </div>
-
-                <div class="screen-subtitle">
-                    Приглашай друзей и следи за статистикой.
-                </div>
-
-            </div>
-
-
-            <div class="panel">
-
-                <div class="panel-title">
-                    Твоя статистика
-                </div>
-
-                <div class="big-stat">
-                    12
-                </div>
-
-                <div class="panel-description">
-                    приглашённых пользователей
-                </div>
-
-            </div>
-
-
-            <div class="panel">
-
-                <div class="panel-title">
-                    Твоя ссылка
-                </div>
-
-                <div
-                    class="panel-description"
-                    style="
-                        margin-top:10px;
-                        padding:11px;
-                        border-radius:11px;
-                        background:#1a1b20;
-                        word-break:break-all;
-                    "
-                >
-                    t.me/paidzombie_bot?start=ref_user
-                </div>
-
-                <button
-                    class="main-button"
-                    onclick="copyReferral()"
-                >
-                    Скопировать ссылку
-                </button>
-
-            </div>
-
-        </section>
-
-
-        <!-- =================================================
-             PROFILE
-             ================================================= -->
-
-        <section id="profile" class="screen">
-
-            <div class="screen-header">
-
-                <button
-                    class="back"
-                    onclick="showScreen('home')"
-                >
-                    ‹
-                </button>
-
-                <div class="screen-title">
-                    Профиль
-                </div>
-
-                <div class="screen-subtitle">
-                    Твоя статистика в Paid Zombie.
-                </div>
-
-            </div>
-
-
-            <div class="profile-head">
-
-                <div
-                    class="profile-avatar"
-                    id="profileAvatar"
-                >
-                    PZ
-                </div>
-
-                <div>
-
-                    <div
-                        class="profile-name"
-                        id="profileName"
-                    >
-                        Пользователь
-                    </div>
-
-                    <div class="profile-id">
-                        Paid Zombie member
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="section">
-
-                <div class="section-title">
-                    Статистика
-                </div>
-
-            </div>
-
-
-            <div class="quick-grid" style="margin-top:11px;">
-
-                <div class="quick">
-
-                    <div class="quick-name">
-                        Баланс
-                    </div>
-
-                    <div
-                        class="big-stat"
-                        style="font-size:25px;"
-                    >
-                        1 250
-                    </div>
-
-                </div>
-
-
-                <div class="quick">
-
-                    <div class="quick-name">
-                        Серия
-                    </div>
-
-                    <div
-                        class="big-stat"
-                        style="font-size:25px;"
-                        id="profileStreak"
-                    >
-                        1
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="profile-menu">
-
-                <button
-                    class="profile-button"
-                    onclick="showToast('Настройки скоро появятся')"
-                >
-
-                    <div class="profile-button-icon">
-                        ⚙
-                    </div>
-
-                    <div class="profile-button-text">
-                        Настройки
-                    </div>
-
-                    <div class="profile-arrow">
-                        ›
-                    </div>
-
-                </button>
-
-
-                <button
-                    class="profile-button"
-                    onclick="showToast('Поддержка скоро будет подключена')"
-                >
-
-                    <div class="profile-button-icon">
-                        ?
-                    </div>
-
-                    <div class="profile-button-text">
-                        Поддержка
-                    </div>
-
-                    <div class="profile-arrow">
-                        ›
-                    </div>
-
-                </button>
-
-            </div>
-
-        </section>
-
-    </main>
-
-
-    <!-- =====================================================
-         NAVIGATION
-         ===================================================== -->
-
-    <nav class="bottom-nav">
-
-        <div class="nav-inner">
-
-            <button
-                class="nav-button active"
-                data-screen="home"
-                onclick="showScreen('home')"
+            <div
+                class="user-name"
+                id="userName"
             >
+                Пользователь
+            </div>
 
-                <div class="nav-icon">
-                    ●
-                </div>
-
-                <div class="nav-label">
-                    Главная
-                </div>
-
-            </button>
-
-
-            <button
-                class="nav-button"
-                data-screen="earn"
-                onclick="showScreen('earn')"
-            >
-
-                <div class="nav-icon">
-                    +
-                </div>
-
-                <div class="nav-label">
-                    Заработок
-                </div>
-
-            </button>
-
-
-            <button
-                class="nav-button"
-                data-screen="games"
-                onclick="showScreen('games')"
-            >
-
-                <div class="nav-icon">
-                    ◇
-                </div>
-
-                <div class="nav-label">
-                    Активности
-                </div>
-
-            </button>
-
-
-            <button
-                class="nav-button"
-                data-screen="profile"
-                onclick="showScreen('profile')"
-            >
-
-                <div class="nav-icon">
-                    ○
-                </div>
-
-                <div class="nav-label">
-                    Профиль
-                </div>
-
-            </button>
+            <div class="user-sub">
+                Добро пожаловать в Paid Zombie
+            </div>
 
         </div>
 
-    </nav>
+    </div>
+
+    <div class="logo">
+        PAID <span>ZOMBIE</span>
+    </div>
+
+</header>
+
+
+<!-- BALANCE -->
+
+<div class="balance-card">
+
+    <div class="balance-label">
+        Текущий баланс
+    </div>
+
+    <div class="balance-value">
+
+        <span id="balance">
+            1 250
+        </span>
+
+        <span class="balance-unit">
+            ZMB
+        </span>
+
+    </div>
+
+    <div class="balance-ton">
+        ≈ 0.00 TON
+    </div>
+
+    <div class="balance-actions">
+
+        <button
+            class="button lime"
+            onclick="showScreen('wallet')"
+        >
+            Кошелёк
+        </button>
+
+        <button
+            class="button"
+            onclick="showScreen('profile')"
+        >
+            Профиль
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- DAILY CHECK -->
+
+<div class="daily-card">
+
+    <div class="daily-row">
+
+        <div class="fire">
+            🔥
+        </div>
+
+        <div class="daily-info">
+
+            <div class="daily-title">
+                Daily Check
+            </div>
+
+            <div
+                class="daily-sub"
+                id="dailyText"
+            >
+                Заходи каждый день
+            </div>
+
+        </div>
+
+        <div class="daily-streak">
+
+            <div
+                class="streak-number"
+                id="streak"
+            >
+                1
+            </div>
+
+            <div class="streak-label">
+                ДНЕЙ
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="daily-bottom">
+
+        <div class="daily-progress">
+
+            <div
+                class="daily-progress-fill"
+                id="dailyProgress"
+            ></div>
+
+        </div>
+
+        <button
+            id="dailyButton"
+            class="daily-button"
+            onclick="claimDaily()"
+        >
+            Забрать
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- FOUR MAIN -->
+
+<section class="section">
+
+    <div class="section-head">
+
+        <div class="section-title">
+            Что будем делать?
+        </div>
+
+    </div>
+
+
+    <div class="main-grid">
+
+
+        <!-- MINING -->
+
+        <button
+            class="main-card"
+            onclick="showScreen('mining')"
+        >
+
+            <div class="card-icon">
+                ⛏
+            </div>
+
+            <div class="card-title">
+                Майнинг
+            </div>
+
+            <div class="card-description">
+                Запускай добычу ZMB
+            </div>
+
+        </button>
+
+
+        <!-- GAMES -->
+
+        <button
+            class="main-card"
+            onclick="showScreen('games')"
+        >
+
+            <div class="card-icon">
+                🎮
+            </div>
+
+            <div class="card-title">
+                Игры
+            </div>
+
+            <div class="card-description">
+                Flip, Run и колесо
+            </div>
+
+        </button>
+
+
+        <!-- ADS -->
+
+        <button
+            class="main-card"
+            onclick="showScreen('earn')"
+        >
+
+            <div class="card-icon">
+                ▶
+            </div>
+
+            <div class="card-title">
+                Реклама
+            </div>
+
+            <div class="card-description">
+                Смотри рекламу и получай ZMB
+            </div>
+
+        </button>
+
+
+        <!-- REFERRALS -->
+
+        <button
+            class="main-card"
+            onclick="showScreen('referrals')"
+        >
+
+            <div class="card-icon">
+                ↗
+            </div>
+
+            <div class="card-title">
+                Рефералы
+            </div>
+
+            <div class="card-description">
+                Приглашай друзей
+            </div>
+
+        </button>
+
+
+    </div>
+
+</section>
+
+
+<!-- PROGRESS -->
+
+<section class="section">
+
+    <div class="section-head">
+
+        <div class="section-title">
+            Твой прогресс
+        </div>
+
+        <div class="section-link">
+            Уровень 7
+        </div>
+
+    </div>
+
+    <div class="panel">
+
+        <div
+            style="
+                display:flex;
+                justify-content:space-between;
+                font-size:10px;
+            "
+        >
+
+            <strong>
+                Уровень 7
+            </strong>
+
+            <span
+                style="color:var(--muted);"
+            >
+                620 / 1000 XP
+            </span>
+
+        </div>
+
+        <div
+            class="daily-progress"
+            style="margin-top:11px;"
+        >
+
+            <div
+                style="
+                    width:62%;
+                    height:100%;
+                    background:var(--lime);
+                    border-radius:99px;
+                "
+            ></div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ACTIVITY -->
+
+<section class="section">
+
+    <div class="section-head">
+
+        <div class="section-title">
+            Последняя активность
+        </div>
+
+    </div>
+
+    <div class="activity-list">
+
+        <div class="ad-card">
+
+            <div class="ad-icon">
+                🔥
+            </div>
+
+            <div class="ad-info">
+
+                <div class="ad-title">
+                    Daily Check
+                </div>
+
+                <div class="ad-description">
+                    Сегодня
+                </div>
+
+            </div>
+
+            <div class="ad-reward">
+                +25 ZMB
+            </div>
+
+        </div>
+
+
+        <div class="ad-card">
+
+            <div class="ad-icon">
+                ▶
+            </div>
+
+            <div class="ad-info">
+
+                <div class="ad-title">
+                    Просмотр рекламы
+                </div>
+
+                <div class="ad-description">
+                    Вчера
+                </div>
+
+            </div>
+
+            <div class="ad-reward">
+                +50 ZMB
+            </div>
+
+        </div>
+
+
+        <div class="ad-card">
+
+            <div class="ad-icon">
+                ↗
+            </div>
+
+            <div class="ad-info">
+
+                <div class="ad-title">
+                    Реферальная награда
+                </div>
+
+                <div class="ad-description">
+                    2 дня назад
+                </div>
+
+            </div>
+
+            <div class="ad-reward">
+                +100 ZMB
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+</section>
+
+
+<!-- =======================================================
+     MINING
+     ======================================================= -->
+
+<section
+    id="mining"
+    class="screen"
+>
+
+<div class="screen-header">
+
+    <button
+        class="back-button"
+        onclick="showScreen('home')"
+    >
+        ‹
+    </button>
+
+    <div class="screen-title">
+        Майнинг
+    </div>
+
+    <div class="screen-subtitle">
+        Запускай добычу и получай ZMB.
+    </div>
+
+</div>
+
+
+<div class="mining-big">
+
+    <div class="mining-big-status">
+        ● Майнинг активен
+    </div>
+
+    <div
+        class="mining-big-number"
+        id="miningAmount"
+    >
+        0.0000
+        <span>ZMB</span>
+    </div>
+
+    <div class="mining-big-rate">
+        Скорость: 0.2500 ZMB / час
+    </div>
+
+    <button
+        class="mining-button"
+        id="miningButton"
+        onclick="toggleMining()"
+    >
+        Остановить майнинг
+    </button>
+
+</div>
+
+
+<div class="stats-grid">
+
+    <div class="stat">
+
+        <div class="stat-label">
+            Сегодня добыто
+        </div>
+
+        <div class="stat-value">
+            18.42 ZMB
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-label">
+            Скорость
+        </div>
+
+        <div class="stat-value">
+            0.25 ZMB/ч
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="panel" style="margin-top:9px;">
+
+    <div class="panel-title">
+        Как это работает?
+    </div>
+
+    <div class="panel-subtitle">
+        Запусти майнинг и возвращайся позже,
+        чтобы забрать накопленные ZMB.
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =======================================================
+     GAMES
+     ======================================================= -->
+
+<section
+    id="games"
+    class="screen"
+>
+
+<div class="screen-header">
+
+    <button
+        class="back-button"
+        onclick="showScreen('home')"
+    >
+        ‹
+    </button>
+
+    <div class="screen-title">
+        Игры
+    </div>
+
+    <div class="screen-subtitle">
+        Играй и получай дополнительные ZMB.
+    </div>
+
+</div>
+
+
+<div class="game-list">
+
+
+    <!-- FLIP -->
+
+    <div class="game">
+
+        <div class="game-icon">
+            🪙
+        </div>
+
+        <div class="game-title">
+            Flip Zombie
+        </div>
+
+        <div class="game-description">
+            Испытай удачу и выбери сторону монеты.
+        </div>
+
+        <button
+            class="game-button lime"
+            onclick="openGame('flip')"
+        >
+            Играть
+        </button>
+
+    </div>
+
+
+    <!-- RUN -->
+
+    <div class="game">
+
+        <div class="game-icon">
+            🏃
+        </div>
+
+        <div class="game-title">
+            Zombie Run
+        </div>
+
+        <div class="game-description">
+            Доберись как можно дальше и забери награду.
+        </div>
+
+        <button
+            class="game-button lime"
+            onclick="openGame('run')"
+        >
+            Играть
+        </button>
+
+    </div>
+
+
+    <!-- WHEEL -->
+
+    <div class="game">
+
+        <div class="game-icon">
+            🎡
+        </div>
+
+        <div class="game-title">
+            Колесо бонусов
+        </div>
+
+        <div class="game-description">
+            Бесплатное вращение один раз в 24 часа.
+        </div>
+
+        <button
+            class="game-button"
+            onclick="openGame('wheel')"
+        >
+            Открыть
+        </button>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =======================================================
+     FLIP GAME
+     ======================================================= -->
+
+<section
+    id="flip"
+    class="screen"
+>
+
+<div class="screen-header">
+
+    <button
+        class="back-button"
+        onclick="showScreen('games')"
+    >
+        ‹
+    </button>
+
+    <div class="screen-title">
+        Flip Zombie
+    </div>
+
+    <div class="screen-subtitle">
+        Выбери сторону монеты.
+    </div>
+
+</div>
+
+
+<div class="flip-area">
+
+    <div
+        id="coin"
+        class="coin"
+    >
+        🧟
+    </div>
+
+    <div
+        id="flipResult"
+        class="flip-result"
+    >
+        Готов?
+    </div>
+
+    <button
+        class="mining-button"
+        onclick="flipCoin()"
+    >
+        Подбросить
+    </button>
+
+</div>
+
+</section>
+
+
+<!-- =======================================================
+     ZOMBIE RUN
+     ======================================================= -->
+
+<section
+    id="run"
+    class="screen"
+>
+
+<div class="screen-header">
+
+    <button
+        class="back-button"
+        onclick="showScreen('games')"
+    >
+        ‹
+    </button>
+
+    <div class="screen-title">
+        Zombie Run
+    </div>
+
+    <div class="screen-subtitle">
+        Мини-игра уже готова для подключения механики.
+    </div>
+
+</div>
+
+
+<div class="panel">
+
+    <div
+        style="
+            text-align:center;
+            font-size:52px;
+            padding:20px 0;
+        "
+    >
+        🧟‍♂️
+    </div>
+
+    <div
+        class="panel-title"
+        style="text-align:center;"
+    >
+        Zombie Run
+    </div>
+
+    <div
+        class="panel-subtitle"
+        style="text-align:center;"
+    >
+        Твоя дистанция:
+        <strong style="color:var(--lime);">
+            0 м
+        </strong>
+    </div>
+
+    <button
+        class="main-button"
+        style="
+            width:100%;
+            min-height:46px;
+            margin-top:15px;
+            border-radius:13px;
+            background:var(--lime);
+            color:#0b0c0d;
+            font-weight:900;
+            border:0;
+        "
+        onclick="startRun()"
+    >
+        Начать забег
+    </button>
+
+</div>
+
+</section>
+
+
+<!-- =======================================================
+     WHEEL
+     ======================================================= -->
+
+<section
+    id="wheel"
+    class="screen"
+>
+
+<div class="screen-header">
+
+    <button
+        class="back-button"
+        onclick="showScreen('games')"
+    >
+        ‹
+    </button>
+
+    <div class="screen-title">
+        Колесо бонусов
+    </div>
+
+    <div class="screen-subtitle">
+        Одно бесплатное вращение каждые 24 часа.
+    </div>
+
+</div>
+
+
+<div class="panel">
+
+    <div class="wheel-pointer">
+        ▼
+    </div>
+
+    <div
+        class="wheel"
+        id="wheelObject"
+    >
+
+        <div class="wheel-center">
+            ZMB
+        </div>
+
+    </div>
+
+    <button
+        class="mining-button"
+        id="wheelButton"
+        onclick="spinWheel()"
+    >
+        Крутить колесо
+    </button>
+
+    <div
+        id="wheelResult"
+        style="
+            min-height:18px;
+            margin-top:12px;
+            text-align:center;
+            color:var(--muted);
+            font-size:10px;
+        "
+    >
+        Бесплатная попытка доступна
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =======================================================
+     EARN ADS
+     ======================================================= -->
+
+<section
+    id="earn"
+    class="screen"
+>
+
+<div class="screen-header">
+
+    <button
+        class="back-button"
+        onclick="showScreen('home')"
+    >
+        ‹
+    </button>
+
+    <div class="screen-title">
+        Заработок
+    </div>
+
+    <div class="screen-subtitle">
+        Смотри рекламу и получай дополнительные ZMB.
+    </div>
+
+</div>
+
+
+<div class="panel">
+
+    <div class="panel-title">
+        Сегодня
+    </div>
+
+    <div class="panel-subtitle">
+        Просмотрено: 0 / 10 реклам
+    </div>
+
+</div>
+
+
+<div class="ad-list">
+
+
+    <div class="ad-card">
+
+        <div class="ad-icon">
+            ▶
+        </div>
+
+        <div class="ad-info">
+
+            <div class="ad-title">
+                Рекламный ролик
+            </div>
+
+            <div class="ad-description">
+                Посмотри ролик
+            </div>
+
+            <div class="ad-reward">
+                +25 ZMB
+            </div>
+
+        </div>
+
+        <button
+            class="ad-button"
+            onclick="watchAd()"
+        >
+            Смотреть
+        </button>
+
+    </div>
+
+
+    <div class="ad-card">
+
+        <div class="ad-icon">
+            ▶
+        </div>
+
+        <div class="ad-info">
+
+            <div class="ad-title">
+                Бонусная реклама
+            </div>
+
+            <div class="ad-description">
+                Дополнительная награда
+            </div>
+
+            <div class="ad-reward">
+                +50 ZMB
+            </div>
+
+        </div>
+
+        <button
+            class="ad-button"
+            onclick="watchAd()"
+        >
+            Смотреть
+        </button>
+
+    </div>
+
+
+</div>
+
+</section>
+
+
+<!-- =======================================================
+     REFERRALS
+     ======================================================= -->
+
+<section
+    id="referrals"
+    class="screen"
+>
+
+<div class="screen-header">
+
+    <button
+        class="back-button"
+        onclick="showScreen('home')"
+    >
+        ‹
+    </button>
+
+    <div class="screen-title">
+        Рефералы
+    </div>
+
+    <div class="screen-subtitle">
+        Приглашай друзей и получай бонусы.
+    </div>
+
+</div>
+
+
+<div class="ref-stat">
+
+    <div class="ref-number">
+        12
+    </div>
+
+    <div class="ref-label">
+        приглашённых пользователей
+    </div>
+
+</div>
+
+
+<div class="panel">
+
+    <div class="panel-title">
+        Твоя реферальная ссылка
+    </div>
+
+    <div
+        class="ref-link"
+        id="refLink"
+    >
+        https://t.me/paidzombie_bot?start=ref_user
+    </div>
+
+    <button
+        class="mining-button"
+        onclick="copyReferral()"
+    >
+        Скопировать ссылку
+    </button>
+
+</div>
+
+
+<div class="panel">
+
+    <div class="panel-title">
+        Заработано с рефералов
+    </div>
+
+    <div
+        class="big-stat"
+        style="
+            font-size:31px;
+            margin-top:10px;
+        "
+    >
+        1 240
+        <span
+            style="
+                color:var(--lime);
+                font-size:12px;
+            "
+        >
+            ZMB
+        </span>
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =======================================================
+     TOP PLAYERS
+     ======================================================= -->
+
+<section
+    id="top"
+    class="screen"
+>
+
+<div class="screen-header">
+
+    <div class="screen-title">
+        Топ игроков
+    </div>
+
+    <div class="screen-subtitle">
+        Лучшие участники Paid Zombie.
+    </div>
+
+</div>
+
+
+<div class="rank-list">
+
+
+    <div class="rank">
+
+        <div class="rank-number">
+            1
+        </div>
+
+        <div class="rank-user">
+            ZombieKing
+        </div>
+
+        <div class="rank-value">
+            58 420 ZMB
+        </div>
+
+    </div>
+
+
+    <div class="rank">
+
+        <div class="rank-number">
+            2
+        </div>
+
+        <div class="rank-user">
+            DeadInside
+        </div>
+
+        <div class="rank-value">
+            47 190 ZMB
+        </div>
+
+    </div>
+
+
+    <div class="rank">
+
+        <div class="rank-number">
+            3
+        </div>
+
+        <div class="rank-user">
+            ZombieX
+        </div>
+
+        <div class="rank-value">
+            39 820 ZMB
+        </div>
+
+    </div>
+
+
+    <div class="rank">
+
+        <div class="rank-number">
+            4
+        </div>
+
+        <div class="rank-user">
+            Player
+        </div>
+
+        <div class="rank-value">
+            31 440 ZMB
+        </div>
+
+    </div>
+
+
+    <div class="rank">
+
+        <div class="rank-number">
+            5
+        </div>
+
+        <div class="rank-user">
+            Walker
+        </div>
+
+        <div class="rank-value">
+            27 800 ZMB
+        </div>
+
+    </div>
+
+
+</div>
+
+</section>
+
+
+<!-- =======================================================
+     WALLET
+     ======================================================= -->
+
+<section
+    id="wallet"
+    class="screen"
+>
+
+<div class="screen-header">
+
+    <div class="screen-title">
+        Кошелёк
+    </div>
+
+    <div class="screen-subtitle">
+        Управляй балансом и выводом.
+    </div>
+
+</div>
+
+
+<div class="wallet-balance">
+
+    <div class="wallet-label">
+        Доступно
+    </div>
+
+    <div class="wallet-number">
+        1 250
+        <span>
+            ZMB
+        </span>
+    </div>
+
+</div>
+
+
+<div class="panel">
+
+    <label class="field-label">
+        TON кошелёк
+    </label>
+
+    <input
+        class="field"
+        id="walletInput"
+        placeholder="Введите адрес TON"
+    >
+
+    <button
+        class="mining-button"
+        onclick="saveWallet()"
+    >
+        Сохранить кошелёк
+    </button>
+
+</div>
+
+
+<div class="panel">
+
+    <div class="panel-title">
+        История операций
+    </div>
+
+    <div
+        style="
+            margin-top:12px;
+            color:var(--muted);
+            font-size:10px;
+        "
+    >
+        Пока нет операций.
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- =======================================================
+     PROFILE
+     ======================================================= -->
+
+<section
+    id="profile"
+    class="screen"
+>
+
+<div class="screen-header">
+
+    <div class="screen-title">
+        Профиль
+    </div>
+
+    <div class="screen-subtitle">
+        Твоя статистика и настройки.
+    </div>
+
+</div>
+
+
+<div class="profile-header">
+
+    <div
+        class="profile-avatar"
+        id="profileAvatar"
+    >
+        PZ
+    </div>
+
+    <div>
+
+        <div
+            class="profile-name"
+            id="profileName"
+        >
+            Пользователь
+        </div>
+
+        <div class="profile-id">
+            Paid Zombie member
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="stats-grid">
+
+    <div class="stat">
+
+        <div class="stat-label">
+            Баланс
+        </div>
+
+        <div class="stat-value">
+            1 250 ZMB
+        </div>
+
+    </div>
+
+
+    <div class="stat">
+
+        <div class="stat-label">
+            Серия
+        </div>
+
+        <div
+            class="stat-value"
+            id="profileStreak"
+        >
+            1 день
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="profile-menu">
+
+
+    <button
+        class="profile-item"
+        onclick="showToast('Настройки скоро появятся')"
+    >
+
+        <div class="profile-item-icon">
+            ⚙
+        </div>
+
+        <div class="profile-item-text">
+            Настройки
+        </div>
+
+        <div class="profile-arrow">
+            ›
+        </div>
+
+    </button>
+
+
+    <button
+        class="profile-item"
+        onclick="showToast('Поддержка скоро будет подключена')"
+    >
+
+        <div class="profile-item-icon">
+            ?
+        </div>
+
+        <div class="profile-item-text">
+            Поддержка
+        </div>
+
+        <div class="profile-arrow">
+            ›
+        </div>
+
+    </button>
+
+
+</div>
+
+</section>
+
+
+</main>
+
+
+<!-- =======================================================
+     BOTTOM NAVIGATION
+     ======================================================= -->
+
+<nav class="bottom-nav">
+
+<div class="nav-inner">
+
+
+    <button
+        class="nav-button"
+        data-screen="top"
+        onclick="showScreen('top')"
+    >
+
+        <div class="nav-icon">
+            🏆
+        </div>
+
+        <div class="nav-label">
+            Топ
+        </div>
+
+    </button>
+
+
+    <button
+        class="nav-button"
+        data-screen="referrals"
+        onclick="showScreen('referrals')"
+    >
+
+        <div class="nav-icon">
+            👥
+        </div>
+
+        <div class="nav-label">
+            Рефералы
+        </div>
+
+    </button>
+
+
+    <button
+        class="nav-button active"
+        data-screen="home"
+        onclick="showScreen('home')"
+    >
+
+        <div class="nav-icon">
+            ●
+        </div>
+
+        <div class="nav-label">
+            Главная
+        </div>
+
+    </button>
+
+
+    <button
+        class="nav-button"
+        data-screen="wallet"
+        onclick="showScreen('wallet')"
+    >
+
+        <div class="nav-icon">
+            ◈
+        </div>
+
+        <div class="nav-label">
+            Кошелёк
+        </div>
+
+    </button>
+
+
+    <button
+        class="nav-button"
+        data-screen="profile"
+        onclick="showScreen('profile')"
+    >
+
+        <div class="nav-icon">
+            ○
+        </div>
+
+        <div class="nav-label">
+            Профиль
+        </div>
+
+    </button>
+
+
+</div>
+
+</nav>
 
 </div>
 
@@ -2037,22 +3190,20 @@ button:active {
    TELEGRAM
    ========================================================= */
 
-const tg = window.Telegram?.WebApp;
+const tg =
+    window.Telegram?.WebApp;
 
 if (tg) {
+
     tg.ready();
+
     tg.expand();
 
-    /*
-       Telegram theme colors can be used later if necessary.
-       The design intentionally stays mostly independent
-       from Telegram's theme for a consistent brand identity.
-    */
 }
 
 
 /* =========================================================
-   USER
+   TELEGRAM USER
    ========================================================= */
 
 function loadTelegramUser() {
@@ -2062,37 +3213,47 @@ function loadTelegramUser() {
 
     if (!user) return;
 
+
     const name =
         user.first_name ||
         user.username ||
         "Пользователь";
 
-    document.getElementById("userName")
-        .textContent = name;
 
-    document.getElementById("profileName")
-        .textContent = name;
+    document.getElementById(
+        "userName"
+    ).textContent = name;
+
+
+    document.getElementById(
+        "profileName"
+    ).textContent = name;
+
 
     const avatar =
         document.getElementById("avatar");
 
+
     const profileAvatar =
-        document.getElementById("profileAvatar");
+        document.getElementById(
+            "profileAvatar"
+        );
+
 
     if (user.photo_url) {
 
         avatar.innerHTML =
-            `<img src="${user.photo_url}" alt="">`;
+            `<img
+                src="${user.photo_url}"
+                alt=""
+            >`;
+
 
         profileAvatar.innerHTML =
-            `<img src="${user.photo_url}"
-                  style="
-                    width:100%;
-                    height:100%;
-                    object-fit:cover;
-                    border-radius:inherit;
-                  "
-                  alt="">`;
+            `<img
+                src="${user.photo_url}"
+                alt=""
+            >`;
 
     } else {
 
@@ -2104,9 +3265,15 @@ function loadTelegramUser() {
                 .slice(0,2)
                 .toUpperCase();
 
-        avatar.textContent = initials;
-        profileAvatar.textContent = initials;
+
+        avatar.textContent =
+            initials;
+
+        profileAvatar.textContent =
+            initials;
+
     }
+
 }
 
 
@@ -2114,23 +3281,33 @@ function loadTelegramUser() {
    NAVIGATION
    ========================================================= */
 
-function showScreen(screenName) {
+function showScreen(name) {
 
     document
         .querySelectorAll(".screen")
         .forEach(screen => {
 
-            screen.classList.remove("active");
+            screen.classList.remove(
+                "active"
+            );
 
         });
 
+
     const screen =
-        document.getElementById(screenName);
+        document.getElementById(name);
 
-    if (screen) {
-        screen.classList.add("active");
-    }
 
+    if (!screen) return;
+
+
+    screen.classList.add("active");
+
+
+    /*
+       Bottom navigation.
+       Sub-games don't activate a bottom item.
+    */
 
     document
         .querySelectorAll(".nav-button")
@@ -2138,7 +3315,7 @@ function showScreen(screenName) {
 
             button.classList.toggle(
                 "active",
-                button.dataset.screen === screenName
+                button.dataset.screen === name
             );
 
         });
@@ -2148,6 +3325,7 @@ function showScreen(screenName) {
         top: 0,
         behavior: "smooth"
     });
+
 }
 
 
@@ -2156,49 +3334,17 @@ function showScreen(screenName) {
    ========================================================= */
 
 const DAILY_KEY =
-    "paid_zombie_daily_data";
+    "paid_zombie_daily";
 
 
-function todayString() {
-
-    const date = new Date();
-
-    const year =
-        date.getFullYear();
-
-    const month =
-        String(date.getMonth() + 1)
-            .padStart(2, "0");
-
-    const day =
-        String(date.getDate())
-            .padStart(2, "0");
-
-    return `${year}-${month}-${day}`;
-}
-
-
-function previousDay(dateString) {
-
-    const date =
-        new Date(dateString + "T12:00:00");
-
-    date.setDate(
-        date.getDate() - 1
-    );
-
-    return date
-        .toISOString()
-        .slice(0,10);
-}
-
-
-function getDailyData() {
+function getDaily() {
 
     try {
 
         const saved =
-            localStorage.getItem(DAILY_KEY);
+            localStorage.getItem(
+                DAILY_KEY
+            );
 
         if (saved) {
 
@@ -2206,65 +3352,84 @@ function getDailyData() {
 
         }
 
-    } catch (error) {
-
-        console.log(error);
-
-    }
-
+    } catch(e) {}
 
     return {
+
         streak: 0,
+
         lastVisit: null,
+
         claimedToday: false
+
     };
+
 }
 
 
-function saveDailyData(data) {
+function saveDaily(data) {
 
     localStorage.setItem(
         DAILY_KEY,
         JSON.stringify(data)
     );
+
+}
+
+
+function dateString(date = new Date()) {
+
+    return date
+        .toISOString()
+        .slice(0,10);
+
+}
+
+
+function yesterday() {
+
+    const date =
+        new Date();
+
+    date.setDate(
+        date.getDate() - 1
+    );
+
+    return dateString(date);
+
 }
 
 
 function updateDaily() {
 
     let data =
-        getDailyData();
+        getDaily();
+
 
     const today =
-        todayString();
+        dateString();
 
-
-    /*
-       Первый запуск
-    */
 
     if (!data.lastVisit) {
 
         data.streak = 1;
+
         data.lastVisit = today;
+
         data.claimedToday = false;
 
-        saveDailyData(data);
+        saveDaily(data);
 
     }
 
+    else if (
+        data.lastVisit !== today
+    ) {
 
-    /*
-       Новый день
-    */
-
-    else if (data.lastVisit !== today) {
-
-        const yesterday =
-            previousDay(today);
-
-
-        if (data.lastVisit === yesterday) {
+        if (
+            data.lastVisit ===
+            yesterday()
+        ) {
 
             data.streak += 1;
 
@@ -2274,53 +3439,42 @@ function updateDaily() {
 
         }
 
-
         data.lastVisit = today;
+
         data.claimedToday = false;
 
-        saveDailyData(data);
+        saveDaily(data);
 
     }
 
 
-    /*
-       UI
-    */
-
     const streak =
-        Math.max(1, data.streak);
+        Math.max(
+            1,
+            data.streak
+        );
 
 
     document.getElementById(
-        "streakNumber"
-    ).textContent = streak;
-
-
-    document.getElementById(
-        "gameStreak"
+        "streak"
     ).textContent = streak;
 
 
     document.getElementById(
         "profileStreak"
-    ).textContent = streak;
-
-
-    /*
-       Progress до условных 7 дней
-    */
-
-    const progress =
-        Math.min(
-            streak / 7 * 100,
-            100
-        );
+    ).textContent =
+        streak +
+        " " +
+        dayWord(streak);
 
 
     document.getElementById(
         "dailyProgress"
     ).style.width =
-        progress + "%";
+        Math.min(
+            streak / 7 * 100,
+            100
+        ) + "%";
 
 
     const button =
@@ -2334,10 +3488,13 @@ function updateDaily() {
         button.textContent =
             "Получено";
 
-        button.classList.add("done");
+        button.classList.add(
+            "done"
+        );
+
 
         document.getElementById(
-            "dailySubtitle"
+            "dailyText"
         ).textContent =
             "Сегодняшняя награда уже получена";
 
@@ -2346,14 +3503,21 @@ function updateDaily() {
         button.textContent =
             "Забрать";
 
-        button.classList.remove("done");
+        button.classList.remove(
+            "done"
+        );
+
 
         document.getElementById(
-            "dailySubtitle"
+            "dailyText"
         ).textContent =
-            `Ты активен уже ${streak} ${dayWord(streak)}`;
+            "Ты активен уже " +
+            streak +
+            " " +
+            dayWord(streak);
 
     }
+
 }
 
 
@@ -2362,40 +3526,40 @@ function dayWord(number) {
     if (
         number % 10 === 1 &&
         number % 100 !== 11
-    ) {
-        return "день";
-    }
+    ) return "день";
 
     if (
-        [2,3,4].includes(number % 10) &&
-        ![12,13,14].includes(number % 100)
-    ) {
-        return "дня";
-    }
+        [2,3,4].includes(
+            number % 10
+        ) &&
+        ![12,13,14].includes(
+            number % 100
+        )
+    ) return "дня";
 
     return "дней";
+
 }
 
 
 function claimDaily() {
 
     let data =
-        getDailyData();
+        getDaily();
+
 
     const today =
-        todayString();
+        dateString();
 
 
-    /*
-       Защита от старой даты
-    */
-
-    if (data.lastVisit !== today) {
+    if (
+        data.lastVisit !== today
+    ) {
 
         updateDaily();
 
         data =
-            getDailyData();
+            getDaily();
 
     }
 
@@ -2403,41 +3567,418 @@ function claimDaily() {
     if (data.claimedToday) {
 
         showToast(
-            "Ты уже забрал награду сегодня"
+            "Награда уже получена сегодня"
         );
 
         return;
+
     }
 
 
     data.claimedToday = true;
 
-    saveDailyData(data);
+    saveDaily(data);
 
     updateDaily();
 
 
+    /*
+       Демо-награда.
+
+       В продакшене здесь должен быть
+       запрос к backend.
+    */
+
+    addBalance(25);
+
+
     showToast(
-        "🔥 Daily Check получен"
+        "🔥 +25 ZMB"
+    );
+
+}
+
+
+/* =========================================================
+   BALANCE
+   ========================================================= */
+
+let balance =
+    Number(
+        localStorage.getItem(
+            "paid_zombie_balance"
+        )
+    ) || 1250;
+
+
+function renderBalance() {
+
+    document.getElementById(
+        "balance"
+    ).textContent =
+        balance.toLocaleString("ru-RU");
+
+}
+
+
+function addBalance(amount) {
+
+    balance += amount;
+
+    localStorage.setItem(
+        "paid_zombie_balance",
+        balance
+    );
+
+    renderBalance();
+
+}
+
+
+/* =========================================================
+   MINING
+   ========================================================= */
+
+let miningActive = true;
+
+let miningAmount = 0;
+
+let miningTimer = null;
+
+
+function toggleMining() {
+
+    miningActive =
+        !miningActive;
+
+
+    const button =
+        document.getElementById(
+            "miningButton"
+        );
+
+
+    if (miningActive) {
+
+        button.textContent =
+            "Остановить майнинг";
+
+        startMining();
+
+        showToast(
+            "⛏ Майнинг запущен"
+        );
+
+    } else {
+
+        button.textContent =
+            "Запустить майнинг";
+
+        showToast(
+            "Майнинг остановлен"
+        );
+
+    }
+
+}
+
+
+function startMining() {
+
+    if (miningTimer) {
+
+        clearInterval(
+            miningTimer
+        );
+
+    }
+
+
+    miningTimer =
+        setInterval(() => {
+
+            if (!miningActive)
+                return;
+
+
+            miningAmount +=
+                0.25 / 3600;
+
+
+            document.getElementById(
+                "miningAmount"
+            ).innerHTML =
+                miningAmount
+                    .toFixed(4)
+                +
+                ' <span>ZMB</span>';
+
+
+        },1000);
+
+}
+
+
+/* =========================================================
+   GAMES
+   ========================================================= */
+
+function openGame(game) {
+
+    if (game === "flip") {
+
+        showScreen("flip");
+
+        return;
+
+    }
+
+
+    if (game === "run") {
+
+        showScreen("run");
+
+        return;
+
+    }
+
+
+    if (game === "wheel") {
+
+        showScreen("wheel");
+
+        return;
+
+    }
+
+}
+
+
+/* =========================================================
+   FLIP ZOMBIE
+   ========================================================= */
+
+function flipCoin() {
+
+    const coin =
+        document.getElementById(
+            "coin"
+        );
+
+    const result =
+        document.getElementById(
+            "flipResult"
+        );
+
+
+    coin.classList.remove(
+        "flipping"
     );
 
 
+    void coin.offsetWidth;
+
+
+    coin.classList.add(
+        "flipping"
+    );
+
+
+    result.textContent =
+        "Монета в воздухе...";
+
+
+    setTimeout(() => {
+
+        const win =
+            Math.random() >= .5;
+
+
+        if (win) {
+
+            result.innerHTML =
+                "🧟 Ты выиграл! <b style='color:var(--lime)'>+10 ZMB</b>";
+
+            addBalance(10);
+
+        } else {
+
+            result.textContent =
+                "Не повезло. Попробуй ещё раз.";
+
+        }
+
+    },700);
+
+}
+
+
+/* =========================================================
+   ZOMBIE RUN
+   ========================================================= */
+
+function startRun() {
+
+    showToast(
+        "🏃 Забег начался"
+    );
+
+
+    setTimeout(() => {
+
+        const distance =
+            Math.floor(
+                Math.random() *
+                500
+            ) + 100;
+
+
+        const reward =
+            Math.floor(
+                distance / 50
+            );
+
+
+        addBalance(reward);
+
+
+        showToast(
+            `🏃 ${distance} м · +${reward} ZMB`
+        );
+
+    },1800);
+
+}
+
+
+/* =========================================================
+   WHEEL 24H
+   ========================================================= */
+
+const WHEEL_KEY =
+    "paid_zombie_wheel";
+
+
+function canSpinWheel() {
+
+    const last =
+        Number(
+            localStorage.getItem(
+                WHEEL_KEY
+            )
+        ) || 0;
+
+
+    return (
+        Date.now() - last
+        >=
+        24 * 60 * 60 * 1000
+    );
+
+}
+
+
+function spinWheel() {
+
+    if (!canSpinWheel()) {
+
+        showToast(
+            "🎡 Колесо доступно раз в 24 часа"
+        );
+
+        return;
+
+    }
+
+
+    const wheel =
+        document.getElementById(
+            "wheelObject"
+        );
+
+
+    const button =
+        document.getElementById(
+            "wheelButton"
+        );
+
+
+    button.disabled = true;
+
+
+    const rotation =
+        1440 +
+        Math.floor(
+            Math.random() * 360
+        );
+
+
+    wheel.style.transform =
+        `rotate(${rotation}deg)`;
+
+
+    setTimeout(() => {
+
+        const rewards =
+            [10,25,50,75,100];
+
+
+        const reward =
+            rewards[
+                Math.floor(
+                    Math.random() *
+                    rewards.length
+                )
+            ];
+
+
+        addBalance(reward);
+
+
+        localStorage.setItem(
+            WHEEL_KEY,
+            Date.now()
+        );
+
+
+        document.getElementById(
+            "wheelResult"
+        ).innerHTML =
+            `🎉 Твоя награда: <b style="color:var(--lime)">+${reward} ZMB</b>`;
+
+
+        button.textContent =
+            "Доступно через 24 часа";
+
+
+        showToast(
+            `🎡 +${reward} ZMB`
+        );
+
+    },2100);
+
+}
+
+
+/* =========================================================
+   ADS
+   ========================================================= */
+
+function watchAd() {
+
     /*
-       Здесь в будущем можно отправлять
-       событие на backend / Telegram bot.
+       Здесь позже подключается
+       твой рекламный SDK.
 
-       Например:
+       После успешного callback:
 
-       fetch("/api/daily", {
-           method: "POST",
-           headers: {
-               "Content-Type": "application/json"
-           },
-           body: JSON.stringify({
-               streak: data.streak
-           })
-       });
+       addBalance(25)
     */
+
+    showToast(
+        "▶ Здесь будет запуск рекламы"
+    );
+
 }
 
 
@@ -2448,12 +3989,13 @@ function claimDaily() {
 function copyReferral() {
 
     const link =
-        "https://t.me/paidzombie_bot?start=ref_user";
+        document.getElementById(
+            "refLink"
+        ).textContent.trim();
 
 
     if (
-        navigator.clipboard &&
-        navigator.clipboard.writeText
+        navigator.clipboard
     ) {
 
         navigator.clipboard
@@ -2473,6 +4015,47 @@ function copyReferral() {
         );
 
     }
+
+}
+
+
+/* =========================================================
+   WALLET
+   ========================================================= */
+
+function saveWallet() {
+
+    const input =
+        document.getElementById(
+            "walletInput"
+        );
+
+
+    const value =
+        input.value.trim();
+
+
+    if (!value) {
+
+        showToast(
+            "Введите TON-кошелёк"
+        );
+
+        return;
+
+    }
+
+
+    localStorage.setItem(
+        "paid_zombie_wallet",
+        value
+    );
+
+
+    showToast(
+        "Кошелёк сохранён"
+    );
+
 }
 
 
@@ -2486,33 +4069,48 @@ let toastTimer;
 function showToast(message) {
 
     const toast =
-        document.getElementById("toast");
+        document.getElementById(
+            "toast"
+        );
+
 
     toast.textContent =
         message;
 
-    toast.classList.add("show");
+
+    toast.classList.add(
+        "show"
+    );
 
 
-    clearTimeout(toastTimer);
+    clearTimeout(
+        toastTimer
+    );
 
 
     toastTimer =
         setTimeout(() => {
 
-            toast.classList.remove("show");
+            toast.classList.remove(
+                "show"
+            );
 
-        }, 2200);
+        },2200);
+
 }
 
 
 /* =========================================================
-   START
+   INIT
    ========================================================= */
 
 loadTelegramUser();
 
+renderBalance();
+
 updateDaily();
+
+startMining();
 
 </script>
 
