@@ -1,54 +1,69 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
-  />
-  <meta name="theme-color" content="#080b12" />
-  <title>PAID ZOMBIE</title>
+<meta charset="UTF-8">
 
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<meta
+  name="viewport"
+  content="width=device-width,
+  initial-scale=1,
+  maximum-scale=1,
+  user-scalable=no,
+  viewport-fit=cover"
+>
 
-  <style>
-    :root {
-      --bg: #080b12;
-      --bg2: #0c111b;
-      --card: rgba(17, 23, 35, .82);
-      --card2: rgba(21, 28, 43, .92);
-      --line: rgba(255,255,255,.075);
+<meta name="theme-color" content="#0b0c0f">
 
-      --text: #f5f7fb;
-      --muted: #8e98aa;
+<title>Paid Zombie</title>
 
-      --cyan: #38d9ff;
-      --blue: #4c7dff;
-      --purple: #9b6cff;
-      --pink: #f35cff;
-      --green: #45e39b;
-      --yellow: #ffd45a;
-      --red: #ff5f70;
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-      --radius: 20px;
-      --nav-height: 74px;
-      --safe-bottom: env(safe-area-inset-bottom, 0px);
-    }
+<style>
 
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
+/* =========================================================
+   PAID ZOMBIE — PREMIUM DARK UI
+   ========================================================= */
 
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      min-height: 100%;
-      background: var(--bg);
-      color: var(--text);
-      font-family:
+:root {
+    --bg: #0a0b0d;
+    --bg-soft: #0f1013;
+    --card: #141519;
+    --card-hover: #191a1f;
+    --border: rgba(255,255,255,.065);
+
+    --text: #f4f4f5;
+    --muted: #85878f;
+    --muted-2: #5f6169;
+
+    --accent: #d8ff62;
+    --accent-soft: rgba(216,255,98,.10);
+
+    --green: #72e3a0;
+    --orange: #ff9f43;
+
+    --radius: 20px;
+
+    --nav-height: 70px;
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+
+    width: 100%;
+    min-height: 100%;
+
+    background: var(--bg);
+    color: var(--text);
+
+    font-family:
         Inter,
         -apple-system,
         BlinkMacSystemFont,
@@ -56,4928 +71,2450 @@
         Roboto,
         Arial,
         sans-serif;
-      overflow-x: hidden;
-    }
 
-    body {
-      min-height: 100vh;
-      min-height: 100dvh;
-      background:
-        radial-gradient(circle at 10% 0%, rgba(56,217,255,.08), transparent 28%),
-        radial-gradient(circle at 100% 10%, rgba(155,108,255,.09), transparent 30%),
-        linear-gradient(180deg, #080b12 0%, #090d15 100%);
-    }
+    overflow-x: hidden;
+}
 
-    button,
-    input,
-    select {
-      font: inherit;
-    }
+body {
+    min-height: 100vh;
+    min-height: 100dvh;
+}
 
-    button {
-      border: 0;
-      color: inherit;
-      cursor: pointer;
-    }
+button,
+input {
+    font: inherit;
+}
 
-    button:active {
-      transform: scale(.98);
-    }
+button {
+    border: 0;
+    color: inherit;
+    cursor: pointer;
+}
 
-    img {
-      max-width: 100%;
-    }
+button:active {
+    transform: scale(.975);
+}
 
-    #app {
-      min-height: 100vh;
-      min-height: 100dvh;
-      padding-bottom: calc(var(--nav-height) + var(--safe-bottom) + 18px);
-    }
+#app {
+    min-height: 100vh;
+    min-height: 100dvh;
 
-    .page {
-      width: min(100%, 760px);
-      margin: 0 auto;
-      padding:
+    padding-bottom:
+        calc(
+            var(--nav-height)
+            + var(--safe-bottom)
+            + 20px
+        );
+}
+
+.page {
+    width: min(100%, 720px);
+    margin: 0 auto;
+
+    padding:
         max(16px, env(safe-area-inset-top))
         16px
-        20px;
-    }
+        24px;
+}
 
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 24px;
-    }
+/* =========================================================
+   HEADER
+   ========================================================= */
 
-    .user-mini {
-      min-width: 0;
-      display: flex;
-      align-items: center;
-      gap: 11px;
-    }
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 
-    .avatar {
-      width: 44px;
-      height: 44px;
-      flex: 0 0 44px;
-      border-radius: 14px;
-      overflow: hidden;
-      background:
-        linear-gradient(135deg, rgba(56,217,255,.28), rgba(155,108,255,.35));
-      border: 1px solid rgba(255,255,255,.09);
-      display: grid;
-      place-items: center;
-      font-weight: 800;
-      color: #fff;
-    }
+    margin-bottom: 24px;
+}
 
-    .avatar img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+.user {
+    display: flex;
+    align-items: center;
+    gap: 11px;
 
-    .user-info {
-      min-width: 0;
-    }
+    min-width: 0;
+}
 
-    .user-name {
-      max-width: 180px;
-      font-size: 14px;
-      font-weight: 700;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+.avatar {
+    width: 43px;
+    height: 43px;
 
-    .user-sub {
-      margin-top: 2px;
-      color: var(--muted);
-      font-size: 11px;
-    }
+    flex: 0 0 43px;
 
-    .brand {
-      font-size: 15px;
-      font-weight: 900;
-      letter-spacing: .08em;
-      white-space: nowrap;
-    }
+    display: grid;
+    place-items: center;
 
-    .brand span {
-      background: linear-gradient(90deg, var(--cyan), var(--purple), var(--pink));
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
+    border-radius: 14px;
 
-    .balance-card {
-      position: relative;
-      overflow: hidden;
-      padding: 25px 22px 22px;
-      border-radius: 25px;
-      border: 1px solid rgba(255,255,255,.09);
-      background:
-        radial-gradient(circle at 85% 15%, rgba(155,108,255,.17), transparent 35%),
-        radial-gradient(circle at 5% 100%, rgba(56,217,255,.1), transparent 38%),
-        linear-gradient(145deg, rgba(19,26,40,.96), rgba(12,16,25,.96));
-      box-shadow: 0 18px 55px rgba(0,0,0,.28);
-    }
+    background: #1b1d22;
 
-    .balance-label {
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: .03em;
-    }
+    border: 1px solid var(--border);
 
-    .balance-value {
-      margin-top: 6px;
-      font-size: clamp(34px, 10vw, 52px);
-      line-height: 1;
-      font-weight: 900;
-      letter-spacing: -.045em;
-      overflow-wrap: anywhere;
-    }
+    font-size: 14px;
+    font-weight: 800;
 
-    .balance-unit {
-      font-size: 18px;
-      color: var(--cyan);
-      letter-spacing: 0;
-      margin-left: 5px;
-    }
+    overflow: hidden;
+}
 
-    .ton-balance {
-      margin-top: 9px;
-      color: #76a4ff;
-      font-size: 14px;
-      font-weight: 700;
-    }
+.avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
-    .balance-actions {
-      display: flex;
-      gap: 9px;
-      margin-top: 20px;
-    }
+.user-text {
+    min-width: 0;
+}
 
-    .small-btn {
-      min-height: 40px;
-      padding: 0 15px;
-      border-radius: 12px;
-      background: rgba(255,255,255,.055);
-      border: 1px solid var(--line);
-      color: #dfe5ef;
-      font-size: 12px;
-      font-weight: 800;
-    }
+.user-name {
+    font-size: 14px;
+    font-weight: 750;
 
-    .small-btn.primary {
-      background: linear-gradient(135deg, rgba(56,217,255,.18), rgba(76,125,255,.2));
-      border-color: rgba(56,217,255,.22);
-    }
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
-    .section {
-      margin-top: 24px;
-    }
+.user-status {
+    margin-top: 3px;
 
-    .section-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
+    color: var(--muted);
 
-    .section-title {
-      font-size: 17px;
-      font-weight: 850;
-      letter-spacing: -.02em;
-    }
+    font-size: 10px;
+}
 
-    .section-link {
-      color: var(--cyan);
-      font-size: 12px;
-      font-weight: 700;
-      background: none;
-      padding: 4px;
-    }
+.logo {
+    font-size: 13px;
+    font-weight: 900;
 
-    .quick-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 11px;
-    }
+    letter-spacing: .14em;
 
-    .quick-card {
-      min-width: 0;
-      min-height: 116px;
-      padding: 17px;
-      border-radius: 19px;
-      border: 1px solid var(--line);
-      background: linear-gradient(145deg, rgba(19,25,38,.95), rgba(12,17,27,.95));
-      text-align: left;
-      position: relative;
-      overflow: hidden;
-    }
+    color: #d9d9dc;
+}
 
-    .quick-card::after {
-      content: "";
-      position: absolute;
-      width: 90px;
-      height: 90px;
-      right: -40px;
-      bottom: -45px;
-      border-radius: 50%;
-      filter: blur(20px);
-      opacity: .4;
-    }
+.logo span {
+    color: var(--accent);
+}
 
-    .quick-card.mining::after { background: var(--cyan); }
-    .quick-card.games::after { background: var(--purple); }
-    .quick-card.earn::after { background: var(--green); }
-    .quick-card.giveaways::after { background: var(--pink); }
+/* =========================================================
+   BALANCE
+   ========================================================= */
 
-    .icon-box {
-      width: 40px;
-      height: 40px;
-      border-radius: 13px;
-      display: grid;
-      place-items: center;
-      margin-bottom: 14px;
-      background: rgba(255,255,255,.055);
-      border: 1px solid rgba(255,255,255,.07);
-    }
+.balance {
+    position: relative;
 
-    .icon-box svg {
-      width: 20px;
-      height: 20px;
-    }
+    padding: 23px;
 
-    .quick-name {
-      font-size: 14px;
-      font-weight: 850;
-    }
+    border-radius: 24px;
 
-    .quick-desc {
-      margin-top: 4px;
-      color: var(--muted);
-      font-size: 11px;
-      line-height: 1.35;
-      overflow-wrap: anywhere;
-    }
-
-    .progress-card {
-      padding: 17px;
-      border-radius: 18px;
-      border: 1px solid var(--line);
-      background: rgba(16,21,32,.78);
-    }
-
-    .progress-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      font-size: 12px;
-    }
-
-    .level {
-      font-weight: 850;
-    }
-
-    .xp {
-      color: var(--muted);
-    }
-
-    .progress {
-      height: 8px;
-      margin-top: 12px;
-      overflow: hidden;
-      border-radius: 99px;
-      background: rgba(255,255,255,.07);
-    }
-
-    .progress > div {
-      height: 100%;
-      border-radius: inherit;
-      background: linear-gradient(90deg, var(--cyan), var(--blue), var(--purple));
-      transition: width .4s ease;
-    }
-
-    .feed {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .feed-item {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      min-width: 0;
-      padding: 12px;
-      border-radius: 15px;
-      background: rgba(16,21,32,.68);
-      border: 1px solid rgba(255,255,255,.055);
-    }
-
-    .feed-avatar {
-      width: 34px;
-      height: 34px;
-      flex: 0 0 34px;
-      display: grid;
-      place-items: center;
-      border-radius: 11px;
-      background: linear-gradient(135deg, #202a3c, #111827);
-      font-size: 13px;
-      font-weight: 850;
-    }
-
-    .feed-text {
-      min-width: 0;
-      flex: 1;
-    }
-
-    .feed-name {
-      font-size: 12px;
-      font-weight: 750;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .feed-desc {
-      margin-top: 2px;
-      color: var(--muted);
-      font-size: 10px;
-    }
-
-    .feed-amount {
-      flex: 0 0 auto;
-      color: var(--green);
-      font-size: 12px;
-      font-weight: 850;
-    }
-
-    .demo-label {
-      margin-top: 9px;
-      color: #687285;
-      font-size: 9px;
-      text-align: center;
-    }
-
-    /* generic screens */
-
-    .screen-title {
-      font-size: 28px;
-      font-weight: 900;
-      letter-spacing: -.04em;
-    }
-
-    .screen-subtitle {
-      margin-top: 5px;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.45;
-    }
-
-    .back-row {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 22px;
-    }
-
-    .back-btn {
-      width: 40px;
-      height: 40px;
-      border-radius: 13px;
-      display: grid;
-      place-items: center;
-      background: rgba(255,255,255,.055);
-      border: 1px solid var(--line);
-    }
-
-    .panel {
-      padding: 17px;
-      margin-top: 14px;
-      border-radius: 20px;
-      background: rgba(16,21,32,.8);
-      border: 1px solid var(--line);
-    }
-
-    .panel-title {
-      font-size: 14px;
-      font-weight: 850;
-    }
-
-    .panel-muted {
-      margin-top: 5px;
-      color: var(--muted);
-      font-size: 11px;
-      line-height: 1.45;
-    }
-
-    .mining-display {
-      margin-top: 18px;
-      padding: 26px 18px;
-      text-align: center;
-      border-radius: 22px;
-      background:
-        radial-gradient(circle at 50% 0%, rgba(56,217,255,.11), transparent 45%),
-        rgba(16,21,32,.82);
-      border: 1px solid rgba(56,217,255,.12);
-    }
-
-    .mining-value {
-      font-size: clamp(28px, 8vw, 43px);
-      font-weight: 900;
-      letter-spacing: -.04em;
-      overflow-wrap: anywhere;
-    }
-
-    .mining-rate {
-      margin-top: 7px;
-      color: var(--muted);
-      font-size: 11px;
-    }
-
-    .main-action {
-      width: 100%;
-      min-height: 52px;
-      margin-top: 14px;
-      border-radius: 15px;
-      font-size: 13px;
-      font-weight: 900;
-      letter-spacing: .025em;
-      background: linear-gradient(135deg, #25c9ee, #536fff);
-      box-shadow: 0 10px 28px rgba(56,125,255,.2);
-    }
-
-    .main-action.green {
-      background: linear-gradient(135deg, #28d995, #39b9ce);
-    }
-
-    .main-action:disabled {
-      opacity: .45;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .tabs {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 5px;
-      padding: 4px;
-      border-radius: 14px;
-      background: rgba(255,255,255,.045);
-      border: 1px solid var(--line);
-    }
-
-    .tab {
-      min-height: 38px;
-      border-radius: 10px;
-      background: transparent;
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 850;
-    }
-
-    .tab.active {
-      color: #fff;
-      background: rgba(255,255,255,.09);
-    }
-
-    .list {
-      display: flex;
-      flex-direction: column;
-      gap: 9px;
-      margin-top: 13px;
-    }
-
-    .list-card {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
-      padding: 14px;
-      border-radius: 17px;
-      background: rgba(16,21,32,.8);
-      border: 1px solid var(--line);
-    }
-
-    .list-icon {
-      width: 43px;
-      height: 43px;
-      flex: 0 0 43px;
-      display: grid;
-      place-items: center;
-      border-radius: 13px;
-      background: rgba(255,255,255,.055);
-    }
-
-    .list-info {
-      min-width: 0;
-      flex: 1;
-    }
-
-    .list-name {
-      font-size: 13px;
-      font-weight: 850;
-      overflow-wrap: anywhere;
-    }
-
-    .list-desc {
-      margin-top: 4px;
-      color: var(--muted);
-      font-size: 10px;
-      line-height: 1.35;
-      overflow-wrap: anywhere;
-    }
-
-    .list-right {
-      flex: 0 0 auto;
-      text-align: right;
-    }
-
-    .price {
-      font-size: 12px;
-      font-weight: 850;
-    }
-
-    .mini-btn {
-      min-height: 34px;
-      padding: 0 11px;
-      margin-top: 6px;
-      border-radius: 10px;
-      background: rgba(56,217,255,.11);
-      color: var(--cyan);
-      border: 1px solid rgba(56,217,255,.13);
-      font-size: 10px;
-      font-weight: 850;
-    }
-
-    .game-grid {
-      display: grid;
-      gap: 12px;
-      margin-top: 18px;
-    }
-
-    .game-card {
-      position: relative;
-      overflow: hidden;
-      min-height: 160px;
-      padding: 19px;
-      border-radius: 21px;
-      border: 1px solid var(--line);
-      background: linear-gradient(145deg, rgba(19,25,39,.95), rgba(11,16,25,.95));
-    }
-
-    .game-card.flip {
-      background:
-        radial-gradient(circle at 100% 0%, rgba(155,108,255,.18), transparent 42%),
-        linear-gradient(145deg, rgba(19,25,39,.95), rgba(11,16,25,.95));
-    }
-
-    .game-card.run {
-      background:
-        radial-gradient(circle at 100% 0%, rgba(56,217,255,.14), transparent 42%),
-        linear-gradient(145deg, rgba(19,25,39,.95), rgba(11,16,25,.95));
-    }
-
-    .game-icon {
-      width: 46px;
-      height: 46px;
-      display: grid;
-      place-items: center;
-      border-radius: 14px;
-      background: rgba(255,255,255,.06);
-    }
-
-    .game-name {
-      margin-top: 17px;
-      font-size: 16px;
-      font-weight: 900;
-    }
-
-    .game-desc {
-      margin-top: 4px;
-      max-width: 75%;
-      color: var(--muted);
-      font-size: 11px;
-      line-height: 1.4;
-      overflow-wrap: anywhere;
-    }
-
-    .game-open {
-      position: absolute;
-      right: 16px;
-      bottom: 16px;
-      width: 39px;
-      height: 39px;
-      display: grid;
-      place-items: center;
-      border-radius: 12px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.08);
-    }
-
-    .earn-grid {
-      display: grid;
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .ad-card {
-      padding: 15px;
-      border-radius: 18px;
-      background: rgba(16,21,32,.82);
-      border: 1px solid var(--line);
-    }
-
-    .ad-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .ad-name {
-      font-size: 13px;
-      font-weight: 850;
-    }
-
-    .ad-counter {
-      color: var(--muted);
-      font-size: 10px;
-    }
-
-    .ad-bottom {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      margin-top: 12px;
-    }
-
-    .reward {
-      color: var(--green);
-      font-size: 12px;
-      font-weight: 850;
-    }
-
-    .watch-btn {
-      min-height: 37px;
-      padding: 0 14px;
-      border-radius: 11px;
-      background: linear-gradient(135deg, rgba(56,217,255,.16), rgba(76,125,255,.18));
-      border: 1px solid rgba(56,217,255,.15);
-      color: #fff;
-      font-size: 11px;
-      font-weight: 850;
-    }
-
-    .wallet-box {
-      margin-top: 17px;
-      padding: 18px;
-      border-radius: 20px;
-      background: rgba(16,21,32,.82);
-      border: 1px solid var(--line);
-    }
-
-    .field-label {
-      display: block;
-      margin-bottom: 7px;
-      color: var(--muted);
-      font-size: 10px;
-      font-weight: 700;
-    }
-
-    .field {
-      width: 100%;
-      min-height: 46px;
-      padding: 0 13px;
-      border-radius: 12px;
-      outline: none;
-      color: #fff;
-      background: rgba(255,255,255,.045);
-      border: 1px solid rgba(255,255,255,.08);
-    }
-
-    .field:focus {
-      border-color: rgba(56,217,255,.35);
-    }
-
-    .field + .field {
-      margin-top: 10px;
-    }
-
-    .swap-row {
-      display: grid;
-      grid-template-columns: 1fr 48px 1fr;
-      align-items: end;
-      gap: 9px;
-    }
-
-    .swap-arrow {
-      width: 48px;
-      height: 46px;
-      border-radius: 12px;
-      background: rgba(255,255,255,.055);
-      border: 1px solid var(--line);
-      display: grid;
-      place-items: center;
-    }
-
-    .profile-menu {
-      display: grid;
-      gap: 8px;
-      margin-top: 18px;
-    }
-
-    .profile-item {
-      width: 100%;
-      min-height: 56px;
-      display: flex;
-      align-items: center;
-      gap: 13px;
-      padding: 0 14px;
-      border-radius: 16px;
-      text-align: left;
-      background: rgba(16,21,32,.82);
-      border: 1px solid var(--line);
-    }
-
-    .profile-item-icon {
-      width: 35px;
-      height: 35px;
-      display: grid;
-      place-items: center;
-      border-radius: 10px;
-      background: rgba(255,255,255,.05);
-    }
-
-    .profile-item-text {
-      min-width: 0;
-      flex: 1;
-      font-size: 12px;
-      font-weight: 750;
-      overflow-wrap: anywhere;
-    }
-
-    .profile-arrow {
-      color: #657084;
-    }
-
-    .rank-tabs {
-      margin-top: 18px;
-    }
-
-    .rank-list {
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-      margin-top: 12px;
-    }
-
-    .rank-row {
-      display: grid;
-      grid-template-columns: 32px 1fr auto;
-      align-items: center;
-      gap: 10px;
-      min-width: 0;
-      padding: 11px;
-      border-radius: 14px;
-      background: rgba(16,21,32,.75);
-      border: 1px solid rgba(255,255,255,.05);
-    }
-
-    .rank-num {
-      text-align: center;
-      color: var(--muted);
-      font-size: 11px;
-      font-weight: 850;
-    }
-
-    .rank-user {
-      min-width: 0;
-      font-size: 11px;
-      font-weight: 750;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .rank-value {
-      color: var(--cyan);
-      font-size: 11px;
-      font-weight: 850;
-    }
-
-    .current-rank {
-      margin-top: 10px;
-      padding: 13px;
-      border-radius: 15px;
-      background: linear-gradient(135deg, rgba(56,217,255,.1), rgba(155,108,255,.1));
-      border: 1px solid rgba(56,217,255,.13);
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      font-size: 11px;
-    }
-
-    .ref-box {
-      margin-top: 18px;
-      padding: 18px;
-      border-radius: 20px;
-      background:
-        radial-gradient(circle at 100% 0%, rgba(155,108,255,.13), transparent 42%),
-        rgba(16,21,32,.82);
-      border: 1px solid var(--line);
-    }
-
-    .ref-link {
-      margin-top: 10px;
-      padding: 11px;
-      border-radius: 11px;
-      color: #b9c3d5;
-      background: rgba(255,255,255,.04);
-      font-size: 10px;
-      overflow-wrap: anywhere;
-      word-break: break-word;
-    }
-
-    .ref-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px;
-      margin-top: 9px;
-    }
-
-    .giveaway-list {
-      display: grid;
-      gap: 11px;
-      margin-top: 17px;
-    }
-
-    .giveaway {
-      padding: 17px;
-      border-radius: 19px;
-      background:
-        linear-gradient(145deg, rgba(21,27,42,.94), rgba(12,17,26,.94));
-      border: 1px solid var(--line);
-    }
-
-    .giveaway-prize {
-      font-size: 16px;
-      font-weight: 900;
-    }
-
-    .giveaway-meta {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap: 8px;
-      margin-top: 13px;
-    }
-
-    .meta-box {
-      min-width: 0;
-      padding: 10px;
-      border-radius: 11px;
-      background: rgba(255,255,255,.04);
-    }
-
-    .meta-label {
-      color: var(--muted);
-      font-size: 9px;
-    }
-
-    .meta-value {
-      margin-top: 3px;
-      font-size: 11px;
-      font-weight: 800;
-      overflow-wrap: anywhere;
-    }
-
-    /* bottom nav */
-
-    .bottom-nav {
-      position: fixed;
-      z-index: 50;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: calc(var(--nav-height) + var(--safe-bottom));
-      padding:
-        7px
-        max(10px, env(safe-area-inset-left))
-        calc(7px + var(--safe-bottom))
-        max(10px, env(safe-area-inset-right));
-      background: rgba(8,11,18,.91);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-top: 1px solid rgba(255,255,255,.06);
-    }
-
-    .nav-inner {
-      width: min(100%, 620px);
-      height: var(--nav-height);
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      align-items: center;
-    }
-
-    .nav-btn {
-      min-width: 0;
-      height: 58px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      background: transparent;
-      color: #626c7e;
-      border-radius: 15px;
-      font-size: 9px;
-      font-weight: 750;
-    }
-
-    .nav-btn svg {
-      width: 20px;
-      height: 20px;
-    }
-
-    .nav-btn.active {
-      color: #fff;
-      background: rgba(255,255,255,.055);
-    }
-
-    .nav-btn.active svg {
-      color: var(--cyan);
-      filter: drop-shadow(0 0 7px rgba(56,217,255,.35));
-    }
-
-    /* modal */
-
-    .modal-root {
-      position: fixed;
-      z-index: 100;
-      inset: 0;
-      display: none;
-      align-items: flex-end;
-      justify-content: center;
-      background: rgba(0,0,0,.58);
-      backdrop-filter: blur(7px);
-      -webkit-backdrop-filter: blur(7px);
-    }
-
-    .modal-root.show {
-      display: flex;
-    }
-
-    .modal {
-      width: min(100%, 680px);
-      max-height: 92dvh;
-      overflow-y: auto;
-      padding: 12px 16px calc(18px + var(--safe-bottom));
-      border-radius: 25px 25px 0 0;
-      background:
-        radial-gradient(circle at 100% 0%, rgba(155,108,255,.08), transparent 35%),
-        #0d121c;
-      border: 1px solid rgba(255,255,255,.08);
-      box-shadow: 0 -20px 70px rgba(0,0,0,.4);
-      animation: modalIn .22s ease;
-    }
-
-    @keyframes modalIn {
-      from { transform: translateY(25px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    .modal-handle {
-      width: 40px;
-      height: 4px;
-      margin: 0 auto 17px;
-      border-radius: 99px;
-      background: rgba(255,255,255,.15);
-    }
-
-    .modal-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 15px;
-    }
-
-    .modal-title {
-      min-width: 0;
-      font-size: 18px;
-      font-weight: 900;
-      overflow-wrap: anywhere;
-    }
-
-    .close-btn {
-      width: 35px;
-      height: 35px;
-      flex: 0 0 35px;
-      display: grid;
-      place-items: center;
-      border-radius: 10px;
-      background: rgba(255,255,255,.06);
-      color: #9aa4b6;
-    }
-
-    .modal-body {
-      min-width: 0;
-    }
-
-    /* combo */
-
-    .combo-cards {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 7px;
-    }
-
-    .combo-card {
-      aspect-ratio: .78;
-      border-radius: 14px;
-      background:
-        linear-gradient(145deg, rgba(30,39,57,.95), rgba(14,19,29,.95));
-      border: 1px solid rgba(255,255,255,.07);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 7px;
-      font-size: 10px;
-      font-weight: 850;
-    }
-
-    .combo-card svg {
-      width: 24px;
-      height: 24px;
-    }
-
-    .combo-card.selected {
-      border-color: var(--cyan);
-      background: rgba(56,217,255,.1);
-      box-shadow: 0 0 0 2px rgba(56,217,255,.08);
-    }
-
-    /* wheel */
-
-    .wheel-wrap {
-      display: grid;
-      place-items: center;
-      padding: 12px 0 17px;
-    }
-
-    .wheel {
-      position: relative;
-      width: min(74vw, 300px);
-      aspect-ratio: 1;
-      border-radius: 50%;
-      background:
-        conic-gradient(
-          #36d7ff 0 45deg,
-          #8d69ff 45deg 90deg,
-          #f15cff 90deg 135deg,
-          #45e29a 135deg 180deg,
-          #ffd35c 180deg 225deg,
-          #4c7dff 225deg 270deg,
-          #35d6c5 270deg 315deg,
-          #b26cff 315deg 360deg
+    background:
+        linear-gradient(
+            145deg,
+            #17181c,
+            #111216
         );
-      border: 8px solid #161d2b;
-      box-shadow: 0 15px 45px rgba(0,0,0,.3);
-      transition: transform 3.7s cubic-bezier(.12,.74,.12,1);
+
+    border: 1px solid var(--border);
+
+    overflow: hidden;
+}
+
+.balance::after {
+    content: "";
+
+    position: absolute;
+
+    width: 180px;
+    height: 180px;
+
+    right: -100px;
+    top: -100px;
+
+    border-radius: 50%;
+
+    background: var(--accent);
+
+    opacity: .035;
+
+    filter: blur(30px);
+
+    pointer-events: none;
+}
+
+.balance-label {
+    color: var(--muted);
+
+    font-size: 11px;
+    font-weight: 650;
+}
+
+.balance-number {
+    margin-top: 7px;
+
+    font-size: clamp(38px, 10vw, 54px);
+
+    line-height: 1;
+
+    font-weight: 850;
+
+    letter-spacing: -.055em;
+}
+
+.balance-unit {
+    margin-left: 4px;
+
+    color: var(--accent);
+
+    font-size: 15px;
+
+    letter-spacing: 0;
+}
+
+.balance-secondary {
+    margin-top: 8px;
+
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+.balance-actions {
+    display: flex;
+    gap: 8px;
+
+    margin-top: 20px;
+}
+
+.button {
+    min-height: 40px;
+
+    padding: 0 15px;
+
+    border-radius: 12px;
+
+    background: #1d1e23;
+
+    border: 1px solid var(--border);
+
+    color: #dedee2;
+
+    font-size: 11px;
+    font-weight: 750;
+}
+
+.button.accent {
+    background: var(--accent);
+    color: #0b0c0d;
+
+    border-color: transparent;
+}
+
+/* =========================================================
+   DAILY CHECK
+   ========================================================= */
+
+.daily {
+    position: relative;
+
+    margin-top: 12px;
+
+    padding: 17px;
+
+    border-radius: 20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(216,255,98,.055),
+            rgba(255,255,255,.025)
+        );
+
+    border: 1px solid rgba(216,255,98,.11);
+
+    overflow: hidden;
+}
+
+.daily-top {
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+}
+
+.fire {
+    width: 45px;
+    height: 45px;
+
+    flex: 0 0 45px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 14px;
+
+    background: rgba(255,159,67,.08);
+
+    font-size: 25px;
+
+    animation: firePulse 1.5s ease-in-out infinite;
+}
+
+@keyframes firePulse {
+    0%,100% {
+        transform: scale(1);
+        filter: brightness(1);
     }
 
-    .wheel::after {
-      content: "";
-      position: absolute;
-      inset: 31%;
-      border-radius: 50%;
-      background: #0d121c;
-      border: 1px solid rgba(255,255,255,.1);
+    50% {
+        transform: scale(1.08);
+        filter: brightness(1.18);
+    }
+}
+
+.daily-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.daily-title {
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.daily-subtitle {
+    margin-top: 3px;
+
+    color: var(--muted);
+
+    font-size: 10px;
+}
+
+.daily-days {
+    text-align: right;
+}
+
+.daily-number {
+    font-size: 22px;
+    font-weight: 900;
+
+    letter-spacing: -.04em;
+}
+
+.daily-days-label {
+    color: var(--muted);
+
+    font-size: 9px;
+}
+
+.daily-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-top: 15px;
+}
+
+.daily-progress {
+    flex: 1;
+
+    height: 5px;
+
+    overflow: hidden;
+
+    border-radius: 99px;
+
+    background: rgba(255,255,255,.06);
+}
+
+.daily-progress div {
+    width: 0;
+    height: 100%;
+
+    border-radius: inherit;
+
+    background: var(--accent);
+
+    transition: width .5s ease;
+}
+
+.daily-button {
+    min-height: 34px;
+
+    padding: 0 12px;
+
+    border-radius: 10px;
+
+    background: rgba(216,255,98,.10);
+
+    color: var(--accent);
+
+    border: 1px solid rgba(216,255,98,.13);
+
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.daily-button.done {
+    background: rgba(255,255,255,.045);
+    color: var(--muted);
+
+    border-color: var(--border);
+}
+
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+
+.section {
+    margin-top: 27px;
+}
+
+.section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 11px;
+}
+
+.section-title {
+    font-size: 17px;
+    font-weight: 820;
+
+    letter-spacing: -.025em;
+}
+
+.section-link {
+    padding: 3px;
+
+    background: none;
+
+    color: var(--muted);
+
+    font-size: 10px;
+    font-weight: 700;
+}
+
+/* =========================================================
+   QUICK CARDS
+   ========================================================= */
+
+.quick-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0,1fr));
+
+    gap: 9px;
+}
+
+.quick {
+    min-height: 112px;
+
+    padding: 16px;
+
+    text-align: left;
+
+    border-radius: 18px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    transition:
+        background .2s ease,
+        transform .2s ease;
+}
+
+.quick:hover {
+    background: var(--card-hover);
+}
+
+.quick-icon {
+    width: 37px;
+    height: 37px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 11px;
+
+    background: #1b1c21;
+
+    color: #cfd0d5;
+
+    font-size: 17px;
+
+    margin-bottom: 13px;
+}
+
+.quick-name {
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.quick-description {
+    margin-top: 4px;
+
+    color: var(--muted);
+
+    font-size: 10px;
+    line-height: 1.35;
+}
+
+/* =========================================================
+   ACTIVITY
+   ========================================================= */
+
+.activity {
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+.activity-item {
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 11px;
+
+    border-radius: 15px;
+
+    background: #111216;
+
+    border: 1px solid var(--border);
+}
+
+.activity-icon {
+    width: 35px;
+    height: 35px;
+
+    display: grid;
+    place-items: center;
+
+    flex: 0 0 35px;
+
+    border-radius: 10px;
+
+    background: #1a1b20;
+
+    font-size: 13px;
+}
+
+.activity-text {
+    flex: 1;
+
+    min-width: 0;
+}
+
+.activity-title {
+    font-size: 11px;
+    font-weight: 750;
+}
+
+.activity-time {
+    margin-top: 2px;
+
+    color: var(--muted);
+
+    font-size: 9px;
+}
+
+.activity-value {
+    color: var(--green);
+
+    font-size: 11px;
+    font-weight: 800;
+}
+
+/* =========================================================
+   LEVEL
+   ========================================================= */
+
+.level-card {
+    padding: 17px;
+
+    border-radius: 18px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+}
+
+.level-head {
+    display: flex;
+    justify-content: space-between;
+
+    font-size: 11px;
+}
+
+.level-name {
+    font-weight: 800;
+}
+
+.level-xp {
+    color: var(--muted);
+}
+
+.level-progress {
+    height: 5px;
+
+    margin-top: 12px;
+
+    overflow: hidden;
+
+    border-radius: 99px;
+
+    background: rgba(255,255,255,.06);
+}
+
+.level-progress div {
+    height: 100%;
+    width: 62%;
+
+    border-radius: inherit;
+
+    background: var(--accent);
+
+    transition: width .4s ease;
+}
+
+/* =========================================================
+   SCREENS
+   ========================================================= */
+
+.screen {
+    display: none;
+}
+
+.screen.active {
+    display: block;
+
+    animation: screenIn .22s ease;
+}
+
+@keyframes screenIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
     }
 
-    .wheel-center {
-      position: absolute;
-      z-index: 2;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      font-size: 11px;
-      font-weight: 900;
-      pointer-events: none;
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
+}
 
-    .wheel-pointer {
-      position: absolute;
-      z-index: 3;
-      top: -7px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 0;
-      height: 0;
-      border-left: 9px solid transparent;
-      border-right: 9px solid transparent;
-      border-top: 18px solid #fff;
-      filter: drop-shadow(0 3px 6px rgba(0,0,0,.4));
-    }
+.screen-header {
+    margin-bottom: 23px;
+}
 
-    /* games */
+.screen-title {
+    font-size: 28px;
 
-    .game-modal {
-      width: 100%;
-      height: 100dvh;
-      max-height: none;
-      padding:
-        max(10px, env(safe-area-inset-top))
+    font-weight: 900;
+
+    letter-spacing: -.05em;
+}
+
+.screen-subtitle {
+    margin-top: 5px;
+
+    color: var(--muted);
+
+    font-size: 11px;
+    line-height: 1.45;
+}
+
+.back {
+    width: 39px;
+    height: 39px;
+
+    margin-bottom: 17px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 12px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    font-size: 17px;
+}
+
+/* =========================================================
+   GENERIC PANELS
+   ========================================================= */
+
+.panel {
+    padding: 17px;
+
+    margin-bottom: 9px;
+
+    border-radius: 18px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+}
+
+.panel-title {
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.panel-description {
+    margin-top: 5px;
+
+    color: var(--muted);
+
+    font-size: 10px;
+    line-height: 1.45;
+}
+
+.big-stat {
+    margin-top: 15px;
+
+    font-size: 37px;
+    font-weight: 900;
+
+    letter-spacing: -.05em;
+}
+
+.main-button {
+    width: 100%;
+
+    min-height: 49px;
+
+    margin-top: 12px;
+
+    border-radius: 14px;
+
+    background: var(--accent);
+
+    color: #090a0b;
+
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.main-button.secondary {
+    background: #1d1e23;
+
+    color: #fff;
+
+    border: 1px solid var(--border);
+}
+
+/* =========================================================
+   LISTS
+   ========================================================= */
+
+.list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 8px;
+}
+
+.list-item {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 13px;
+
+    border-radius: 16px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+}
+
+.list-icon {
+    width: 42px;
+    height: 42px;
+
+    display: grid;
+    place-items: center;
+
+    flex: 0 0 42px;
+
+    border-radius: 12px;
+
+    background: #1b1c21;
+
+    font-size: 17px;
+}
+
+.list-info {
+    min-width: 0;
+    flex: 1;
+}
+
+.list-title {
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.list-description {
+    margin-top: 3px;
+
+    color: var(--muted);
+
+    font-size: 9px;
+
+    line-height: 1.35;
+}
+
+.list-action {
+    min-height: 33px;
+
+    padding: 0 11px;
+
+    border-radius: 10px;
+
+    background: #1e2025;
+
+    color: #dddfe4;
+
+    font-size: 9px;
+    font-weight: 800;
+}
+
+/* =========================================================
+   PROFILE
+   ========================================================= */
+
+.profile-head {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 18px;
+
+    border-radius: 20px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+}
+
+.profile-avatar {
+    width: 58px;
+    height: 58px;
+
+    display: grid;
+    place-items: center;
+
+    flex: 0 0 58px;
+
+    border-radius: 17px;
+
+    background: #1d1f24;
+
+    font-size: 18px;
+    font-weight: 900;
+}
+
+.profile-name {
+    font-size: 16px;
+    font-weight: 850;
+}
+
+.profile-id {
+    margin-top: 4px;
+
+    color: var(--muted);
+
+    font-size: 10px;
+}
+
+.profile-menu {
+    margin-top: 10px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+.profile-button {
+    width: 100%;
+
+    min-height: 54px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 0 14px;
+
+    text-align: left;
+
+    border-radius: 15px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+}
+
+.profile-button-icon {
+    width: 34px;
+    height: 34px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 10px;
+
+    background: #1b1c21;
+}
+
+.profile-button-text {
+    flex: 1;
+
+    font-size: 11px;
+    font-weight: 750;
+}
+
+.profile-arrow {
+    color: var(--muted-2);
+}
+
+/* =========================================================
+   BOTTOM NAV
+   ========================================================= */
+
+.bottom-nav {
+    position: fixed;
+
+    z-index: 100;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height:
+        calc(
+            var(--nav-height)
+            + var(--safe-bottom)
+        );
+
+    padding:
+        6px
         10px
-        calc(10px + var(--safe-bottom));
-      border-radius: 0;
-      background: #070a10;
+        calc(6px + var(--safe-bottom));
+
+    background:
+        rgba(10,11,13,.94);
+
+    backdrop-filter: blur(20px);
+
+    border-top:
+        1px solid rgba(255,255,255,.045);
+}
+
+.nav-inner {
+    width: min(100%, 520px);
+
+    height: 100%;
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap: 4px;
+}
+
+.nav-button {
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 4px;
+
+    border-radius: 13px;
+
+    background: transparent;
+
+    color: #65676f;
+
+    transition: .2s ease;
+}
+
+.nav-button.active {
+    color: var(--text);
+
+    background: rgba(255,255,255,.045);
+}
+
+.nav-icon {
+    font-size: 17px;
+
+    line-height: 1;
+}
+
+.nav-label {
+    font-size: 8px;
+    font-weight: 750;
+}
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+.toast {
+    position: fixed;
+
+    z-index: 200;
+
+    left: 50%;
+    bottom:
+        calc(
+            var(--nav-height)
+            + var(--safe-bottom)
+            + 18px
+        );
+
+    transform:
+        translate(-50%, 15px);
+
+    padding: 11px 15px;
+
+    border-radius: 12px;
+
+    background: #202126;
+
+    border: 1px solid var(--border);
+
+    color: #fff;
+
+    font-size: 10px;
+    font-weight: 750;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity .2s ease,
+        transform .2s ease;
+}
+
+.toast.show {
+    opacity: 1;
+
+    transform:
+        translate(-50%, 0);
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+    .page {
+        padding-left: 13px;
+        padding-right: 13px;
     }
 
-    .game-modal .modal-handle {
-      display: none;
+    .balance {
+        padding: 20px;
     }
 
-    .game-stage {
-      position: relative;
-      width: 100%;
-      max-width: 650px;
-      height: calc(100dvh - 90px);
-      margin: 0 auto;
-      overflow: hidden;
-      border-radius: 22px;
-      background: #101722;
-      border: 1px solid rgba(255,255,255,.08);
+    .quick {
+        padding: 14px;
     }
 
-    .game-canvas {
-      display: block;
-      width: 100%;
-      height: 100%;
-      touch-action: none;
+    .daily {
+        padding: 14px;
     }
 
-    .game-ui {
-      position: absolute;
-      top: 14px;
-      left: 14px;
-      right: 14px;
-      display: flex;
-      justify-content: space-between;
-      pointer-events: none;
+    .daily-number {
+        font-size: 19px;
     }
+}
 
-    .game-stat {
-      padding: 8px 11px;
-      border-radius: 11px;
-      background: rgba(0,0,0,.3);
-      backdrop-filter: blur(8px);
-      font-size: 11px;
-      font-weight: 850;
-    }
-
-    .game-exit {
-      position: absolute;
-      right: 14px;
-      bottom: 14px;
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      background: rgba(0,0,0,.35);
-      border: 1px solid rgba(255,255,255,.1);
-    }
-
-    .game-help {
-      position: absolute;
-      left: 50%;
-      bottom: 18px;
-      transform: translateX(-50%);
-      padding: 8px 12px;
-      border-radius: 99px;
-      color: rgba(255,255,255,.7);
-      background: rgba(0,0,0,.3);
-      font-size: 10px;
-      pointer-events: none;
-    }
-
-    /* toast */
-
-    .toast {
-      position: fixed;
-      z-index: 200;
-      left: 50%;
-      bottom: calc(var(--nav-height) + var(--safe-bottom) + 16px);
-      transform: translate(-50%, 20px);
-      width: max-content;
-      max-width: calc(100% - 32px);
-      padding: 11px 15px;
-      border-radius: 12px;
-      background: rgba(24,30,43,.96);
-      border: 1px solid rgba(255,255,255,.09);
-      box-shadow: 0 12px 35px rgba(0,0,0,.3);
-      color: #fff;
-      font-size: 11px;
-      font-weight: 700;
-      opacity: 0;
-      pointer-events: none;
-      transition: .22s ease;
-      text-align: center;
-      overflow-wrap: anywhere;
-    }
-
-    .toast.show {
-      opacity: 1;
-      transform: translate(-50%, 0);
-    }
-
-    .empty {
-      padding: 28px 15px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 11px;
-    }
-
-    @media (min-width: 600px) {
-      .page {
-        padding-left: 22px;
-        padding-right: 22px;
-      }
-
-      .game-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .earn-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-  </style>
+</style>
 </head>
 
 <body>
-  <div id="app"></div>
 
-  <div id="modal-root" class="modal-root">
-    <div id="modal" class="modal"></div>
-  </div>
+<div id="app">
 
-  <div id="toast" class="toast"></div>
+    <main class="page">
 
-  <nav class="bottom-nav">
-    <div class="nav-inner">
-      <button class="nav-btn active" data-action="nav" data-screen="home">
-        <span data-icon="home"></span>
-        <span data-i18n="nav.home"></span>
-      </button>
+        <!-- =================================================
+             HOME
+             ================================================= -->
 
-      <button class="nav-btn" data-action="nav" data-screen="mining">
-        <span data-icon="pickaxe"></span>
-        <span data-i18n="nav.mining"></span>
-      </button>
+        <section id="home" class="screen active">
 
-      <button class="nav-btn" data-action="nav" data-screen="games">
-        <span data-icon="game"></span>
-        <span data-i18n="nav.games"></span>
-      </button>
+            <header class="header">
 
-      <button class="nav-btn" data-action="nav" data-screen="wallet">
-        <span data-icon="wallet"></span>
-        <span data-i18n="nav.wallet"></span>
-      </button>
+                <div class="user">
 
-      <button class="nav-btn" data-action="nav" data-screen="profile">
-        <span data-icon="user"></span>
-        <span data-i18n="nav.profile"></span>
-      </button>
-    </div>
-  </nav>
+                    <div class="avatar" id="avatar">
+                        PZ
+                    </div>
+
+                    <div class="user-text">
+
+                        <div
+                            class="user-name"
+                            id="userName"
+                        >
+                            Пользователь
+                        </div>
+
+                        <div class="user-status">
+                            Добро пожаловать
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="logo">
+                    PAID <span>ZOMBIE</span>
+                </div>
+
+            </header>
+
+
+            <!-- BALANCE -->
+
+            <div class="balance">
+
+                <div class="balance-label">
+                    Текущий баланс
+                </div>
+
+                <div class="balance-number">
+                    1 250
+                    <span class="balance-unit">
+                        PZ
+                    </span>
+                </div>
+
+                <div class="balance-secondary">
+                    ≈ 0.00 TON
+                </div>
+
+                <div class="balance-actions">
+
+                    <button
+                        class="button accent"
+                        onclick="showScreen('earn')"
+                    >
+                        Заработать
+                    </button>
+
+                    <button
+                        class="button"
+                        onclick="showScreen('profile')"
+                    >
+                        Профиль
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- DAILY CHECK -->
+
+            <div class="daily">
+
+                <div class="daily-top">
+
+                    <div class="fire">
+                        🔥
+                    </div>
+
+                    <div class="daily-info">
+
+                        <div class="daily-title">
+                            Daily Check
+                        </div>
+
+                        <div
+                            class="daily-subtitle"
+                            id="dailySubtitle"
+                        >
+                            Заходи каждый день и сохраняй серию
+                        </div>
+
+                    </div>
+
+                    <div class="daily-days">
+
+                        <div
+                            class="daily-number"
+                            id="streakNumber"
+                        >
+                            1
+                        </div>
+
+                        <div class="daily-days-label">
+                            ДНЕЙ
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="daily-bottom">
+
+                    <div class="daily-progress">
+                        <div id="dailyProgress"></div>
+                    </div>
+
+                    <button
+                        id="dailyButton"
+                        class="daily-button"
+                        onclick="claimDaily()"
+                    >
+                        Забрать
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- QUICK -->
+
+            <section class="section">
+
+                <div class="section-head">
+
+                    <div class="section-title">
+                        Быстрый доступ
+                    </div>
+
+                </div>
+
+                <div class="quick-grid">
+
+                    <button
+                        class="quick"
+                        onclick="showScreen('earn')"
+                    >
+
+                        <div class="quick-icon">
+                            +
+                        </div>
+
+                        <div class="quick-name">
+                            Заработок
+                        </div>
+
+                        <div class="quick-description">
+                            Выполняй доступные задания
+                        </div>
+
+                    </button>
+
+
+                    <button
+                        class="quick"
+                        onclick="showScreen('games')"
+                    >
+
+                        <div class="quick-icon">
+                            ◇
+                        </div>
+
+                        <div class="quick-name">
+                            Развлечения
+                        </div>
+
+                        <div class="quick-description">
+                            Открой доступные активности
+                        </div>
+
+                    </button>
+
+
+                    <button
+                        class="quick"
+                        onclick="showScreen('referrals')"
+                    >
+
+                        <div class="quick-icon">
+                            ↗
+                        </div>
+
+                        <div class="quick-name">
+                            Рефералы
+                        </div>
+
+                        <div class="quick-description">
+                            Приглашай друзей
+                        </div>
+
+                    </button>
+
+
+                    <button
+                        class="quick"
+                        onclick="showScreen('profile')"
+                    >
+
+                        <div class="quick-icon">
+                            ○
+                        </div>
+
+                        <div class="quick-name">
+                            Профиль
+                        </div>
+
+                        <div class="quick-description">
+                            Статистика и настройки
+                        </div>
+
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- LEVEL -->
+
+            <section class="section">
+
+                <div class="section-head">
+
+                    <div class="section-title">
+                        Прогресс
+                    </div>
+
+                </div>
+
+                <div class="level-card">
+
+                    <div class="level-head">
+
+                        <span class="level-name">
+                            Уровень 7
+                        </span>
+
+                        <span class="level-xp">
+                            620 / 1000 XP
+                        </span>
+
+                    </div>
+
+                    <div class="level-progress">
+                        <div></div>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ACTIVITY -->
+
+            <section class="section">
+
+                <div class="section-head">
+
+                    <div class="section-title">
+                        Последняя активность
+                    </div>
+
+                </div>
+
+                <div class="activity">
+
+                    <div class="activity-item">
+
+                        <div class="activity-icon">
+                            ✓
+                        </div>
+
+                        <div class="activity-text">
+
+                            <div class="activity-title">
+                                Daily Check
+                            </div>
+
+                            <div class="activity-time">
+                                Сегодня
+                            </div>
+
+                        </div>
+
+                        <div class="activity-value">
+                            +25
+                        </div>
+
+                    </div>
+
+
+                    <div class="activity-item">
+
+                        <div class="activity-icon">
+                            +
+                        </div>
+
+                        <div class="activity-text">
+
+                            <div class="activity-title">
+                                Задание выполнено
+                            </div>
+
+                            <div class="activity-time">
+                                Вчера
+                            </div>
+
+                        </div>
+
+                        <div class="activity-value">
+                            +50
+                        </div>
+
+                    </div>
+
+
+                    <div class="activity-item">
+
+                        <div class="activity-icon">
+                            ↗
+                        </div>
+
+                        <div class="activity-text">
+
+                            <div class="activity-title">
+                                Реферальная награда
+                            </div>
+
+                            <div class="activity-time">
+                                2 дня назад
+                            </div>
+
+                        </div>
+
+                        <div class="activity-value">
+                            +100
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </section>
+
+
+        <!-- =================================================
+             EARN
+             ================================================= -->
+
+        <section id="earn" class="screen">
+
+            <div class="screen-header">
+
+                <button
+                    class="back"
+                    onclick="showScreen('home')"
+                >
+                    ‹
+                </button>
+
+                <div class="screen-title">
+                    Заработок
+                </div>
+
+                <div class="screen-subtitle">
+                    Доступные задания и активности.
+                </div>
+
+            </div>
+
+
+            <div class="list">
+
+                <div class="list-item">
+
+                    <div class="list-icon">
+                        ✓
+                    </div>
+
+                    <div class="list-info">
+
+                        <div class="list-title">
+                            Ежедневный вход
+                        </div>
+
+                        <div class="list-description">
+                            Посещай приложение каждый день
+                        </div>
+
+                    </div>
+
+                    <button
+                        class="list-action"
+                        onclick="claimDaily()"
+                    >
+                        +25
+                    </button>
+
+                </div>
+
+
+                <div class="list-item">
+
+                    <div class="list-icon">
+                        +
+                    </div>
+
+                    <div class="list-info">
+
+                        <div class="list-title">
+                            Новое задание
+                        </div>
+
+                        <div class="list-description">
+                            Выполни доступную активность
+                        </div>
+
+                    </div>
+
+                    <button
+                        class="list-action"
+                        onclick="showToast('Задание пока недоступно')"
+                    >
+                        Открыть
+                    </button>
+
+                </div>
+
+
+                <div class="list-item">
+
+                    <div class="list-icon">
+                        ↗
+                    </div>
+
+                    <div class="list-info">
+
+                        <div class="list-title">
+                            Пригласить друга
+                        </div>
+
+                        <div class="list-description">
+                            Получай бонус за приглашения
+                        </div>
+
+                    </div>
+
+                    <button
+                        class="list-action"
+                        onclick="showScreen('referrals')"
+                    >
+                        Открыть
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             GAMES
+             ================================================= -->
+
+        <section id="games" class="screen">
+
+            <div class="screen-header">
+
+                <button
+                    class="back"
+                    onclick="showScreen('home')"
+                >
+                    ‹
+                </button>
+
+                <div class="screen-title">
+                    Активности
+                </div>
+
+                <div class="screen-subtitle">
+                    Раздел с дополнительными возможностями.
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="panel-title">
+                    Daily Activity
+                </div>
+
+                <div class="panel-description">
+                    Проверяй доступные активности каждый день.
+                </div>
+
+                <div class="big-stat">
+                    🔥 <span id="gameStreak">1</span>
+                </div>
+
+                <button
+                    class="main-button"
+                    onclick="claimDaily()"
+                >
+                    Проверить Daily Check
+                </button>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="panel-title">
+                    Скоро
+                </div>
+
+                <div class="panel-description">
+                    Новые разделы и активности появятся здесь.
+                </div>
+
+                <button
+                    class="main-button secondary"
+                    onclick="showToast('Раздел находится в разработке')"
+                >
+                    Подробнее
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             REFERRALS
+             ================================================= -->
+
+        <section id="referrals" class="screen">
+
+            <div class="screen-header">
+
+                <button
+                    class="back"
+                    onclick="showScreen('home')"
+                >
+                    ‹
+                </button>
+
+                <div class="screen-title">
+                    Рефералы
+                </div>
+
+                <div class="screen-subtitle">
+                    Приглашай друзей и следи за статистикой.
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="panel-title">
+                    Твоя статистика
+                </div>
+
+                <div class="big-stat">
+                    12
+                </div>
+
+                <div class="panel-description">
+                    приглашённых пользователей
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="panel-title">
+                    Твоя ссылка
+                </div>
+
+                <div
+                    class="panel-description"
+                    style="
+                        margin-top:10px;
+                        padding:11px;
+                        border-radius:11px;
+                        background:#1a1b20;
+                        word-break:break-all;
+                    "
+                >
+                    t.me/paidzombie_bot?start=ref_user
+                </div>
+
+                <button
+                    class="main-button"
+                    onclick="copyReferral()"
+                >
+                    Скопировать ссылку
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             PROFILE
+             ================================================= -->
+
+        <section id="profile" class="screen">
+
+            <div class="screen-header">
+
+                <button
+                    class="back"
+                    onclick="showScreen('home')"
+                >
+                    ‹
+                </button>
+
+                <div class="screen-title">
+                    Профиль
+                </div>
+
+                <div class="screen-subtitle">
+                    Твоя статистика в Paid Zombie.
+                </div>
+
+            </div>
+
+
+            <div class="profile-head">
+
+                <div
+                    class="profile-avatar"
+                    id="profileAvatar"
+                >
+                    PZ
+                </div>
+
+                <div>
+
+                    <div
+                        class="profile-name"
+                        id="profileName"
+                    >
+                        Пользователь
+                    </div>
+
+                    <div class="profile-id">
+                        Paid Zombie member
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="section">
+
+                <div class="section-title">
+                    Статистика
+                </div>
+
+            </div>
+
+
+            <div class="quick-grid" style="margin-top:11px;">
+
+                <div class="quick">
+
+                    <div class="quick-name">
+                        Баланс
+                    </div>
+
+                    <div
+                        class="big-stat"
+                        style="font-size:25px;"
+                    >
+                        1 250
+                    </div>
+
+                </div>
+
+
+                <div class="quick">
+
+                    <div class="quick-name">
+                        Серия
+                    </div>
+
+                    <div
+                        class="big-stat"
+                        style="font-size:25px;"
+                        id="profileStreak"
+                    >
+                        1
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="profile-menu">
+
+                <button
+                    class="profile-button"
+                    onclick="showToast('Настройки скоро появятся')"
+                >
+
+                    <div class="profile-button-icon">
+                        ⚙
+                    </div>
+
+                    <div class="profile-button-text">
+                        Настройки
+                    </div>
+
+                    <div class="profile-arrow">
+                        ›
+                    </div>
+
+                </button>
+
+
+                <button
+                    class="profile-button"
+                    onclick="showToast('Поддержка скоро будет подключена')"
+                >
+
+                    <div class="profile-button-icon">
+                        ?
+                    </div>
+
+                    <div class="profile-button-text">
+                        Поддержка
+                    </div>
+
+                    <div class="profile-arrow">
+                        ›
+                    </div>
+
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         NAVIGATION
+         ===================================================== -->
+
+    <nav class="bottom-nav">
+
+        <div class="nav-inner">
+
+            <button
+                class="nav-button active"
+                data-screen="home"
+                onclick="showScreen('home')"
+            >
+
+                <div class="nav-icon">
+                    ●
+                </div>
+
+                <div class="nav-label">
+                    Главная
+                </div>
+
+            </button>
+
+
+            <button
+                class="nav-button"
+                data-screen="earn"
+                onclick="showScreen('earn')"
+            >
+
+                <div class="nav-icon">
+                    +
+                </div>
+
+                <div class="nav-label">
+                    Заработок
+                </div>
+
+            </button>
+
+
+            <button
+                class="nav-button"
+                data-screen="games"
+                onclick="showScreen('games')"
+            >
+
+                <div class="nav-icon">
+                    ◇
+                </div>
+
+                <div class="nav-label">
+                    Активности
+                </div>
+
+            </button>
+
+
+            <button
+                class="nav-button"
+                data-screen="profile"
+                onclick="showScreen('profile')"
+            >
+
+                <div class="nav-icon">
+                    ○
+                </div>
+
+                <div class="nav-label">
+                    Профиль
+                </div>
+
+            </button>
+
+        </div>
+
+    </nav>
+
+</div>
+
+
+<!-- TOAST -->
+
+<div
+    id="toast"
+    class="toast"
+>
+    Готово
+</div>
+
 
 <script>
-(() => {
-  "use strict";
 
-  /* =========================
-     TELEGRAM
-  ========================= */
+/* =========================================================
+   TELEGRAM
+   ========================================================= */
 
-  const tg = window.Telegram?.WebApp || null;
+const tg = window.Telegram?.WebApp;
 
-  if (tg) {
-    try {
-      tg.ready();
-      tg.expand();
-      tg.setHeaderColor("#080b12");
-      tg.setBackgroundColor("#080b12");
-    } catch (_) {}
-  }
+if (tg) {
+    tg.ready();
+    tg.expand();
 
-  const tgUser = tg?.initDataUnsafe?.user || {};
+    /*
+       Telegram theme colors can be used later if necessary.
+       The design intentionally stays mostly independent
+       from Telegram's theme for a consistent brand identity.
+    */
+}
 
-  /* =========================
-     SVG ICONS
-  ========================= */
 
-  const ICONS = {
-    home: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.8 12 3l9 7.8"/><path d="M5.5 9.5V21h13V9.5"/><path d="M9.5 21v-6h5v6"/></svg>`,
+/* =========================================================
+   USER
+   ========================================================= */
 
-    pickaxe: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m5 20 12.7-12.7"/><path d="m14 4 2-2 6 6-2 2"/><path d="M4 13 2 11l4-4 2 2"/><path d="m8 8 8 8"/></svg>`,
+function loadTelegramUser() {
 
-    game: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 8h10a4 4 0 0 1 3.8 5.2l-1.4 4.3a2 2 0 0 1-3.5.6L14 15H10l-1.9 3.1a2 2 0 0 1-3.5-.6l-1.4-4.3A4 4 0 0 1 7 8Z"/><path d="M7 11v4M5 13h4"/><path d="M16.5 12h.01M19 14h.01"/></svg>`,
+    const user =
+        tg?.initDataUnsafe?.user;
 
-    wallet: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h15a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2Z"/><path d="M17 13h4v4h-4a2 2 0 0 1 0-4Z"/><path d="M5 6V4h13a2 2 0 0 1 2 2"/></svg>`,
+    if (!user) return;
 
-    user: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>`,
+    const name =
+        user.first_name ||
+        user.username ||
+        "Пользователь";
 
-    bolt: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="m13 2-9 12h7l-1 8 9-12h-7l1-8Z"/></svg>`,
+    document.getElementById("userName")
+        .textContent = name;
 
-    play: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13L19 12 8 5.5Z"/></svg>`,
+    document.getElementById("profileName")
+        .textContent = name;
 
-    gift: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v8a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-8"/><path d="M3 8h18v4H3z"/><path d="M12 8v13"/><path d="M12 8H7.5A2.5 2.5 0 1 1 10 5.5C10 7 12 8 12 8ZM12 8h4.5A2.5 2.5 0 1 0 14 5.5C14 7 12 8 12 8Z"/></svg>`,
+    const avatar =
+        document.getElementById("avatar");
 
-    users: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>`,
+    const profileAvatar =
+        document.getElementById("profileAvatar");
 
-    trophy: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4Z"/><path d="M7 6H4v2a4 4 0 0 0 4 4M17 6h3v2a4 4 0 0 1-4 4"/></svg>`,
+    if (user.photo_url) {
 
-    settings: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Z"/><path d="m19.4 15 .1.1a2 2 0 0 1-2.8 2.8l-.1-.1a2 2 0 0 0-3.4 1.4v.2a2 2 0 0 1-4 0v-.2A2 2 0 0 0 5.8 17.8l-.1.1a2 2 0 0 1-2.8-2.8l.1-.1A2 2 0 0 0 1.6 11.6H1.4a2 2 0 0 1 0-4h.2A2 2 0 0 0 3.2 4.2l-.1-.1A2 2 0 0 1 5.9 1.3l.1.1A2 2 0 0 0 9.4 0v-.2a2 2 0 0 1 4 0V0a2 2 0 0 0 3.4 1.4l.1-.1a2 2 0 0 1 2.8 2.8l-.1.1a2 2 0 0 0 1.4 3.4h.2a2 2 0 0 1 0 4H21a2 2 0 0 0-1.6 3.4Z" transform="translate(0 2) scale(.83)"/></svg>`,
+        avatar.innerHTML =
+            `<img src="${user.photo_url}" alt="">`;
 
-    chart: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16"/><path d="m7 15 3-4 3 2 5-7"/></svg>`,
+        profileAvatar.innerHTML =
+            `<img src="${user.photo_url}"
+                  style="
+                    width:100%;
+                    height:100%;
+                    object-fit:cover;
+                    border-radius:inherit;
+                  "
+                  alt="">`;
 
-    question: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9.7 9a2.4 2.4 0 1 1 4.2 1.6c-.9 1-1.9 1.3-1.9 2.9M12 17h.01"/></svg>`,
-
-    support: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13v-1a8 8 0 0 1 16 0v1"/><path d="M4 13h3v5H4a2 2 0 0 1-2-2v-1a2 2 0 0 1 2-2ZM20 13h-3v5h3a2 2 0 0 0 2-2v-1a2 2 0 0 0-2-2Z"/><path d="M17 18c0 2-2 3-5 3"/></svg>`,
-
-    arrow: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>`,
-
-    back: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>`,
-
-    close: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="m6 6 12 12M18 6 6 18"/></svg>`,
-
-    copy: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>`,
-
-    refresh: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M20 11a8 8 0 0 0-14-4l-2 2"/><path d="M4 5v4h4M4 13a8 8 0 0 0 14 4l2-2"/><path d="M20 19v-4h-4"/></svg>`
-  };
-
-  function icon(name) {
-    return ICONS[name] || "";
-  }
-
-  /* =========================
-     TRANSLATIONS
-  ========================= */
-
-  const I18N = {
-    ru: {
-      nav: {
-        home: "Главная",
-        mining: "Майнинг",
-        games: "Игры",
-        wallet: "Кошелёк",
-        profile: "Профиль"
-      },
-      home: {
-        balance: "Ваш баланс",
-        ton: "TON баланс",
-        mining: "Майнинг",
-        miningDesc: "Запускай добычу ZMB",
-        games: "Игры",
-        gamesDesc: "Играй и получай ZMB",
-        earn: "Заработок",
-        earnDesc: "Реклама и задания",
-        giveaways: "Розыгрыши",
-        giveawaysDesc: "Билеты и призы",
-        level: "Уровень",
-        payout: "Последние выплаты",
-        all: "Все",
-        demo: "Демонстрационная лента"
-      },
-      mining: {
-        title: "Майнинг",
-        subtitle: "Накопленные ZMB остаются здесь до получения.",
-        accrued: "Накоплено",
-        rate: "Скорость",
-        start: "ЗАПУСТИТЬ МАЙНИНГ",
-        claim: "ЗАБРАТЬ",
-        stopped: "Майнинг не запущен",
-        active: "Майнинг активен",
-        demoAd: "Перед запуском будет показана демонстрационная реклама.",
-        miners: "Майнеры",
-        boosts: "Бустеры",
-        shop: "Магазин",
-        owned: "Куплено",
-        buy: "Купить",
-        equipped: "Активен"
-      },
-      games: {
-        title: "Игры",
-        subtitle: "Играй, набирай очки и получай ZMB.",
-        flip: "Zombie Flip",
-        flipDesc: "Лети между препятствиями.",
-        run: "Zombie Run",
-        runDesc: "Беги, прыгай и собирай монеты.",
-        best: "Рекорд"
-      },
-      earn: {
-        title: "Заработок",
-        subtitle: "Смотри рекламу и выполняй задания.",
-        ads: "Реклама",
-        promote: "Продвижение",
-        network1: "Ad Network",
-        network2: "Partner Network",
-        watched: "Просмотрено",
-        watch: "Смотреть",
-        reward: "+0.5 ZMB",
-        tasks: "Задания",
-        subscribe: "Подписаться",
-        taskReward: "+2 ZMB",
-        demo: "Рекламные просмотры работают в демо-режиме."
-      },
-      wallet: {
-        title: "Кошелёк",
-        subtitle: "Обмен и вывод TON.",
-        swap: "Обмен",
-        withdraw: "Вывод",
-        history: "История",
-        from: "Из",
-        to: "В",
-        amount: "Количество",
-        swapButton: "ОБМЕНЯТЬ",
-        rate: "Демо-курс",
-        tonAddress: "TON адрес",
-        tonAmount: "Количество TON",
-        minimum: "Минимум",
-        fee: "Комиссия",
-        receive: "Получите",
-        withdrawButton: "ВЫВЕСТИ",
-        demoWithdraw: "Вывод работает только как демонстрация."
-      },
-      profile: {
-        title: "Профиль",
-        withdraw: "Вывод",
-        swap: "Обмен",
-        statistics: "Статистика",
-        bonuses: "Бонусы",
-        support: "Поддержка",
-        faq: "FAQ",
-        channels: "Наши каналы",
-        settings: "Настройки",
-        back: "Назад",
-        language: "Язык",
-        chooseLanguage: "Выберите язык"
-      },
-      top: {
-        title: "Рейтинг",
-        zmb: "TOP ZMB",
-        ref: "TOP REF",
-        games: "TOP GAMES",
-        position: "Ваша позиция"
-      },
-      friends: {
-        title: "Друзья",
-        subtitle: "Приглашай друзей и получай бонусы.",
-        link: "Ваша реферальная ссылка",
-        copy: "Копировать",
-        share: "Поделиться",
-        invited: "Приглашено",
-        list: "Список друзей"
-      },
-      giveaways: {
-        title: "Розыгрыши",
-        subtitle: "Используй билеты для участия.",
-        participants: "Участников",
-        ends: "Окончание",
-        participate: "Участвовать",
-        tickets: "Мои билеты",
-        ticketRule: "5 просмотров рекламы = 1 билет"
-      },
-      modal: {
-        close: "Закрыть",
-        spin: "КРУТИТЬ",
-        combo: "DAILY COMBO",
-        comboDesc: "Выберите ровно 3 карты.",
-        confirm: "ПОДТВЕРДИТЬ",
-        selected: "Выбрано",
-        reward: "Награда",
-        daily: "Доступно раз в 24 часа",
-        stats: "Статистика",
-        bonuses: "Бонусы",
-        support: "Поддержка",
-        faq: "Частые вопросы",
-        channels: "Наши каналы"
-      },
-      messages: {
-        copied: "Ссылка скопирована",
-        miningStarted: "Майнинг запущен",
-        claimed: "ZMB переведены на баланс",
-        nothing: "Пока нечего забирать",
-        purchased: "Покупка выполнена",
-        insufficient: "Недостаточно ZMB",
-        adFinished: "Реклама просмотрена",
-        ticket: "Вы получили билет",
-        comboNeed: "Выберите ровно 3 карты",
-        comboWin: "Комбо угадано! +10 ZMB",
-        comboLose: "Комбо не угадано",
-        wheelWait: "Колесо уже использовано сегодня",
-        wheelWin: "Вы выиграли",
-        withdrawalDemo: "Заявка создана в демо-режиме",
-        swapDone: "Обмен выполнен",
-        language: "Язык изменён",
-        taskDone: "Задание выполнено",
-        noTickets: "Нет билетов"
-      }
-    },
-
-    uk: {
-      nav: {
-        home: "Головна",
-        mining: "Майнінг",
-        games: "Ігри",
-        wallet: "Гаманець",
-        profile: "Профіль"
-      },
-      home: {
-        balance: "Ваш баланс",
-        ton: "TON баланс",
-        mining: "Майнінг",
-        miningDesc: "Запускай видобуток ZMB",
-        games: "Ігри",
-        gamesDesc: "Грай та отримуй ZMB",
-        earn: "Заробіток",
-        earnDesc: "Реклама та завдання",
-        giveaways: "Розіграші",
-        giveawaysDesc: "Квитки та призи",
-        level: "Рівень",
-        payout: "Останні виплати",
-        all: "Усі",
-        demo: "Демонстраційна стрічка"
-      },
-      mining: {
-        title: "Майнінг",
-        subtitle: "Накопичені ZMB залишаються тут до отримання.",
-        accrued: "Накопичено",
-        rate: "Швидкість",
-        start: "ЗАПУСТИТИ МАЙНІНГ",
-        claim: "ЗАБРАТИ",
-        stopped: "Майнінг не запущено",
-        active: "Майнінг активний",
-        demoAd: "Перед запуском буде показано демонстраційну рекламу.",
-        miners: "Майнери",
-        boosts: "Бустери",
-        shop: "Магазин",
-        owned: "Придбано",
-        buy: "Купити",
-        equipped: "Активний"
-      },
-      games: {
-        title: "Ігри",
-        subtitle: "Грай, набирай очки та отримуй ZMB.",
-        flip: "Zombie Flip",
-        flipDesc: "Лети між перешкодами.",
-        run: "Zombie Run",
-        runDesc: "Біжи, стрибай та збирай монети.",
-        best: "Рекорд"
-      },
-      earn: {
-        title: "Заробіток",
-        subtitle: "Дивись рекламу та виконуй завдання.",
-        ads: "Реклама",
-        promote: "Просування",
-        network1: "Ad Network",
-        network2: "Partner Network",
-        watched: "Переглянуто",
-        watch: "Дивитися",
-        reward: "+0.5 ZMB",
-        tasks: "Завдання",
-        subscribe: "Підписатися",
-        taskReward: "+2 ZMB",
-        demo: "Рекламні перегляди працюють у демо-режимі."
-      },
-      wallet: {
-        title: "Гаманець",
-        subtitle: "Обмін та виведення TON.",
-        swap: "Обмін",
-        withdraw: "Виведення",
-        history: "Історія",
-        from: "З",
-        to: "В",
-        amount: "Кількість",
-        swapButton: "ОБМІНЯТИ",
-        rate: "Демо-курс",
-        tonAddress: "TON адреса",
-        tonAmount: "Кількість TON",
-        minimum: "Мінімум",
-        fee: "Комісія",
-        receive: "Отримаєте",
-        withdrawButton: "ВИВЕСТИ",
-        demoWithdraw: "Виведення працює лише як демонстрація."
-      },
-      profile: {
-        title: "Профіль",
-        withdraw: "Виведення",
-        swap: "Обмін",
-        statistics: "Статистика",
-        bonuses: "Бонуси",
-        support: "Підтримка",
-        faq: "FAQ",
-        channels: "Наші канали",
-        settings: "Налаштування",
-        back: "Назад",
-        language: "Мова",
-        chooseLanguage: "Оберіть мову"
-      },
-      top: {
-        title: "Рейтинг",
-        zmb: "TOP ZMB",
-        ref: "TOP REF",
-        games: "TOP GAMES",
-        position: "Ваша позиція"
-      },
-      friends: {
-        title: "Друзі",
-        subtitle: "Запрошуй друзів та отримуй бонуси.",
-        link: "Ваше реферальне посилання",
-        copy: "Копіювати",
-        share: "Поділитися",
-        invited: "Запрошено",
-        list: "Список друзів"
-      },
-      giveaways: {
-        title: "Розіграші",
-        subtitle: "Використовуй квитки для участі.",
-        participants: "Учасників",
-        ends: "Завершення",
-        participate: "Взяти участь",
-        tickets: "Мої квитки",
-        ticketRule: "5 переглядів реклами = 1 квиток"
-      },
-      modal: {
-        close: "Закрити",
-        spin: "КРУТИТИ",
-        combo: "DAILY COMBO",
-        comboDesc: "Оберіть рівно 3 карти.",
-        confirm: "ПІДТВЕРДИТИ",
-        selected: "Обрано",
-        reward: "Нагорода",
-        daily: "Доступно раз на 24 години",
-        stats: "Статистика",
-        bonuses: "Бонуси",
-        support: "Підтримка",
-        faq: "Часті питання",
-        channels: "Наші канали"
-      },
-      messages: {
-        copied: "Посилання скопійовано",
-        miningStarted: "Майнінг запущено",
-        claimed: "ZMB переведено на баланс",
-        nothing: "Поки нічого забирати",
-        purchased: "Покупку виконано",
-        insufficient: "Недостатньо ZMB",
-        adFinished: "Рекламу переглянуто",
-        ticket: "Ви отримали квиток",
-        comboNeed: "Оберіть рівно 3 карти",
-        comboWin: "Комбо вгадано! +10 ZMB",
-        comboLose: "Комбо не вгадано",
-        wheelWait: "Колесо вже використано сьогодні",
-        wheelWin: "Ви виграли",
-        withdrawalDemo: "Заявку створено в демо-режимі",
-        swapDone: "Обмін виконано",
-        language: "Мову змінено",
-        taskDone: "Завдання виконано",
-        noTickets: "Немає квитків"
-      }
-    },
-
-    en: {
-      nav: {
-        home: "Home",
-        mining: "Mining",
-        games: "Games",
-        wallet: "Wallet",
-        profile: "Profile"
-      },
-      home: {
-        balance: "Your balance",
-        ton: "TON balance",
-        mining: "Mining",
-        miningDesc: "Start earning ZMB",
-        games: "Games",
-        gamesDesc: "Play and earn ZMB",
-        earn: "Earn",
-        earnDesc: "Ads and tasks",
-        giveaways: "Giveaways",
-        giveawaysDesc: "Tickets and prizes",
-        level: "Level",
-        payout: "Recent payouts",
-        all: "All",
-        demo: "Demo payout feed"
-      },
-      mining: {
-        title: "Mining",
-        subtitle: "Accumulated ZMB stays here until claimed.",
-        accrued: "Accrued",
-        rate: "Rate",
-        start: "START MINING",
-        claim: "CLAIM",
-        stopped: "Mining is not active",
-        active: "Mining is active",
-        demoAd: "A demo ad will be shown before starting.",
-        miners: "Miners",
-        boosts: "Boosts",
-        shop: "Shop",
-        owned: "Owned",
-        buy: "Buy",
-        equipped: "Active"
-      },
-      games: {
-        title: "Games",
-        subtitle: "Play, score and earn ZMB.",
-        flip: "Zombie Flip",
-        flipDesc: "Fly between obstacles.",
-        run: "Zombie Run",
-        runDesc: "Run, jump and collect coins.",
-        best: "Best"
-      },
-      earn: {
-        title: "Earn",
-        subtitle: "Watch ads and complete tasks.",
-        ads: "Ads",
-        promote: "Promote",
-        network1: "Ad Network",
-        network2: "Partner Network",
-        watched: "Watched",
-        watch: "Watch",
-        reward: "+0.5 ZMB",
-        tasks: "Tasks",
-        subscribe: "Subscribe",
-        taskReward: "+2 ZMB",
-        demo: "Ad views are running in demo mode."
-      },
-      wallet: {
-        title: "Wallet",
-        subtitle: "Swap and withdraw TON.",
-        swap: "Swap",
-        withdraw: "Withdraw",
-        history: "History",
-        from: "From",
-        to: "To",
-        amount: "Amount",
-        swapButton: "SWAP",
-        rate: "Demo rate",
-        tonAddress: "TON address",
-        tonAmount: "TON amount",
-        minimum: "Minimum",
-        fee: "Fee",
-        receive: "You receive",
-        withdrawButton: "WITHDRAW",
-        demoWithdraw: "Withdrawals work as a demo only."
-      },
-      profile: {
-        title: "Profile",
-        withdraw: "Withdraw",
-        swap: "Swap",
-        statistics: "Statistics",
-        bonuses: "Bonuses",
-        support: "Support",
-        faq: "FAQ",
-        channels: "Our channels",
-        settings: "Settings",
-        back: "Back",
-        language: "Language",
-        chooseLanguage: "Choose language"
-      },
-      top: {
-        title: "Leaderboard",
-        zmb: "TOP ZMB",
-        ref: "TOP REF",
-        games: "TOP GAMES",
-        position: "Your position"
-      },
-      friends: {
-        title: "Friends",
-        subtitle: "Invite friends and earn bonuses.",
-        link: "Your referral link",
-        copy: "Copy",
-        share: "Share",
-        invited: "Invited",
-        list: "Friends list"
-      },
-      giveaways: {
-        title: "Giveaways",
-        subtitle: "Use tickets to participate.",
-        participants: "Participants",
-        ends: "Ends",
-        participate: "Participate",
-        tickets: "My tickets",
-        ticketRule: "5 ad views = 1 ticket"
-      },
-      modal: {
-        close: "Close",
-        spin: "SPIN",
-        combo: "DAILY COMBO",
-        comboDesc: "Select exactly 3 cards.",
-        confirm: "CONFIRM",
-        selected: "Selected",
-        reward: "Reward",
-        daily: "Available once every 24 hours",
-        stats: "Statistics",
-        bonuses: "Bonuses",
-        support: "Support",
-        faq: "FAQ",
-        channels: "Our channels"
-      },
-      messages: {
-        copied: "Link copied",
-        miningStarted: "Mining started",
-        claimed: "ZMB added to balance",
-        nothing: "Nothing to claim yet",
-        purchased: "Purchase completed",
-        insufficient: "Not enough ZMB",
-        adFinished: "Ad completed",
-        ticket: "You received a ticket",
-        comboNeed: "Select exactly 3 cards",
-        comboWin: "Combo matched! +10 ZMB",
-        comboLose: "Combo did not match",
-        wheelWait: "Wheel already used today",
-        wheelWin: "You won",
-        withdrawalDemo: "Demo withdrawal request created",
-        swapDone: "Swap completed",
-        language: "Language changed",
-        taskDone: "Task completed",
-        noTickets: "No tickets"
-      }
-    }
-  };
-
-  /* =========================
-     STATE
-  ========================= */
-
-  const DEFAULT_STATE = {
-    version: 4,
-    language: "ru",
-
-    balance: 128.42,
-    ton: 2.37,
-
-    level: 7,
-    xp: 742,
-
-    mining: {
-      active: false,
-      startedAt: 0,
-      accumulated: 0,
-      baseRate: 0.0000035
-    },
-
-    miner: 0,
-
-    boosts: {
-      turbo: 0,
-      battery: 0,
-      reactor: 0,
-      lucky: 0
-    },
-
-    ads: {
-      network1: 0,
-      network2: 0
-    },
-
-    tasks: {},
-
-    tickets: 3,
-
-    wheelLast: 0,
-    comboLast: 0,
-
-    games: {
-      flipBest: 0,
-      runBest: 0,
-      totalZmb: 0
-    },
-
-    referrals: [
-      { name: "ZombieFox", reward: 12.4 },
-      { name: "DeadPixel", reward: 8.7 },
-      { name: "CryptoWalk", reward: 5.2 }
-    ],
-
-    history: []
-  };
-
-  function clone(obj) {
-    return JSON.parse(JSON.stringify(obj));
-  }
-
-  function loadState() {
-    try {
-      const raw = localStorage.getItem("paid_zombie_state");
-      if (!raw) return clone(DEFAULT_STATE);
-
-      const saved = JSON.parse(raw);
-      const base = clone(DEFAULT_STATE);
-
-      return {
-        ...base,
-        ...saved,
-        mining: {
-          ...base.mining,
-          ...(saved.mining || {})
-        },
-        boosts: {
-          ...base.boosts,
-          ...(saved.boosts || {})
-        },
-        ads: {
-          ...base.ads,
-          ...(saved.ads || {})
-        },
-        games: {
-          ...base.games,
-          ...(saved.games || {})
-        }
-      };
-    } catch (_) {
-      return clone(DEFAULT_STATE);
-    }
-  }
-
-  let state = loadState();
-
-  function saveState() {
-    try {
-      localStorage.setItem("paid_zombie_state", JSON.stringify(state));
-    } catch (_) {}
-  }
-
-  /* =========================
-     HELPERS
-  ========================= */
-
-  const $ = (selector, root = document) => root.querySelector(selector);
-
-  function escapeHTML(value) {
-    return String(value ?? "")
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
-  }
-
-  function t(path, vars = {}) {
-    const lang = I18N[state.language] || I18N.ru;
-    const fallback = I18N.en;
-
-    function get(obj, p) {
-      return p.split(".").reduce((acc, key) => acc?.[key], obj);
-    }
-
-    let text = get(lang, path);
-
-    if (text == null) {
-      text = get(fallback, path);
-    }
-
-    if (text == null) {
-      return path;
-    }
-
-    return String(text).replace(/\{(\w+)\}/g, (_, key) => {
-      return vars[key] ?? "";
-    });
-  }
-
-  function fmt(num, decimals = 4) {
-    return Number(num || 0).toLocaleString("en-US", {
-      minimumFractionDigits: decimals,
-      maximumFractionDigits: decimals
-    });
-  }
-
-  function short(num) {
-    return Number(num || 0).toLocaleString("en-US", {
-      maximumFractionDigits: 2
-    });
-  }
-
-  function random(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-  }
-
-  function toast(message) {
-    const el = $("#toast");
-    el.textContent = message;
-    el.classList.add("show");
-
-    clearTimeout(toast.timer);
-
-    toast.timer = setTimeout(() => {
-      el.classList.remove("show");
-    }, 2200);
-  }
-
-  function setIcons() {
-    document.querySelectorAll("[data-icon]").forEach(el => {
-      el.innerHTML = icon(el.dataset.icon);
-    });
-  }
-
-  function avatarHTML(sizeClass = "") {
-    const first =
-      tgUser.first_name ||
-      tgUser.username ||
-      "Z";
-
-    const initials = escapeHTML(first.slice(0, 1).toUpperCase());
-
-    if (tgUser.photo_url) {
-      return `
-        <div class="avatar ${sizeClass}">
-          <img src="${escapeHTML(tgUser.photo_url)}" alt="">
-        </div>
-      `;
-    }
-
-    return `
-      <div class="avatar ${sizeClass}">
-        ${initials}
-      </div>
-    `;
-  }
-
-  function username() {
-    if (tgUser.username) return "@" + tgUser.username;
-    if (tgUser.first_name) return tgUser.first_name;
-    return "Zombie";
-  }
-
-  function miningRate() {
-    let rate = state.mining.baseRate;
-
-    const miners = [
-      1,
-      1.7,
-      2.8,
-      4.4,
-      6.5,
-      9
-    ];
-
-    rate *= miners[state.miner] || 1;
-
-    rate *= 1 + state.boosts.turbo * .25;
-    rate *= 1 + state.boosts.reactor * .5;
-    rate *= 1 + state.boosts.battery * .1;
-
-    return rate;
-  }
-
-  function miningAccrued() {
-    let amount = Number(state.mining.accumulated || 0);
-
-    if (state.mining.active && state.mining.startedAt) {
-      const seconds = Math.max(
-        0,
-        (Date.now() - state.mining.startedAt) / 1000
-      );
-
-      amount += seconds * miningRate();
-    }
-
-    return amount;
-  }
-
-  function addHistory(type, amount, currency = "ZMB") {
-    state.history.unshift({
-      type,
-      amount,
-      currency,
-      time: Date.now()
-    });
-
-    state.history = state.history.slice(0, 30);
-  }
-
-  function addXP(amount) {
-    state.xp += amount;
-
-    while (state.xp >= 1000) {
-      state.xp -= 1000;
-      state.level++;
-    }
-  }
-
-  /* =========================
-     RENDER
-  ========================= */
-
-  let currentScreen = "home";
-  let miningTimer = null;
-  let payoutTimer = null;
-
-  function render() {
-    const app = $("#app");
-
-    if (currentScreen === "home") app.innerHTML = homeScreen();
-    if (currentScreen === "mining") app.innerHTML = miningScreen();
-    if (currentScreen === "games") app.innerHTML = gamesScreen();
-    if (currentScreen === "earn") app.innerHTML = earnScreen();
-    if (currentScreen === "wallet") app.innerHTML = walletScreen();
-    if (currentScreen === "profile") app.innerHTML = profileScreen();
-    if (currentScreen === "top") app.innerHTML = topScreen();
-    if (currentScreen === "friends") app.innerHTML = friendsScreen();
-    if (currentScreen === "giveaways") app.innerHTML = giveawaysScreen();
-
-    updateNav();
-    setIcons();
-  }
-
-  function header() {
-    return `
-      <div class="topbar">
-        <div class="user-mini">
-          ${avatarHTML()}
-          <div class="user-info">
-            <div class="user-name">${escapeHTML(username())}</div>
-            <div class="user-sub">${t("home.level")} ${state.level}</div>
-          </div>
-        </div>
-
-        <div class="brand"><span>PAID ZOMBIE</span></div>
-      </div>
-    `;
-  }
-
-  function homeScreen() {
-    return `
-      <main class="page">
-        ${header()}
-
-        <section class="balance-card">
-          <div class="balance-label">${t("home.balance")}</div>
-
-          <div class="balance-value">
-            ${fmt(state.balance, 2)}
-            <span class="balance-unit">ZMB</span>
-          </div>
-
-          <div class="ton-balance">
-            ${fmt(state.ton, 3)} TON
-          </div>
-
-          <div class="balance-actions">
-            <button class="small-btn primary" data-action="nav" data-screen="wallet">
-              ${t("wallet.swap")}
-            </button>
-
-            <button class="small-btn" data-action="openProfileItem" data-item="withdraw">
-              ${t("profile.withdraw")}
-            </button>
-          </div>
-        </section>
-
-        <section class="section">
-          <div class="quick-grid">
-
-            <button class="quick-card mining"
-                    data-action="nav"
-                    data-screen="mining">
-
-              <div class="icon-box">
-                ${icon("pickaxe")}
-              </div>
-
-              <div class="quick-name">${t("home.mining")}</div>
-              <div class="quick-desc">${t("home.miningDesc")}</div>
-            </button>
-
-            <button class="quick-card games"
-                    data-action="nav"
-                    data-screen="games">
-
-              <div class="icon-box">
-                ${icon("game")}
-              </div>
-
-              <div class="quick-name">${t("home.games")}</div>
-              <div class="quick-desc">${t("home.gamesDesc")}</div>
-            </button>
-
-            <button class="quick-card earn"
-                    data-action="nav"
-                    data-screen="earn">
-
-              <div class="icon-box">
-                ${icon("bolt")}
-              </div>
-
-              <div class="quick-name">${t("home.earn")}</div>
-              <div class="quick-desc">${t("home.earnDesc")}</div>
-            </button>
-
-            <button class="quick-card giveaways"
-                    data-action="nav"
-                    data-screen="giveaways">
-
-              <div class="icon-box">
-                ${icon("gift")}
-              </div>
-
-              <div class="quick-name">${t("home.giveaways")}</div>
-              <div class="quick-desc">${t("home.giveawaysDesc")}</div>
-            </button>
-
-          </div>
-        </section>
-
-        <section class="section">
-          <div class="section-head">
-            <div class="section-title">${t("home.level")} ${state.level}</div>
-            <div class="xp">${state.xp}/1000 XP</div>
-          </div>
-
-          <div class="progress-card">
-            <div class="progress">
-              <div style="width:${Math.min(100, state.xp / 10)}%"></div>
-            </div>
-          </div>
-        </section>
-
-        <section class="section">
-          <div class="section-head">
-            <div class="section-title">${t("home.payout")}</div>
-
-            <button class="section-link"
-                    data-action="nav"
-                    data-screen="top">
-              ${t("home.all")}
-            </button>
-          </div>
-
-          <div class="feed">
-            ${payoutsHTML()}
-          </div>
-
-          <div class="demo-label">${t("home.demo")}</div>
-        </section>
-      </main>
-    `;
-  }
-
-  let payouts = [
-    ["ZombieMike", "1,284.20 ZMB"],
-    ["CryptoSoul", "742.50 ZMB"],
-    ["DeadWalker", "519.00 ZMB"],
-    ["NightMiner", "386.40 ZMB"],
-    ["PixelZombie", "251.80 ZMB"]
-  ];
-
-  function payoutsHTML() {
-    return payouts.slice(0, 5).map((p, i) => `
-      <div class="feed-item">
-        <div class="feed-avatar">
-          ${escapeHTML(p[0].slice(0,1))}
-        </div>
-
-        <div class="feed-text">
-          <div class="feed-name">${escapeHTML(p[0])}</div>
-          <div class="feed-desc">ZMB payout</div>
-        </div>
-
-        <div class="feed-amount">${escapeHTML(p[1])}</div>
-      </div>
-    `).join("");
-  }
-
-  function miningScreen() {
-    const accrued = miningAccrued();
-
-    return `
-      <main class="page">
-        ${header()}
-
-        <div class="back-row">
-          <button class="back-btn" data-action="nav" data-screen="home">
-            ${icon("back")}
-          </button>
-
-          <div>
-            <div class="screen-title">${t("mining.title")}</div>
-            <div class="screen-subtitle">${t("mining.subtitle")}</div>
-          </div>
-        </div>
-
-        <section class="mining-display">
-          <div class="mining-value" id="mining-live">
-            ${fmt(accrued, 7)} ZMB
-          </div>
-
-          <div class="mining-rate">
-            ${t("mining.rate")}: ${fmt(miningRate() * 3600, 4)} ZMB / h
-          </div>
-
-          <button
-            class="main-action ${state.mining.active ? "green" : ""}"
-            data-action="${state.mining.active ? "claimMining" : "startMining"}">
-            ${state.mining.active ? t("mining.claim") : t("mining.start")}
-          </button>
-        </section>
-
-        <div class="panel">
-          <div class="panel-title">
-            ${state.mining.active ? t("mining.active") : t("mining.stopped")}
-          </div>
-
-          <div class="panel-muted">
-            ${t("mining.demoAd")}
-          </div>
-        </div>
-
-        <section class="section">
-          <div class="tabs">
-            <button class="tab active" data-action="miningTab" data-tab="miners">
-              ${t("mining.miners")}
-            </button>
-
-            <button class="tab" data-action="miningTab" data-tab="boosts">
-              ${t("mining.boosts")}
-            </button>
-          </div>
-
-          <div id="mining-products">
-            ${minersHTML()}
-          </div>
-        </section>
-      </main>
-    `;
-  }
-
-  const MINERS = [
-    {
-      name: "Starter",
-      profit: "0.0000035 ZMB/s",
-      price: 0,
-      desc: "Базовый майнер"
-    },
-    {
-      name: "Worker",
-      profit: "0.000006 ZMB/s",
-      price: 50,
-      desc: "Надёжный рабочий модуль"
-    },
-    {
-      name: "Hunter",
-      profit: "0.0000098 ZMB/s",
-      price: 140,
-      desc: "Улучшенный модуль добычи"
-    },
-    {
-      name: "Mutant",
-      profit: "0.0000154 ZMB/s",
-      price: 320,
-      desc: "Мощный мутировавший майнер"
-    },
-    {
-      name: "Overlord",
-      profit: "0.0000227 ZMB/s",
-      price: 700,
-      desc: "Максимальный демо-уровень"
-    }
-  ];
-
-  function minersHTML() {
-    return `
-      <div class="list">
-        ${MINERS.map((m, i) => {
-          const owned = state.miner >= i;
-
-          return `
-            <div class="list-card">
-              <div class="list-icon">
-                ${icon("bolt")}
-              </div>
-
-              <div class="list-info">
-                <div class="list-name">${m.name}</div>
-                <div class="list-desc">
-                  ${m.desc}<br>${m.profit}
-                </div>
-              </div>
-
-              <div class="list-right">
-                <div class="price">
-                  ${i === 0 ? t("mining.owned") : m.price + " ZMB"}
-                </div>
-
-                ${
-                  owned
-                    ? `<div class="mini-btn" style="color:var(--green)">
-                        ${t("mining.equipped")}
-                       </div>`
-                    : `<button class="mini-btn"
-                              data-action="buyMiner"
-                              data-id="${i}">
-                        ${t("mining.buy")}
-                       </button>`
-                }
-              </div>
-            </div>
-          `;
-        }).join("")}
-      </div>
-    `;
-  }
-
-  const BOOSTS = [
-    {
-      id: "turbo",
-      name: "Turbo",
-      desc: "+25% к скорости за уровень",
-      price: 80
-    },
-    {
-      id: "battery",
-      name: "Battery",
-      desc: "+10% к скорости за уровень",
-      price: 60
-    },
-    {
-      id: "reactor",
-      name: "Overdrive",
-      desc: "+50% к скорости за уровень",
-      price: 180
-    },
-    {
-      id: "lucky",
-      name: "Lucky Drop",
-      desc: "Улучшает бонусные награды",
-      price: 120
-    },
-    {
-      id: "quantum",
-      name: "Quantum",
-      desc: "Дополнительный уровень эффективности",
-      price: 250
-    }
-  ];
-
-  function boostsHTML() {
-    return `
-      <div class="list">
-        ${BOOSTS.map(b => {
-          const level =
-            state.boosts[b.id] ||
-            (b.id === "quantum" ? 0 : 0);
-
-          return `
-            <div class="list-card">
-              <div class="list-icon">
-                ${icon("bolt")}
-              </div>
-
-              <div class="list-info">
-                <div class="list-name">${b.name} · Lv.${level}</div>
-                <div class="list-desc">${b.desc}</div>
-              </div>
-
-              <div class="list-right">
-                <div class="price">${b.price} ZMB</div>
-
-                <button class="mini-btn"
-                        data-action="buyBoost"
-                        data-id="${b.id}">
-                  ${t("mining.buy")}
-                </button>
-              </div>
-            </div>
-          `;
-        }).join("")}
-      </div>
-    `;
-  }
-
-  function gamesScreen() {
-    return `
-      <main class="page">
-        ${header()}
-
-        <div class="screen-title">${t("games.title")}</div>
-        <div class="screen-subtitle">${t("games.subtitle")}</div>
-
-        <div class="game-grid">
-
-          <button class="game-card flip"
-                  data-action="openGame"
-                  data-game="flip">
-
-            <div class="game-icon">
-              ${icon("game")}
-            </div>
-
-            <div class="game-name">${t("games.flip")}</div>
-            <div class="game-desc">${t("games.flipDesc")}</div>
-
-            <div class="game-open">
-              ${icon("arrow")}
-            </div>
-          </button>
-
-          <button class="game-card run"
-                  data-action="openGame"
-                  data-game="run">
-
-            <div class="game-icon">
-              ${icon("bolt")}
-            </div>
-
-            <div class="game-name">${t("games.run")}</div>
-            <div class="game-desc">${t("games.runDesc")}</div>
-
-            <div class="game-open">
-              ${icon("arrow")}
-            </div>
-          </button>
-
-        </div>
-
-        <section class="section">
-          <div class="section-title">${t("games.best")}</div>
-
-          <div class="list">
-            <div class="list-card">
-              <div class="list-icon">${icon("game")}</div>
-              <div class="list-info">
-                <div class="list-name">Zombie Flip</div>
-              </div>
-              <div class="price">${state.games.flipBest}</div>
-            </div>
-
-            <div class="list-card">
-              <div class="list-icon">${icon("bolt")}</div>
-              <div class="list-info">
-                <div class="list-name">Zombie Run</div>
-              </div>
-              <div class="price">${state.games.runBest}</div>
-            </div>
-          </div>
-        </section>
-      </main>
-    `;
-  }
-
-  function earnScreen() {
-    return `
-      <main class="page">
-        ${header()}
-
-        <div class="screen-title">${t("earn.title")}</div>
-        <div class="screen-subtitle">${t("earn.subtitle")}</div>
-
-        <div class="tabs" style="margin-top:18px">
-          <button class="tab active" data-action="earnTab" data-tab="ads">
-            ${t("earn.ads")}
-          </button>
-
-          <button class="tab" data-action="earnTab" data-tab="promote">
-            ${t("earn.promote")}
-          </button>
-        </div>
-
-        <div id="earn-content">
-          ${adsHTML()}
-        </div>
-      </main>
-    `;
-  }
-
-  function adsHTML() {
-    return `
-      <div class="earn-grid">
-
-        ${adNetworkHTML(
-          "network1",
-          t("earn.network1")
-        )}
-
-        ${adNetworkHTML(
-          "network2",
-          t("earn.network2")
-        )}
-
-      </div>
-
-      <section class="section">
-        <div class="section-title">${t("earn.tasks")}</div>
-
-        <div class="list">
-          ${taskHTML("channel1", "Telegram Channel")}
-          ${taskHTML("channel2", "Zombie Community")}
-          ${taskHTML("channel3", "Partner Channel")}
-        </div>
-      </section>
-
-      <div class="demo-label">${t("earn.demo")}</div>
-    `;
-  }
-
-  function adNetworkHTML(id, name) {
-    const count = state.ads[id] || 0;
-
-    return `
-      <div class="ad-card">
-        <div class="ad-top">
-          <div class="ad-name">${name}</div>
-          <div class="ad-counter">${t("earn.watched")}: ${count}/20</div>
-        </div>
-
-        <div class="ad-bottom">
-          <div class="reward">${t("earn.reward")}</div>
-
-          <button class="watch-btn"
-                  ${count >= 20 ? "disabled" : ""}
-                  data-action="watchAd"
-                  data-network="${id}">
-            ${count >= 20 ? "20/20" : t("earn.watch")}
-          </button>
-        </div>
-      </div>
-    `;
-  }
-
-  function taskHTML(id, name) {
-    const done = !!state.tasks[id];
-
-    return `
-      <div class="list-card">
-        <div class="list-icon">${icon("users")}</div>
-
-        <div class="list-info">
-          <div class="list-name">${name}</div>
-          <div class="list-desc">${t("earn.taskReward")}</div>
-        </div>
-
-        ${
-          done
-            ? `<div class="price" style="color:var(--green)">✓</div>`
-            : `<button class="mini-btn"
-                      data-action="task"
-                      data-task="${id}">
-                 ${t("earn.subscribe")}
-               </button>`
-        }
-      </div>
-    `;
-  }
-
-  function walletScreen() {
-    return `
-      <main class="page">
-        ${header()}
-
-        <div class="screen-title">${t("wallet.title")}</div>
-        <div class="screen-subtitle">${t("wallet.subtitle")}</div>
-
-        <div class="wallet-box">
-          <div class="tabs">
-            <button class="tab active" data-action="walletTab" data-tab="swap">
-              ${t("wallet.swap")}
-            </button>
-
-            <button class="tab" data-action="walletTab" data-tab="withdraw">
-              ${t("wallet.withdraw")}
-            </button>
-          </div>
-
-          <div id="wallet-content">
-            ${swapHTML()}
-          </div>
-        </div>
-
-        <section class="section">
-          <div class="section-title">${t("wallet.history")}</div>
-          ${historyHTML()}
-        </section>
-      </main>
-    `;
-  }
-
-  function swapHTML() {
-    return `
-      <div style="margin-top:17px">
-        <div class="swap-row">
-
-          <div>
-            <label class="field-label">${t("wallet.from")}</label>
-            <select id="swap-from" class="field">
-              <option value="ZMB">ZMB</option>
-              <option value="TON">TON</option>
-            </select>
-          </div>
-
-          <button class="swap-arrow"
-                  data-action="swapDirection">
-            ${icon("refresh")}
-          </button>
-
-          <div>
-            <label class="field-label">${t("wallet.to")}</label>
-            <select id="swap-to" class="field">
-              <option value="TON">TON</option>
-              <option value="ZMB">ZMB</option>
-            </select>
-          </div>
-
-        </div>
-
-        <div style="margin-top:12px">
-          <label class="field-label">${t("wallet.amount")}</label>
-          <input id="swap-amount"
-                 class="field"
-                 type="number"
-                 min="0"
-                 step="any"
-                 placeholder="0">
-        </div>
-
-        <div class="panel" style="margin-top:12px">
-          <div class="panel-muted">
-            ${t("wallet.rate")}: 100 ZMB = 1 TON
-          </div>
-        </div>
-
-        <button class="main-action"
-                data-action="swap">
-          ${t("wallet.swapButton")}
-        </button>
-      </div>
-    `;
-  }
-
-  function withdrawHTML() {
-    return `
-      <div style="margin-top:17px">
-
-        <label class="field-label">${t("wallet.tonAddress")}</label>
-
-        <input id="withdraw-address"
-               class="field"
-               placeholder="UQ...">
-
-        <div style="margin-top:12px">
-          <label class="field-label">${t("wallet.tonAmount")}</label>
-
-          <input id="withdraw-amount"
-                 class="field"
-                 type="number"
-                 min="0"
-                 step="any"
-                 placeholder="0">
-        </div>
-
-        <div class="panel">
-          <div class="panel-muted">
-            ${t("wallet.minimum")}: 1 TON<br>
-            ${t("wallet.fee")}: 0.05 TON
-          </div>
-        </div>
-
-        <button class="main-action"
-                data-action="withdraw">
-          ${t("wallet.withdrawButton")}
-        </button>
-
-        <div class="demo-label">${t("wallet.demoWithdraw")}</div>
-      </div>
-    `;
-  }
-
-  function historyHTML() {
-    if (!state.history.length) {
-      return `<div class="empty">—</div>`;
-    }
-
-    return `
-      <div class="list">
-        ${state.history.slice(0, 8).map(h => `
-          <div class="list-card">
-            <div class="list-icon">${icon(h.currency === "TON" ? "wallet" : "bolt")}</div>
-
-            <div class="list-info">
-              <div class="list-name">${escapeHTML(h.type)}</div>
-              <div class="list-desc">
-                ${new Date(h.time).toLocaleString()}
-              </div>
-            </div>
-
-            <div class="price">
-              ${h.amount > 0 ? "+" : ""}${fmt(h.amount, 3)} ${h.currency}
-            </div>
-          </div>
-        `).join("")}
-      </div>
-    `;
-  }
-
-  function profileScreen() {
-    const items = [
-      ["withdraw", "wallet"],
-      ["swap", "refresh"],
-      ["statistics", "chart"],
-      ["bonuses", "gift"],
-      ["support", "support"],
-      ["faq", "question"],
-      ["channels", "users"],
-      ["settings", "settings"],
-      ["back", "back"]
-    ];
-
-    return `
-      <main class="page">
-        ${header()}
-
-        <div class="screen-title">${t("profile.title")}</div>
-        <div class="screen-subtitle">
-          ${escapeHTML(username())}
-        </div>
-
-        <div class="profile-menu">
-          ${items.map(([key, ico]) => `
-            <button class="profile-item"
-                    data-action="${key === "back" ? "nav" : "openProfileItem"}"
-                    ${key === "back" ? 'data-screen="home"' : `data-item="${key}"`}>
-
-              <div class="profile-item-icon">
-                ${icon(ico)}
-              </div>
-
-              <div class="profile-item-text">
-                ${t("profile." + key)}
-              </div>
-
-              <div class="profile-arrow">
-                ${icon("arrow")}
-              </div>
-            </button>
-          `).join("")}
-        </div>
-      </main>
-    `;
-  }
-
-  function topScreen() {
-    return `
-      <main class="page">
-        ${header()}
-
-        <div class="back-row">
-          <button class="back-btn" data-action="nav" data-screen="home">
-            ${icon("back")}
-          </button>
-
-          <div>
-            <div class="screen-title">${t("top.title")}</div>
-          </div>
-        </div>
-
-        <div class="tabs rank-tabs">
-          <button class="tab active" data-action="rankTab" data-tab="zmb">
-            ${t("top.zmb")}
-          </button>
-
-          <button class="tab" data-action="rankTab" data-tab="ref">
-            ${t("top.ref")}
-          </button>
-
-          <button class="tab" data-action="rankTab" data-tab="games">
-            ${t("top.games")}
-          </button>
-        </div>
-
-        <div id="rank-content">
-          ${rankingHTML("zmb")}
-        </div>
-      </main>
-    `;
-  }
-
-  function rankingHTML(type) {
-    const names = [
-      "DarkZombie","MangoX","GhostNode","DeadPixel","ZombieFox",
-      "TONWalker","NightCore","CryptoSoul","MutantX","ZeroCool",
-      "PixelLord","DeadShot","MinerOne","ZMBHunter","BlackByte",
-      "CryptoKid","NightMiner","ZombieKing","AlphaDead","MoonWalker"
-    ];
-
-    return `
-      <div class="rank-list">
-        ${names.map((name, i) => {
-          let value;
-
-          if (type === "zmb") value = fmt(25000 - i * 713, 0) + " ZMB";
-          if (type === "ref") value = Math.max(2, 84 - i * 3) + " refs";
-          if (type === "games") value = Math.max(150, 9800 - i * 417);
-
-          return `
-            <div class="rank-row">
-              <div class="rank-num">${i + 1}</div>
-              <div class="rank-user">${name}</div>
-              <div class="rank-value">${value}</div>
-            </div>
-          `;
-        }).join("")}
-      </div>
-
-      <div class="current-rank">
-        <span>${t("top.position")}</span>
-        <strong>#${random(51, 180)}</strong>
-      </div>
-    `;
-  }
-
-  function friendsScreen() {
-    const id = tgUser.id || "demo";
-    const link = `https://t.me/paid_zombie_bot?start=ref_${id}`;
-
-    return `
-      <main class="page">
-        ${header()}
-
-        <div class="back-row">
-          <button class="back-btn" data-action="nav" data-screen="home">
-            ${icon("back")}
-          </button>
-
-          <div>
-            <div class="screen-title">${t("friends.title")}</div>
-            <div class="screen-subtitle">${t("friends.subtitle")}</div>
-          </div>
-        </div>
-
-        <div class="ref-box">
-          <div class="panel-title">${t("friends.link")}</div>
-
-          <div class="ref-link" id="ref-link">
-            ${escapeHTML(link)}
-          </div>
-
-          <div class="ref-actions">
-            <button class="small-btn primary"
-                    data-action="copyReferral"
-                    data-link="${escapeHTML(link)}">
-              ${t("friends.copy")}
-            </button>
-
-            <button class="small-btn"
-                    data-action="shareReferral"
-                    data-link="${escapeHTML(link)}">
-              ${t("friends.share")}
-            </button>
-          </div>
-        </div>
-
-        <section class="section">
-          <div class="section-head">
-            <div class="section-title">${t("friends.list")}</div>
-            <div class="xp">
-              ${t("friends.invited")}: ${state.referrals.length}
-            </div>
-          </div>
-
-          <div class="list">
-            ${state.referrals.map(r => `
-              <div class="list-card">
-                <div class="list-icon">${icon("user")}</div>
-
-                <div class="list-info">
-                  <div class="list-name">${escapeHTML(r.name)}</div>
-                  <div class="list-desc">Referral reward</div>
-                </div>
-
-                <div class="price" style="color:var(--green)">
-                  +${fmt(r.reward, 1)} ZMB
-                </div>
-              </div>
-            `).join("")}
-          </div>
-        </section>
-      </main>
-    `;
-  }
-
-  function giveawaysScreen() {
-    const giveaways = [
-      {
-        prize: "100 TON",
-        participants: 1842,
-        end: Date.now() + 1000 * 60 * 60 * 18
-      },
-      {
-        prize: "50 TON",
-        participants: 921,
-        end: Date.now() + 1000 * 60 * 60 * 42
-      },
-      {
-        prize: "25 TON",
-        participants: 487,
-        end: Date.now() + 1000 * 60 * 60 * 70
-      }
-    ];
-
-    return `
-      <main class="page">
-        ${header()}
-
-        <div class="back-row">
-          <button class="back-btn" data-action="nav" data-screen="home">
-            ${icon("back")}
-          </button>
-
-          <div>
-            <div class="screen-title">${t("giveaways.title")}</div>
-            <div class="screen-subtitle">${t("giveaways.subtitle")}</div>
-          </div>
-        </div>
-
-        <div class="panel">
-          <div class="panel-title">
-            ${t("giveaways.tickets")}: ${state.tickets}
-          </div>
-
-          <div class="panel-muted">
-            ${t("giveaways.ticketRule")}
-          </div>
-        </div>
-
-        <div class="giveaway-list">
-          ${giveaways.map((g, i) => `
-            <div class="giveaway">
-              <div class="giveaway-prize">${g.prize}</div>
-
-              <div class="giveaway-meta">
-                <div class="meta-box">
-                  <div class="meta-label">${t("giveaways.participants")}</div>
-                  <div class="meta-value">${g.participants}</div>
-                </div>
-
-                <div class="meta-box">
-                  <div class="meta-label">${t("giveaways.ends")}</div>
-                  <div class="meta-value countdown"
-                       data-end="${g.end}">
-                    ...
-                  </div>
-                </div>
-              </div>
-
-              <button class="main-action"
-                      data-action="participate"
-                      data-giveaway="${i}">
-                ${t("giveaways.participate")}
-              </button>
-            </div>
-          `).join("")}
-        </div>
-      </main>
-    `;
-  }
-
-  function updateCountdowns() {
-    document.querySelectorAll(".countdown").forEach(el => {
-      const end = Number(el.dataset.end);
-      const left = Math.max(0, end - Date.now());
-
-      const h = Math.floor(left / 3600000);
-      const m = Math.floor((left % 3600000) / 60000);
-      const s = Math.floor((left % 60000) / 1000);
-
-      el.textContent =
-        `${String(h).padStart(2,"0")}:` +
-        `${String(m).padStart(2,"0")}:` +
-        `${String(s).padStart(2,"0")}`;
-    });
-  }
-
-  function updateNav() {
-    document.querySelectorAll(".nav-btn").forEach(btn => {
-      btn.classList.toggle(
-        "active",
-        btn.dataset.screen === currentScreen
-      );
-    });
-  }
-
-  function showScreen(screen) {
-    stopGame();
-
-    currentScreen = screen;
-    render();
-
-    window.scrollTo({
-      top: 0,
-      behavior: "instant"
-    });
-
-    if (screen === "mining") startMiningTicker();
-  }
-
-  /* =========================
-     MINING
-  ========================= */
-
-  function startMiningTicker() {
-    clearInterval(miningTimer);
-
-    miningTimer = setInterval(() => {
-      const el = $("#mining-live");
-
-      if (!el) {
-        clearInterval(miningTimer);
-        return;
-      }
-
-      el.textContent = `${fmt(miningAccrued(), 7)} ZMB`;
-    }, 250);
-  }
-
-  function startMining() {
-    if (state.mining.active) return;
-
-    state.mining.active = true;
-    state.mining.startedAt = Date.now();
-
-    saveState();
-    toast(t("messages.miningStarted"));
-    render();
-    startMiningTicker();
-  }
-
-  function claimMining() {
-    const amount = miningAccrued();
-
-    if (amount <= 0) {
-      toast(t("messages.nothing"));
-      return;
-    }
-
-    state.balance += amount;
-    state.mining.active = false;
-    state.mining.startedAt = 0;
-    state.mining.accumulated = 0;
-
-    addXP(Math.min(50, Math.floor(amount * 10)));
-    addHistory("Mining claim", amount, "ZMB");
-
-    saveState();
-
-    toast(`+${fmt(amount, 5)} ZMB`);
-    render();
-  }
-
-  function buyMiner(id) {
-    id = Number(id);
-
-    if (id <= state.miner) return;
-
-    const miner = MINERS[id];
-
-    if (!miner) return;
-
-    if (state.balance < miner.price) {
-      toast(t("messages.insufficient"));
-      return;
-    }
-
-    state.balance -= miner.price;
-    state.miner = id;
-
-    addHistory("Miner purchase", -miner.price, "ZMB");
-
-    saveState();
-    toast(t("messages.purchased"));
-    render();
-  }
-
-  function buyBoost(id) {
-    const boost = BOOSTS.find(x => x.id === id);
-
-    if (!boost) return;
-
-    if (state.balance < boost.price) {
-      toast(t("messages.insufficient"));
-      return;
-    }
-
-    if (!(id in state.boosts)) {
-      state.boosts[id] = 0;
-    }
-
-    state.balance -= boost.price;
-    state.boosts[id]++;
-
-    addHistory("Boost purchase", -boost.price, "ZMB");
-
-    saveState();
-    toast(t("messages.purchased"));
-    render();
-  }
-
-  /* =========================
-     ADS
-  ========================= */
-
-  function watchAd(network) {
-    if ((state.ads[network] || 0) >= 20) return;
-
-    openAdModal(network);
-  }
-
-  function openAdModal(network) {
-    let seconds = 3;
-
-    openModal(
-      network === "network1"
-        ? t("earn.network1")
-        : t("earn.network2"),
-      `
-        <div class="panel" style="text-align:center">
-          <div style="font-size:32px;font-weight:900" id="ad-countdown">
-            3
-          </div>
-
-          <div class="panel-muted">
-            ${t("earn.reward")}
-          </div>
-        </div>
-      `,
-      false
-    );
-
-    const timer = setInterval(() => {
-      seconds--;
-
-      const el = $("#ad-countdown");
-
-      if (el) {
-        el.textContent = seconds;
-      }
-
-      if (seconds <= 0) {
-        clearInterval(timer);
-
-        state.ads[network]++;
-        state.balance += .5;
-
-        const totalAds =
-          state.ads.network1 +
-          state.ads.network2;
-
-        if (totalAds % 5 === 0) {
-          state.tickets++;
-          toast(t("messages.ticket"));
-        } else {
-          toast(t("messages.adFinished"));
-        }
-
-        addXP(3);
-        addHistory("Ad reward", .5, "ZMB");
-
-        saveState();
-        closeModal();
-        render();
-      }
-    }, 1000);
-  }
-
-  function completeTask(id) {
-    if (state.tasks[id]) return;
-
-    state.tasks[id] = true;
-    state.balance += 2;
-    addXP(10);
-    addHistory("Task reward", 2, "ZMB");
-
-    saveState();
-    toast(t("messages.taskDone"));
-    render();
-  }
-
-  /* =========================
-     WALLET
-  ========================= */
-
-  function walletTab(tab) {
-    const content = $("#wallet-content");
-
-    if (!content) return;
-
-    document.querySelectorAll(".wallet-box .tab")
-      .forEach(btn => {
-        btn.classList.toggle(
-          "active",
-          btn.dataset.tab === tab
-        );
-      });
-
-    content.innerHTML =
-      tab === "swap"
-        ? swapHTML()
-        : withdrawHTML();
-  }
-
-  function swapDirection() {
-    const from = $("#swap-from");
-    const to = $("#swap-to");
-
-    if (!from || !to) return;
-
-    const old = from.value;
-    from.value = to.value;
-    to.value = old;
-  }
-
-  function doSwap() {
-    const from = $("#swap-from")?.value;
-    const to = $("#swap-to")?.value;
-    const amount = Number($("#swap-amount")?.value || 0);
-
-    if (!amount || amount <= 0 || from === to) return;
-
-    if (from === "ZMB" && to === "TON") {
-      if (state.balance < amount) {
-        toast(t("messages.insufficient"));
-        return;
-      }
-
-      const result = amount / 100;
-
-      state.balance -= amount;
-      state.ton += result;
-
-      addHistory("Swap", -amount, "ZMB");
-      addHistory("Swap", result, "TON");
-    }
-
-    if (from === "TON" && to === "ZMB") {
-      if (state.ton < amount) {
-        toast("Not enough TON");
-        return;
-      }
-
-      const result = amount * 100;
-
-      state.ton -= amount;
-      state.balance += result;
-
-      addHistory("Swap", -amount, "TON");
-      addHistory("Swap", result, "ZMB");
-    }
-
-    saveState();
-    toast(t("messages.swapDone"));
-    render();
-  }
-
-  function withdraw() {
-    const address = ($("#withdraw-address")?.value || "").trim();
-    const amount = Number($("#withdraw-amount")?.value || 0);
-
-    if (!address || amount < 1) {
-      toast("Enter a valid amount and address");
-      return;
-    }
-
-    const fee = .05;
-
-    if (state.ton < amount + fee) {
-      toast(t("messages.insufficient"));
-      return;
-    }
-
-    state.ton -= amount + fee;
-
-    addHistory("Withdrawal", -amount, "TON");
-    addHistory("Fee", -fee, "TON");
-
-    saveState();
-
-    toast(t("messages.withdrawalDemo"));
-    render();
-  }
-
-  /* =========================
-     PROFILE
-  ========================= */
-
-  function openProfileItem(item) {
-    if (item === "withdraw") {
-      showScreen("wallet");
-      setTimeout(() => walletTab("withdraw"), 0);
-      return;
-    }
-
-    if (item === "swap") {
-      showScreen("wallet");
-      setTimeout(() => walletTab("swap"), 0);
-      return;
-    }
-
-    if (item === "statistics") {
-      openModal(
-        t("profile.statistics"),
-        `
-          <div class="list">
-            <div class="list-card">
-              <div class="list-info">
-                <div class="list-name">ZMB balance</div>
-              </div>
-              <div class="price">${fmt(state.balance,2)}</div>
-            </div>
-
-            <div class="list-card">
-              <div class="list-info">
-                <div class="list-name">TON balance</div>
-              </div>
-              <div class="price">${fmt(state.ton,3)}</div>
-            </div>
-
-            <div class="list-card">
-              <div class="list-info">
-                <div class="list-name">Flip best</div>
-              </div>
-              <div class="price">${state.games.flipBest}</div>
-            </div>
-
-            <div class="list-card">
-              <div class="list-info">
-                <div class="list-name">Run best</div>
-              </div>
-              <div class="price">${state.games.runBest}</div>
-            </div>
-          </div>
-        `
-      );
-      return;
-    }
-
-    if (item === "bonuses") {
-      openBonusModal();
-      return;
-    }
-
-    if (item === "support") {
-      openModal(
-        t("profile.support"),
-        `
-          <div class="panel">
-            <div class="panel-title">@paid_zombie_support</div>
-            <div class="panel-muted">
-              Telegram support channel. Demo interface.
-            </div>
-          </div>
-        `
-      );
-      return;
-    }
-
-    if (item === "faq") {
-      openModal(
-        "FAQ",
-        `
-          <div class="list">
-            <div class="panel">
-              <div class="panel-title">How does mining work?</div>
-              <div class="panel-muted">
-                Mining accumulates ZMB while a session is active.
-              </div>
-            </div>
-
-            <div class="panel">
-              <div class="panel-title">Where are rewards stored?</div>
-              <div class="panel-muted">
-                Accrued mining rewards stay in Mining until claimed.
-              </div>
-            </div>
-
-            <div class="panel">
-              <div class="panel-title">Are balances real?</div>
-              <div class="panel-muted">
-                This frontend is a demonstration. Production balances
-                must be handled by a backend.
-              </div>
-            </div>
-          </div>
-        `
-      );
-      return;
-    }
-
-    if (item === "channels") {
-      openModal(
-        t("profile.channels"),
-        `
-          <div class="list">
-            <button class="profile-item">
-              <div class="profile-item-icon">${icon("users")}</div>
-              <div class="profile-item-text">@paid_zombie_news</div>
-              <div class="profile-arrow">${icon("arrow")}</div>
-            </button>
-
-            <button class="profile-item">
-              <div class="profile-item-icon">${icon("game")}</div>
-              <div class="profile-item-text">@paid_zombie_chat</div>
-              <div class="profile-arrow">${icon("arrow")}</div>
-            </button>
-          </div>
-        `
-      );
-      return;
-    }
-
-    if (item === "settings") {
-      openSettings();
-    }
-  }
-
-  function openSettings() {
-    openModal(
-      t("profile.settings"),
-      `
-        <div class="panel-title">${t("profile.chooseLanguage")}</div>
-
-        <div class="list" style="margin-top:12px">
-          <button class="profile-item"
-                  data-action="language"
-                  data-language="ru">
-            <div class="profile-item-text">Русский</div>
-            <div class="profile-arrow">
-              ${state.language === "ru" ? "✓" : ""}
-            </div>
-          </button>
-
-          <button class="profile-item"
-                  data-action="language"
-                  data-language="uk">
-            <div class="profile-item-text">Українська</div>
-            <div class="profile-arrow">
-              ${state.language === "uk" ? "✓" : ""}
-            </div>
-          </button>
-
-          <button class="profile-item"
-                  data-action="language"
-                  data-language="en">
-            <div class="profile-item-text">English</div>
-            <div class="profile-arrow">
-              ${state.language === "en" ? "✓" : ""}
-            </div>
-          </button>
-        </div>
-      `
-    );
-  }
-
-  function setLanguage(lang) {
-    if (!I18N[lang]) return;
-
-    state.language = lang;
-    document.documentElement.lang = lang;
-
-    saveState();
-    closeModal();
-    render();
-
-    toast(t("messages.language"));
-  }
-
-  function openBonusModal() {
-    openModal(
-      t("profile.bonuses"),
-      `
-        <div class="list">
-          <div class="list-card">
-            <div class="list-icon">${icon("gift")}</div>
-            <div class="list-info">
-              <div class="list-name">Daily Wheel</div>
-              <div class="list-desc">${t("modal.daily")}</div>
-            </div>
-          </div>
-
-          <div class="list-card">
-            <div class="list-icon">${icon("bolt")}</div>
-            <div class="list-info">
-              <div class="list-name">Daily Combo</div>
-              <div class="list-desc">3 correct cards = bonus</div>
-            </div>
-          </div>
-        </div>
-
-        <button class="main-action"
-                data-action="openWheel">
-          DAILY WHEEL
-        </button>
-
-        <button class="main-action"
-                data-action="openCombo">
-          DAILY COMBO
-        </button>
-      `
-    );
-  }
-
-  /* =========================
-     WHEEL
-  ========================= */
-
-  function openWheel() {
-    const remaining =
-      86400000 - (Date.now() - state.wheelLast);
-
-    if (state.wheelLast && remaining > 0) {
-      toast(t("messages.wheelWait"));
-      return;
-    }
-
-    openModal(
-      "DAILY WHEEL",
-      `
-        <div class="wheel-wrap">
-          <div class="wheel-pointer"></div>
-
-          <div class="wheel" id="wheel">
-            <div class="wheel-center">ZMB</div>
-          </div>
-        </div>
-
-        <div class="panel" style="text-align:center">
-          ${t("modal.daily")}
-        </div>
-
-        <button class="main-action"
-                id="spin-button"
-                data-action="spinWheel">
-          ${t("modal.spin")}
-        </button>
-      `
-    );
-  }
-
-  function spinWheel() {
-    const button = $("#spin-button");
-    const wheel = $("#wheel");
-
-    if (!button || !wheel) return;
-
-    button.disabled = true;
-
-    const rewards = [2, 5, 10, 15, 25, 3, 8, 50];
-    const index = Math.floor(Math.random() * rewards.length);
-
-    const reward = rewards[index];
-
-    wheel.style.transform =
-      `rotate(${1440 + index * 45 + 20}deg)`;
-
-    setTimeout(() => {
-      state.balance += reward;
-      state.wheelLast = Date.now();
-
-      addHistory("Daily Wheel", reward, "ZMB");
-      saveState();
-
-      toast(`${t("messages.wheelWin")}: +${reward} ZMB`);
-
-      closeModal();
-      render();
-    }, 3800);
-  }
-
-  /* =========================
-     COMBO
-  ========================= */
-
-  function comboTarget() {
-    const params = new URLSearchParams(location.search);
-    const value = params.get("combo");
-
-    if (value) {
-      const nums = value
-        .split(",")
-        .map(Number)
-        .filter(x => x >= 1 && x <= 5);
-
-      if (nums.length === 3) {
-        return nums;
-      }
-    }
-
-    return [2, 4, 5];
-  }
-
-  let comboSelected = [];
-
-  function openCombo() {
-    const remaining =
-      86400000 - (Date.now() - state.comboLast);
-
-    if (state.comboLast && remaining > 0) {
-      toast(t("messages.wheelWait"));
-      return;
-    }
-
-    comboSelected = [];
-
-    openModal(
-      t("modal.combo"),
-      `
-        <div class="panel-muted" style="margin-bottom:14px">
-          ${t("modal.comboDesc")}
-        </div>
-
-        <div class="combo-cards">
-          ${[1,2,3,4,5].map(i => `
-            <button class="combo-card"
-                    data-action="comboSelect"
-                    data-card="${i}">
-              ${icon("gift")}
-              <span>#${i}</span>
-            </button>
-          `).join("")}
-        </div>
-
-        <div class="panel">
-          <div class="panel-muted">
-            ${t("modal.selected")}: <strong id="combo-count">0/3</strong>
-          </div>
-        </div>
-
-        <button class="main-action"
-                id="combo-confirm"
-                disabled
-                data-action="confirmCombo">
-          ${t("modal.confirm")}
-        </button>
-      `
-    );
-  }
-
-  function comboSelect(card) {
-    card = Number(card);
-
-    if (comboSelected.includes(card)) {
-      comboSelected = comboSelected.filter(x => x !== card);
     } else {
-      if (comboSelected.length >= 3) return;
-      comboSelected.push(card);
+
+        const initials =
+            name
+                .split(" ")
+                .map(x => x[0])
+                .join("")
+                .slice(0,2)
+                .toUpperCase();
+
+        avatar.textContent = initials;
+        profileAvatar.textContent = initials;
     }
+}
 
-    document.querySelectorAll(".combo-card").forEach(btn => {
-      btn.classList.toggle(
-        "selected",
-        comboSelected.includes(Number(btn.dataset.card))
-      );
-    });
 
-    const count = $("#combo-count");
-    const confirm = $("#combo-confirm");
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
 
-    if (count) count.textContent = `${comboSelected.length}/3`;
-    if (confirm) confirm.disabled = comboSelected.length !== 3;
-  }
+function showScreen(screenName) {
 
-  function confirmCombo() {
-    if (comboSelected.length !== 3) {
-      toast(t("messages.comboNeed"));
-      return;
-    }
+    document
+        .querySelectorAll(".screen")
+        .forEach(screen => {
 
-    const target = comboTarget();
+            screen.classList.remove("active");
 
-    const correct =
-      [...comboSelected].sort().join(",") ===
-      [...target].sort().join(",");
-
-    state.comboLast = Date.now();
-
-    if (correct) {
-      state.balance += 10;
-      addHistory("Daily Combo", 10, "ZMB");
-      toast(t("messages.comboWin"));
-    } else {
-      toast(t("messages.comboLose"));
-    }
-
-    saveState();
-    closeModal();
-    render();
-  }
-
-  /* =========================
-     GAMES
-  ========================= */
-
-  let game = null;
-
-  function openGame(type) {
-    stopGame();
-
-    const title =
-      type === "flip"
-        ? t("games.flip")
-        : t("games.run");
-
-    openModal(
-      title,
-      `
-        <div class="game-stage">
-          <canvas id="game-canvas" class="game-canvas"></canvas>
-
-          <div class="game-ui">
-            <div class="game-stat" id="game-score">0</div>
-            <div class="game-stat" id="game-earned">0 ZMB</div>
-          </div>
-
-          <button class="game-exit"
-                  data-action="closeGame">
-            ${icon("close")}
-          </button>
-
-          <div class="game-help">
-            ${type === "flip" ? "TAP / SPACE" : "TAP / SPACE / ↑"}
-          </div>
-        </div>
-      `,
-      false,
-      true
-    );
-
-    setTimeout(() => {
-      const canvas = $("#game-canvas");
-      if (!canvas) return;
-
-      if (type === "flip") startFlip(canvas);
-      else startRun(canvas);
-    }, 30);
-  }
-
-  function setupCanvas(canvas) {
-    const rect = canvas.getBoundingClientRect();
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-
-    canvas.width = Math.max(1, Math.floor(rect.width * dpr));
-    canvas.height = Math.max(1, Math.floor(rect.height * dpr));
-
-    const ctx = canvas.getContext("2d");
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-    return {
-      ctx,
-      width: rect.width,
-      height: rect.height
-    };
-  }
-
-  function sound(freq = 440, duration = .06) {
-    try {
-      const AC = window.AudioContext || window.webkitAudioContext;
-      if (!AC) return;
-
-      const ac = new AC();
-      const osc = ac.createOscillator();
-      const gain = ac.createGain();
-
-      osc.frequency.value = freq;
-      osc.type = "sine";
-
-      gain.gain.setValueAtTime(.045, ac.currentTime);
-      gain.gain.exponentialRampToValueAtTime(
-        .001,
-        ac.currentTime + duration
-      );
-
-      osc.connect(gain);
-      gain.connect(ac.destination);
-
-      osc.start();
-      osc.stop(ac.currentTime + duration);
-    } catch (_) {}
-  }
-
-  function drawZombie(ctx, x, y, scale, velocity, time, running = false) {
-    ctx.save();
-    ctx.translate(x, y);
-
-    const tilt = Math.max(-.35, Math.min(.55, velocity / 900));
-    ctx.rotate(tilt);
-
-    const bob =
-      running
-        ? Math.sin(time * .018) * 2.5
-        : Math.sin(time * .012) * 1.5;
-
-    ctx.translate(0, bob);
-
-    /* shadow */
-    ctx.globalAlpha = .18;
-    ctx.fillStyle = "#000";
-    ctx.beginPath();
-    ctx.ellipse(0, 29 * scale, 22 * scale, 5 * scale, 0, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.globalAlpha = 1;
-
-    /* legs */
-    const legPhase =
-      running
-        ? Math.sin(time * .025) * 8
-        : Math.sin(time * .01) * 2;
-
-    ctx.strokeStyle = "#5fdbb1";
-    ctx.lineWidth = 5 * scale;
-    ctx.lineCap = "round";
-
-    ctx.beginPath();
-    ctx.moveTo(-7 * scale, 15 * scale);
-    ctx.lineTo((-12 + legPhase) * scale, 31 * scale);
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.moveTo(7 * scale, 15 * scale);
-    ctx.lineTo((12 - legPhase) * scale, 31 * scale);
-    ctx.stroke();
-
-    /* body */
-    ctx.fillStyle = "#48d39f";
-    ctx.beginPath();
-    ctx.roundRect(
-      -15 * scale,
-      -12 * scale,
-      30 * scale,
-      31 * scale,
-      9 * scale
-    );
-    ctx.fill();
-
-    /* arms */
-    const armPhase =
-      running
-        ? Math.sin(time * .025) * 10
-        : 0;
-
-    ctx.strokeStyle = "#55e3ad";
-    ctx.lineWidth = 5 * scale;
-
-    ctx.beginPath();
-    ctx.moveTo(-12 * scale, -3 * scale);
-    ctx.lineTo((-23 - armPhase) * scale, 7 * scale);
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.moveTo(12 * scale, -3 * scale);
-    ctx.lineTo((23 + armPhase) * scale, 7 * scale);
-    ctx.stroke();
-
-    /* head */
-    ctx.fillStyle = "#63e5b3";
-    ctx.beginPath();
-    ctx.arc(0, -23 * scale, 15 * scale, 0, Math.PI * 2);
-    ctx.fill();
-
-    /* hair */
-    ctx.fillStyle = "#1d7e62";
-
-    for (let i = -1; i <= 1; i++) {
-      ctx.beginPath();
-      ctx.moveTo(i * 8 * scale, -35 * scale);
-      ctx.lineTo((i * 8 - 4) * scale, -45 * scale);
-      ctx.lineTo((i * 8 + 5) * scale, -36 * scale);
-      ctx.fill();
-    }
-
-    /* eyes */
-    ctx.fillStyle = "#0a1017";
-
-    ctx.beginPath();
-    ctx.arc(-5 * scale, -24 * scale, 2.2 * scale, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.beginPath();
-    ctx.arc(5 * scale, -24 * scale, 2.2 * scale, 0, Math.PI * 2);
-    ctx.fill();
-
-    /* mouth */
-    ctx.strokeStyle = "#174f40";
-    ctx.lineWidth = 2 * scale;
-
-    ctx.beginPath();
-    ctx.arc(0, -18 * scale, 6 * scale, 0, Math.PI);
-    ctx.stroke();
-
-    ctx.restore();
-  }
-
-  function startFlip(canvas) {
-    const { ctx, width, height } = setupCanvas(canvas);
-
-    game = {
-      type: "flip",
-      running: true,
-      last: performance.now(),
-      score: 0,
-      earned: 0,
-      y: height * .45,
-      vy: 0,
-      pipes: [],
-      spawn: 0,
-      time: 0,
-      width,
-      height,
-      ctx,
-      raf: 0
-    };
-
-    gameFlipLoop(performance.now());
-  }
-
-  function flap() {
-    if (!game || game.type !== "flip") return;
-
-    if (!game.running) {
-      restartCurrentGame();
-      return;
-    }
-
-    game.vy = -430;
-    sound(650, .06);
-  }
-
-  function gameFlipLoop(now) {
-    if (!game || game.type !== "flip") return;
-
-    const dt = Math.min(.032, (now - game.last) / 1000);
-    game.last = now;
-    game.time += dt * 1000;
-
-    const g = game;
-
-    g.vy += 1150 * dt;
-    g.y += g.vy * dt;
-
-    g.spawn -= dt;
-
-    if (g.spawn <= 0) {
-      const gap = 150;
-      const minTop = 70;
-      const maxTop = g.height - gap - 100;
-
-      const top = minTop + Math.random() * (maxTop - minTop);
-
-      g.pipes.push({
-        x: g.width + 40,
-        top,
-        gap,
-        passed: false
-      });
-
-      g.spawn = 1.55;
-    }
-
-    for (const p of g.pipes) {
-      p.x -= 185 * dt;
-
-      if (!p.passed && p.x + 55 < 82) {
-        p.passed = true;
-        g.score++;
-        g.earned += .08;
-        updateGameUI();
-      }
-    }
-
-    g.pipes = g.pipes.filter(p => p.x > -90);
-
-    if (
-      g.y < 25 ||
-      g.y > g.height - 25 ||
-      g.pipes.some(p =>
-        82 + 18 > p.x &&
-        82 - 18 < p.x + 55 &&
-        (g.y - 18 < p.top ||
-         g.y + 18 > p.top + p.gap)
-      )
-    ) {
-      gameOver();
-      return;
-    }
-
-    drawFlip(g);
-
-    g.raf = requestAnimationFrame(gameFlipLoop);
-  }
-
-  function drawFlip(g) {
-    const { ctx, width, height } = g;
-
-    const bg = ctx.createLinearGradient(0,0,0,height);
-    bg.addColorStop(0, "#172a45");
-    bg.addColorStop(1, "#0a1019");
-
-    ctx.fillStyle = bg;
-    ctx.fillRect(0,0,width,height);
-
-    /* background circles */
-    ctx.globalAlpha = .12;
-    ctx.fillStyle = "#43d9ff";
-
-    for (let i = 0; i < 4; i++) {
-      ctx.beginPath();
-      ctx.arc(
-        (i * 160 + 50) % width,
-        90 + i * 90,
-        35 + i * 8,
-        0,
-        Math.PI * 2
-      );
-      ctx.fill();
-    }
-
-    ctx.globalAlpha = 1;
-
-    /* pipes */
-    for (const p of g.pipes) {
-      ctx.fillStyle = "#4bd3a0";
-
-      ctx.fillRect(p.x, 0, 55, p.top);
-      ctx.fillRect(
-        p.x,
-        p.top + p.gap,
-        55,
-        height - p.top - p.gap
-      );
-
-      ctx.fillStyle = "#66e8b8";
-      ctx.fillRect(p.x - 4, p.top - 12, 63, 12);
-      ctx.fillRect(
-        p.x - 4,
-        p.top + p.gap,
-        63,
-        12
-      );
-    }
-
-    /* ground */
-    ctx.fillStyle = "#0b1119";
-    ctx.fillRect(0, height - 14, width, 14);
-
-    drawZombie(
-      ctx,
-      82,
-      g.y,
-      .85,
-      g.vy,
-      g.time,
-      false
-    );
-  }
-
-  function startRun(canvas) {
-    const { ctx, width, height } = setupCanvas(canvas);
-
-    game = {
-      type: "run",
-      running: true,
-      last: performance.now(),
-      score: 0,
-      earned: 0,
-      x: 80,
-      y: height - 75,
-      vy: 0,
-      obstacles: [],
-      coins: [],
-      spawn: .7,
-      coinSpawn: .8,
-      speed: 300,
-      time: 0,
-      width,
-      height,
-      ctx,
-      raf: 0,
-      grounded: true
-    };
-
-    gameRunLoop(performance.now());
-  }
-
-  function jump() {
-    if (!game || game.type !== "run") return;
-
-    if (!game.running) {
-      restartCurrentGame();
-      return;
-    }
-
-    if (!game.grounded) return;
-
-    game.vy = -730;
-    game.grounded = false;
-    sound(520, .07);
-  }
-
-  function gameRunLoop(now) {
-    if (!game || game.type !== "run") return;
-
-    const dt = Math.min(.032, (now - game.last) / 1000);
-    game.last = now;
-    game.time += dt * 1000;
-
-    const g = game;
-
-    g.speed += dt * 5;
-
-    g.vy += 1850 * dt;
-    g.y += g.vy * dt;
-
-    const ground = g.height - 75;
-
-    if (g.y >= ground) {
-      g.y = ground;
-      g.vy = 0;
-      g.grounded = true;
-    }
-
-    g.spawn -= dt;
-    g.coinSpawn -= dt;
-
-    if (g.spawn <= 0) {
-      const heights = [34, 46, 62, 75];
-      const h = heights[random(0, heights.length - 1)];
-
-      g.obstacles.push({
-        x: g.width + 30,
-        width: random(22, 42),
-        height: h
-      });
-
-      g.spawn = .9 + Math.random() * .8;
-    }
-
-    if (g.coinSpawn <= 0) {
-      g.coins.push({
-        x: g.width + 20,
-        y: ground - random(45, 155),
-        r: 7,
-        collected: false
-      });
-
-      g.coinSpawn = .55 + Math.random() * .8;
-    }
-
-    for (const o of g.obstacles) {
-      o.x -= g.speed * dt;
-    }
-
-    for (const c of g.coins) {
-      c.x -= g.speed * dt;
-    }
-
-    g.obstacles = g.obstacles.filter(o => o.x > -70);
-    g.coins = g.coins.filter(c => c.x > -30 && !c.collected);
-
-    for (const o of g.obstacles) {
-      const zx = g.x;
-      const zy = g.y;
-
-      const hit =
-        zx + 15 > o.x &&
-        zx - 15 < o.x + o.width &&
-        zy + 15 > ground - o.height &&
-        zy - 20 < ground;
-
-      if (hit) {
-        gameOver();
-        return;
-      }
-    }
-
-    for (const c of g.coins) {
-      const dx = c.x - g.x;
-      const dy = c.y - (g.y - 5);
-
-      if (Math.sqrt(dx*dx + dy*dy) < 28) {
-        c.collected = true;
-        g.score++;
-        g.earned += .12;
-        sound(880, .045);
-        updateGameUI();
-      }
-    }
-
-    if (Math.floor(g.time / 1000) % 2 === 0) {
-      g.score += 0.002;
-    }
-
-    drawRun(g);
-
-    g.raf = requestAnimationFrame(gameRunLoop);
-  }
-
-  function drawRun(g) {
-    const { ctx, width, height } = g;
-
-    const bg = ctx.createLinearGradient(0,0,0,height);
-    bg.addColorStop(0, "#12243a");
-    bg.addColorStop(1, "#090e16");
-
-    ctx.fillStyle = bg;
-    ctx.fillRect(0,0,width,height);
-
-    /* distant shapes */
-    ctx.fillStyle = "rgba(56,217,255,.06)";
-
-    for (let i = 0; i < 6; i++) {
-      ctx.beginPath();
-      ctx.arc(
-        i * 120 + 20,
-        100 + (i % 3) * 55,
-        35,
-        0,
-        Math.PI * 2
-      );
-      ctx.fill();
-    }
-
-    /* ground */
-    ctx.fillStyle = "#111a26";
-    ctx.fillRect(0, g.height - 60, width, 60);
-
-    ctx.strokeStyle = "rgba(255,255,255,.07)";
-    ctx.lineWidth = 1;
-
-    ctx.beginPath();
-    ctx.moveTo(0, g.height - 60);
-    ctx.lineTo(width, g.height - 60);
-    ctx.stroke();
-
-    /* obstacles */
-    for (const o of g.obstacles) {
-      ctx.fillStyle = "#9a6bff";
-
-      ctx.beginPath();
-      ctx.roundRect(
-        o.x,
-        g.height - 60 - o.height,
-        o.width,
-        o.height,
-        5
-      );
-      ctx.fill();
-
-      ctx.fillStyle = "#bd9cff";
-
-      ctx.beginPath();
-      ctx.moveTo(o.x + o.width/2, g.height - 60 - o.height);
-      ctx.lineTo(o.x + o.width/2 + 8, g.height - 60 - o.height - 13);
-      ctx.lineTo(o.x + o.width/2 - 8, g.height - 60 - o.height - 13);
-      ctx.closePath();
-      ctx.fill();
-    }
-
-    /* coins */
-    for (const c of g.coins) {
-      ctx.fillStyle = "#ffd45a";
-
-      ctx.beginPath();
-      ctx.arc(c.x, c.y, c.r, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.strokeStyle = "#fff1a3";
-      ctx.lineWidth = 2;
-
-      ctx.beginPath();
-      ctx.arc(c.x, c.y, c.r - 2, 0, Math.PI * 2);
-      ctx.stroke();
-    }
-
-    drawZombie(
-      ctx,
-      g.x,
-      g.y,
-      .92,
-      g.vy,
-      g.time,
-      true
-    );
-  }
-
-  function updateGameUI() {
-    if (!game) return;
-
-    const score = $("#game-score");
-    const earned = $("#game-earned");
-
-    if (score) {
-      score.textContent =
-        Math.floor(game.score);
-    }
-
-    if (earned) {
-      earned.textContent =
-        `${fmt(game.earned, 2)} ZMB`;
-    }
-  }
-
-  function gameOver() {
-    if (!game) return;
-
-    game.running = false;
-
-    if (game.type === "flip") {
-      state.games.flipBest =
-        Math.max(
-          state.games.flipBest,
-          Math.floor(game.score)
-        );
-    }
-
-    if (game.type === "run") {
-      state.games.runBest =
-        Math.max(
-          state.games.runBest,
-          Math.floor(game.score)
-        );
-    }
-
-    state.games.totalZmb += game.earned;
-
-    if (game.earned > 0) {
-      state.balance += game.earned;
-      addHistory("Game reward", game.earned, "ZMB");
-    }
-
-    saveState();
-
-    drawGameOver();
-  }
-
-  function drawGameOver() {
-    if (!game) return;
-
-    const { ctx, width, height } = game;
-
-    ctx.fillStyle = "rgba(4,7,11,.58)";
-    ctx.fillRect(0,0,width,height);
-
-    ctx.textAlign = "center";
-
-    ctx.fillStyle = "#fff";
-    ctx.font = "900 28px Inter, Arial";
-    ctx.fillText(
-      "GAME OVER",
-      width / 2,
-      height / 2 - 20
-    );
-
-    ctx.fillStyle = "#9da8ba";
-    ctx.font = "600 13px Inter, Arial";
-    ctx.fillText(
-      `${Math.floor(game.score)}  •  +${fmt(game.earned,2)} ZMB`,
-      width / 2,
-      height / 2 + 10
-    );
-
-    ctx.fillStyle = "#fff";
-    ctx.font = "800 12px Inter, Arial";
-    ctx.fillText(
-      "TAP TO RESTART",
-      width / 2,
-      height / 2 + 45
-    );
-  }
-
-  function restartCurrentGame() {
-    if (!game) return;
-
-    const type = game.type;
-    const canvas = $("#game-canvas");
-
-    if (!canvas) return;
-
-    stopGame();
-
-    if (type === "flip") startFlip(canvas);
-    else startRun(canvas);
-  }
-
-  function stopGame() {
-    if (game?.raf) {
-      cancelAnimationFrame(game.raf);
-    }
-
-    game = null;
-  }
-
-  /* =========================
-     MODALS
-  ========================= */
-
-  function openModal(title, body, close = true, fullscreen = false) {
-    const root = $("#modal-root");
-    const modal = $("#modal");
-
-    modal.className =
-      "modal" + (fullscreen ? " game-modal" : "");
-
-    modal.innerHTML = `
-      ${fullscreen ? "" : `<div class="modal-handle"></div>`}
-
-      <div class="modal-head">
-        <div class="modal-title">${escapeHTML(title)}</div>
-
-        ${
-          close
-            ? `<button class="close-btn" data-action="closeModal">
-                 ${icon("close")}
-               </button>`
-            : ""
-        }
-      </div>
-
-      <div class="modal-body">
-        ${body}
-      </div>
-    `;
-
-    root.classList.add("show");
-    document.body.style.overflow = "hidden";
-  }
-
-  function closeModal() {
-    stopGame();
-
-    $("#modal-root").classList.remove("show");
-    document.body.style.overflow = "";
-
-    const modal = $("#modal");
-    modal.innerHTML = "";
-  }
-
-  /* =========================
-     EVENT DELEGATION
-  ========================= */
-
-  document.addEventListener("click", e => {
-    const target = e.target.closest("[data-action]");
-
-    if (!target) return;
-
-    const action = target.dataset.action;
-
-    switch (action) {
-      case "nav":
-        showScreen(target.dataset.screen);
-        break;
-
-      case "startMining":
-        startMining();
-        break;
-
-      case "claimMining":
-        claimMining();
-        break;
-
-      case "miningTab": {
-        const tab = target.dataset.tab;
-        const parent = target.closest(".section");
-
-        parent?.querySelectorAll(".tab").forEach(btn => {
-          btn.classList.toggle(
-            "active",
-            btn.dataset.tab === tab
-          );
         });
 
-        const products = $("#mining-products");
+    const screen =
+        document.getElementById(screenName);
 
-        if (products) {
-          products.innerHTML =
-            tab === "miners"
-              ? minersHTML()
-              : boostsHTML();
-        }
-
-        break;
-      }
-
-      case "buyMiner":
-        buyMiner(target.dataset.id);
-        break;
-
-      case "buyBoost":
-        buyBoost(target.dataset.id);
-        break;
-
-      case "openGame":
-        openGame(target.dataset.game);
-        break;
-
-      case "closeGame":
-        closeModal();
-        break;
-
-      case "watchAd":
-        watchAd(target.dataset.network);
-        break;
-
-      case "task":
-        completeTask(target.dataset.task);
-        break;
-
-      case "earnTab": {
-        const tab = target.dataset.tab;
-
-        document.querySelectorAll(".tabs .tab")
-          .forEach(btn => {
-            if (
-              btn.dataset.action === "earnTab"
-            ) {
-              btn.classList.toggle(
-                "active",
-                btn.dataset.tab === tab
-              );
-            }
-          });
-
-        const content = $("#earn-content");
-
-        if (content) {
-          content.innerHTML =
-            tab === "ads"
-              ? adsHTML()
-              : `
-                <div class="panel" style="margin-top:14px">
-                  <div class="panel-title">
-                    ${t("earn.promote")}
-                  </div>
-
-                  <div class="panel-muted">
-                    Promote your Telegram channel or project.
-                  </div>
-
-                  <input class="field"
-                         style="margin-top:14px"
-                         placeholder="https://t.me/...">
-
-                  <select class="field" style="margin-top:10px">
-                    <option>10 TON</option>
-                    <option>25 TON</option>
-                    <option>50 TON</option>
-                  </select>
-
-                  <button class="main-action">
-                    ${t("earn.promote")}
-                  </button>
-
-                  <div class="demo-label">
-                    Demo payment interface
-                  </div>
-                </div>
-              `;
-        }
-
-        break;
-      }
-
-      case "walletTab":
-        walletTab(target.dataset.tab);
-        break;
-
-      case "swapDirection":
-        swapDirection();
-        break;
-
-      case "swap":
-        doSwap();
-        break;
-
-      case "withdraw":
-        withdraw();
-        break;
-
-      case "openProfileItem":
-        openProfileItem(target.dataset.item);
-        break;
-
-      case "language":
-        setLanguage(target.dataset.language);
-        break;
-
-      case "rankTab": {
-        const tab = target.dataset.tab;
-
-        document.querySelectorAll(".rank-tabs .tab")
-          .forEach(btn => {
-            btn.classList.toggle(
-              "active",
-              btn.dataset.tab === tab
-            );
-          });
-
-        const content = $("#rank-content");
-
-        if (content) {
-          content.innerHTML = rankingHTML(tab);
-        }
-
-        break;
-      }
-
-      case "copyReferral":
-        copyText(target.dataset.link);
-        break;
-
-      case "shareReferral":
-        shareReferral(target.dataset.link);
-        break;
-
-      case "participate":
-        participate();
-        break;
-
-      case "openWheel":
-        closeModal();
-        setTimeout(openWheel, 80);
-        break;
-
-      case "spinWheel":
-        spinWheel();
-        break;
-
-      case "openCombo":
-        closeModal();
-        setTimeout(openCombo, 80);
-        break;
-
-      case "comboSelect":
-        comboSelect(target.dataset.card);
-        break;
-
-      case "confirmCombo":
-        confirmCombo();
-        break;
-
-      case "closeModal":
-        closeModal();
-        break;
+    if (screen) {
+        screen.classList.add("active");
     }
-  });
 
-  /* =========================
-     GAME INPUT
-  ========================= */
 
-  document.addEventListener("keydown", e => {
-    if (!game) return;
+    document
+        .querySelectorAll(".nav-button")
+        .forEach(button => {
+
+            button.classList.toggle(
+                "active",
+                button.dataset.screen === screenName
+            );
+
+        });
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+/* =========================================================
+   DAILY CHECK
+   ========================================================= */
+
+const DAILY_KEY =
+    "paid_zombie_daily_data";
+
+
+function todayString() {
+
+    const date = new Date();
+
+    const year =
+        date.getFullYear();
+
+    const month =
+        String(date.getMonth() + 1)
+            .padStart(2, "0");
+
+    const day =
+        String(date.getDate())
+            .padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+}
+
+
+function previousDay(dateString) {
+
+    const date =
+        new Date(dateString + "T12:00:00");
+
+    date.setDate(
+        date.getDate() - 1
+    );
+
+    return date
+        .toISOString()
+        .slice(0,10);
+}
+
+
+function getDailyData() {
+
+    try {
+
+        const saved =
+            localStorage.getItem(DAILY_KEY);
+
+        if (saved) {
+
+            return JSON.parse(saved);
+
+        }
+
+    } catch (error) {
+
+        console.log(error);
+
+    }
+
+
+    return {
+        streak: 0,
+        lastVisit: null,
+        claimedToday: false
+    };
+}
+
+
+function saveDailyData(data) {
+
+    localStorage.setItem(
+        DAILY_KEY,
+        JSON.stringify(data)
+    );
+}
+
+
+function updateDaily() {
+
+    let data =
+        getDailyData();
+
+    const today =
+        todayString();
+
+
+    /*
+       Первый запуск
+    */
+
+    if (!data.lastVisit) {
+
+        data.streak = 1;
+        data.lastVisit = today;
+        data.claimedToday = false;
+
+        saveDailyData(data);
+
+    }
+
+
+    /*
+       Новый день
+    */
+
+    else if (data.lastVisit !== today) {
+
+        const yesterday =
+            previousDay(today);
+
+
+        if (data.lastVisit === yesterday) {
+
+            data.streak += 1;
+
+        } else {
+
+            data.streak = 1;
+
+        }
+
+
+        data.lastVisit = today;
+        data.claimedToday = false;
+
+        saveDailyData(data);
+
+    }
+
+
+    /*
+       UI
+    */
+
+    const streak =
+        Math.max(1, data.streak);
+
+
+    document.getElementById(
+        "streakNumber"
+    ).textContent = streak;
+
+
+    document.getElementById(
+        "gameStreak"
+    ).textContent = streak;
+
+
+    document.getElementById(
+        "profileStreak"
+    ).textContent = streak;
+
+
+    /*
+       Progress до условных 7 дней
+    */
+
+    const progress =
+        Math.min(
+            streak / 7 * 100,
+            100
+        );
+
+
+    document.getElementById(
+        "dailyProgress"
+    ).style.width =
+        progress + "%";
+
+
+    const button =
+        document.getElementById(
+            "dailyButton"
+        );
+
+
+    if (data.claimedToday) {
+
+        button.textContent =
+            "Получено";
+
+        button.classList.add("done");
+
+        document.getElementById(
+            "dailySubtitle"
+        ).textContent =
+            "Сегодняшняя награда уже получена";
+
+    } else {
+
+        button.textContent =
+            "Забрать";
+
+        button.classList.remove("done");
+
+        document.getElementById(
+            "dailySubtitle"
+        ).textContent =
+            `Ты активен уже ${streak} ${dayWord(streak)}`;
+
+    }
+}
+
+
+function dayWord(number) {
 
     if (
-      e.code === "Space" ||
-      e.code === "ArrowUp"
+        number % 10 === 1 &&
+        number % 100 !== 11
     ) {
-      e.preventDefault();
-
-      if (game.type === "flip") flap();
-      else jump();
+        return "день";
     }
-  });
 
-  document.addEventListener("pointerdown", e => {
-    if (!game) return;
-
-    const canvas = $("#game-canvas");
-
-    if (!canvas || e.target !== canvas) return;
-
-    if (game.type === "flip") flap();
-    else jump();
-  });
-
-  /* =========================
-     REFERRALS
-  ========================= */
-
-  async function copyText(text) {
-    try {
-      await navigator.clipboard.writeText(text);
-      toast(t("messages.copied"));
-    } catch (_) {
-      const input = document.createElement("textarea");
-      input.value = text;
-      document.body.appendChild(input);
-      input.select();
-
-      try {
-        document.execCommand("copy");
-      } catch (_) {}
-
-      input.remove();
-
-      toast(t("messages.copied"));
+    if (
+        [2,3,4].includes(number % 10) &&
+        ![12,13,14].includes(number % 100)
+    ) {
+        return "дня";
     }
-  }
 
-  function shareReferral(link) {
-    const text =
-      state.language === "ru"
-        ? "Заходи в PAID ZOMBIE 👇"
-        : state.language === "uk"
-          ? "Заходь у PAID ZOMBIE 👇"
-          : "Join PAID ZOMBIE 👇";
+    return "дней";
+}
 
-    const url =
-      `https://t.me/share/url?url=${encodeURIComponent(link)}` +
-      `&text=${encodeURIComponent(text)}`;
 
-    if (tg?.openTelegramLink) {
-      tg.openTelegramLink(url);
+function claimDaily() {
+
+    let data =
+        getDailyData();
+
+    const today =
+        todayString();
+
+
+    /*
+       Защита от старой даты
+    */
+
+    if (data.lastVisit !== today) {
+
+        updateDaily();
+
+        data =
+            getDailyData();
+
+    }
+
+
+    if (data.claimedToday) {
+
+        showToast(
+            "Ты уже забрал награду сегодня"
+        );
+
+        return;
+    }
+
+
+    data.claimedToday = true;
+
+    saveDailyData(data);
+
+    updateDaily();
+
+
+    showToast(
+        "🔥 Daily Check получен"
+    );
+
+
+    /*
+       Здесь в будущем можно отправлять
+       событие на backend / Telegram bot.
+
+       Например:
+
+       fetch("/api/daily", {
+           method: "POST",
+           headers: {
+               "Content-Type": "application/json"
+           },
+           body: JSON.stringify({
+               streak: data.streak
+           })
+       });
+    */
+}
+
+
+/* =========================================================
+   REFERRAL
+   ========================================================= */
+
+function copyReferral() {
+
+    const link =
+        "https://t.me/paidzombie_bot?start=ref_user";
+
+
+    if (
+        navigator.clipboard &&
+        navigator.clipboard.writeText
+    ) {
+
+        navigator.clipboard
+            .writeText(link)
+            .then(() => {
+
+                showToast(
+                    "Ссылка скопирована"
+                );
+
+            });
+
     } else {
-      window.open(url, "_blank");
+
+        showToast(
+            "Скопируй ссылку вручную"
+        );
+
     }
-  }
+}
 
-  /* =========================
-     GIVEAWAYS
-  ========================= */
 
-  function participate() {
-    if (state.tickets <= 0) {
-      toast(t("messages.noTickets"));
-      return;
-    }
+/* =========================================================
+   TOAST
+   ========================================================= */
 
-    state.tickets--;
+let toastTimer;
 
-    saveState();
 
-    toast("✓");
-    render();
-  }
+function showToast(message) {
 
-  /* =========================
-     PAYOUT FEED
-  ========================= */
+    const toast =
+        document.getElementById("toast");
 
-  function schedulePayout() {
-    clearTimeout(payoutTimer);
+    toast.textContent =
+        message;
 
-    payoutTimer = setTimeout(() => {
-      const names = [
-        "ZombieFox",
-        "DeadPixel",
-        "TONWalker",
-        "NightMiner",
-        "CryptoSoul",
-        "MutantX",
-        "PixelLord"
-      ];
+    toast.classList.add("show");
 
-      const amount = random(40, 1500);
 
-      payouts.unshift([
-        names[random(0, names.length - 1)],
-        `${amount.toLocaleString("en-US")} ZMB`
-      ]);
+    clearTimeout(toastTimer);
 
-      payouts = payouts.slice(0, 5);
 
-      if (currentScreen === "home") {
-        render();
-      }
+    toastTimer =
+        setTimeout(() => {
 
-      schedulePayout();
-    }, random(3000, 10000));
-  }
+            toast.classList.remove("show");
 
-  /* =========================
-     TIMER
-  ========================= */
+        }, 2200);
+}
 
-  setInterval(updateCountdowns, 1000);
 
-  /* =========================
-     INIT
-  ========================= */
+/* =========================================================
+   START
+   ========================================================= */
 
-  document.documentElement.lang = state.language;
+loadTelegramUser();
 
-  render();
-  schedulePayout();
+updateDaily();
 
-})();
 </script>
+
 </body>
 </html>
